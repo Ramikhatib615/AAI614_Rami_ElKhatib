@@ -1,0 +1,181 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — docs/plan/design-system.md.
+ * Never write a raw hex value in a component; use a token.
+ *
+ * Contrast (computed, docs/plan/contrast.py): every text token clears WCAG AA in both themes.
+ * --contour is 3.5:1 and is therefore restricted to 1px graphics: hairlines, rules, neatlines.
+ */
+:root {
+  --ground: #f5f4f0;
+  --ground-sunk: #ebe9e3;
+  --ink: #12161a;
+  --ink-soft: #4a5158;
+  --contour: #a67a46;
+  --accent: #8c2a66;
+  --hydro: #1b5e7e;
+  --verify: #3f6b45;
+  --warn: #9a4a12;
+
+  --hairline: 1px;
+  --measure: 68ch;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #0d1114;
+    --ground-sunk: #161c20;
+    --ink: #e8e9e4;
+    --ink-soft: #9ba4aa;
+    /* The contour darkens rather than lightens: a bright hairline on black reads as neon. */
+    --contour: #8a6538;
+    --accent: #ee8fc4;
+    --hydro: #7bc0de;
+    --verify: #89be93;
+    --warn: #e0a05c;
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-ground: var(--ground);
+  --color-sunk: var(--ground-sunk);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-contour: var(--contour);
+  --color-accent: var(--accent);
+  --color-hydro: var(--hydro);
+  --color-verify: var(--verify);
+  --color-warn: var(--warn);
+
+  --font-display: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", monospace;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-newsreader), Georgia, serif;
+    line-height: 1.08;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  /* Visible focus everywhere. Never remove this. */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+
+  table {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  /*
+   * A plate is the map-sheet replacement for the shadowed card: a neatline border, square corners,
+   * no shadow, and corner ticks drawn just inside the frame.
+   */
+  .plate {
+    position: relative;
+    border: var(--hairline) solid color-mix(in srgb, var(--contour) 70%, transparent);
+    background: var(--ground);
+    border-radius: 0;
+  }
+
+  .plate::before,
+  .plate::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    pointer-events: none;
+    border-color: var(--contour);
+    border-style: solid;
+  }
+
+  .plate::before {
+    top: 5px;
+    left: 5px;
+    border-width: var(--hairline) 0 0 var(--hairline);
+  }
+
+  .plate::after {
+    bottom: 5px;
+    right: 5px;
+    border-width: 0 var(--hairline) var(--hairline) 0;
+  }
+
+  /* Emphasis is a registration offset, not a drop shadow. */
+  .plate-raised {
+    box-shadow: 3px 3px 0 -1px color-mix(in srgb, var(--contour) 45%, transparent);
+  }
+
+  /* The station mark in the left margin: a survey station number, not an all-caps eyebrow. */
+  .station {
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .measure {
+    max-width: var(--measure);
+  }
+
+  .link {
+    color: var(--hydro);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.16em;
+  }
+
+  .link:hover,
+  .link:focus-visible {
+    color: var(--accent);
+    text-decoration-thickness: 2px;
+  }
+
+  /* Status language, used identically on the public site and the dashboard. */
+  .status-unverified {
+    color: var(--accent);
+  }
+
+  .status-verified {
+    color: var(--verify);
+  }
+
+  .status-warn {
+    color: var(--warn);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

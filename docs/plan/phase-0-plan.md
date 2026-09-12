@@ -212,12 +212,36 @@ No application code yet, per the brief.
 
 ---
 
-## 8. Decisions needed from Rami before Phase 1
+## 8. Decisions — answered 12 Sep 2026
 
-1. **Repo home** — subdirectory of this course repo (default), or a separate private repo?
-2. **Auth** — GitHub OAuth (recommended) or email magic link (needs Resend)?
-3. **Vercel plan** — Hobby or Pro? Determines cron frequency and the worker design above.
-4. **Phase 5/6 order** — programs first (default) or professors first?
-5. The `[CONFIRM]` answers in `docs/plan/open-questions.md`. Phases 1–4 can proceed without them;
-   Phase 2's public pages and Phase 3's CV approval cannot finish without them, since unconfirmed
-   facts are blocked from both by design.
+1. **Repo home: a separate private repo** (`Ramikhatib615/phd-command-center`). Rami creates it;
+   this session's GitHub app cannot (`403 Resource not accessible by integration`). Until it
+   exists, work is committed to the `claude/phd-app-command-center-0maw1c` branch of this **public**
+   course repo so nothing is lost — which is why Rami's one sensitive value (the phone number) is
+   never written to a file in git. See §9.
+2. **Auth: GitHub OAuth** with an email allowlist. No email sender needed.
+3. **Vercel plan: Hobby.** Confirms the design above — the browser-driven `POST /api/jobs/drain` is
+   the primary worker path and the daily cron is maintenance only. `maxDuration = 300`, the Hobby
+   ceiling. This design runs unchanged on Pro later, just with a more frequent cron.
+4. **Professor finder before program finder.** Phase 6 moves ahead of Phase 5, because outreach is
+   the time-critical path (emails should go out Sep–Nov 2026). Both depend only on Phase 4, so the
+   swap costs nothing. Revised order: 1 → 2 → 3 → 4 → **6** → 7 → **5** → 8 → 9 → 10.
+5. The `[CONFIRM]` answers in `docs/plan/open-questions.md` are still open. Phases 1–4 proceed
+   without them; Phase 2's public pages and Phase 3's CV approval cannot finish without them, since
+   unconfirmed facts are blocked from both by design.
+
+---
+
+## 9. Private data in a public repo (interim)
+
+Until `phd-command-center` exists, code lands in a public repo. The rule applied:
+
+- Facts already on Rami's CV and LinkedIn (employers, titles, dates, education, skills) are
+  committed normally — he sends them to strangers by design.
+- A fact whose value is genuinely sensitive is **never written to a file in git**. It is declared in
+  `data/profile.ts` with `valueFrom: 'PROFILE_PHONE'` instead of `value`, and resolved at runtime,
+  server-side only, from the environment. Today that is the phone number; referees (third-party
+  personal data) will use the same mechanism when they arrive, as will the GPA if Rami wants it
+  kept out of git.
+- Nothing about which professors or programs he is targeting is committed: that data lives only in
+  the database.

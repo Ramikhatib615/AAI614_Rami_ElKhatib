@@ -2,8 +2,21 @@
 
 Project brief: `PROMPT.md` (canonical). Plan: `docs/plan/`. Read both before changing anything.
 
-The app lives in `phd-command-center/` (subdirectory of this course repo; Vercel Root Directory
-points at it). The notebooks at the repo root are unrelated AAI614 coursework — do not touch them.
+The app lives in `phd-command-center/`. Its final home is the **private** repo
+`Ramikhatib615/phd-command-center`; until that exists it is committed to this **public** course
+repo, so read "Private data" below before adding any fact. The notebooks at the repo root are
+unrelated AAI614 coursework — do not touch them.
+
+Decisions in force (12 Sep 2026): GitHub OAuth + email allowlist · Vercel **Hobby** (daily cron,
+300s max duration, browser-driven queue drain) · professor finder is built before the program
+finder.
+
+## Private data
+
+A fact whose value is sensitive is never written to a file in git. Declare it in `data/profile.ts`
+with `valueFrom: '<ENV_KEY>'` instead of `value`; it resolves server-side only, at runtime, from the
+environment. This covers the phone number today and referees when they arrive. Program and
+professor data lives only in the database, never in a committed seed beyond `PROMPT.md` §7.
 
 ## Commands
 
