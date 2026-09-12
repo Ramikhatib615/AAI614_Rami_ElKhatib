@@ -90,11 +90,15 @@ export interface ProjectLink {
   status: FactStatus;
 }
 
+export type ProjectEmphasis = "machine-learning" | "geospatial" | "policy";
+
 export interface ProjectRecord {
   id: string;
   name: string;
   context: string;
   year: string;
+  /** Drives ordering: machine-learning work leads, since that is what the PhD is for. */
+  emphasis: ProjectEmphasis;
   tools: string[];
   headline: Fact;
   details: Fact[];
@@ -567,12 +571,14 @@ export const profile: Profile = {
     },
   ],
 
+  // Within an emphasis, this order is the order they appear in: the modelling study leads.
   projects: [
     {
       id: "proj.pa-index",
       name: "Public Administration Index",
       context: "UN ESCWA",
       year: "2024–2025",
+      emphasis: "policy",
       tools: ["Python", "Excel", "Power BI"],
       headline: {
         id: "proj.pa-index.headline",
@@ -597,6 +603,7 @@ export const profile: Profile = {
       name: "A Tour in Sour",
       context: "UN-Habitat Sustainable Cities Initiative",
       year: "2024",
+      emphasis: "geospatial",
       tools: ["ArcGIS Online", "Survey123"],
       headline: {
         id: "proj.tour-in-sour.headline",
@@ -613,6 +620,7 @@ export const profile: Profile = {
       name: "Neighbourhood profiles of disadvantaged areas",
       context: "UN-Habitat",
       year: "2024",
+      emphasis: "geospatial",
       tools: ["ArcGIS Pro", "Kobo Toolbox"],
       headline: {
         id: "proj.neighbourhood-profiles.headline",
@@ -629,6 +637,7 @@ export const profile: Profile = {
       name: "STDM/GIZ Phase 3 land tenure mapping",
       context: "UN-Habitat with GIZ",
       year: "2024",
+      emphasis: "geospatial",
       tools: ["ArcGIS Pro", "QGIS"],
       headline: {
         id: "proj.stdm-giz.headline",
@@ -645,6 +654,7 @@ export const profile: Profile = {
       name: "Civil defense location optimisation",
       context: "Academic project",
       year: "2023",
+      emphasis: "geospatial",
       tools: ["ArcGIS Pro", "Network Analyst"],
       headline: {
         id: "proj.civil-defense.headline",
@@ -657,45 +667,147 @@ export const profile: Profile = {
       links: [],
     },
     {
-      id: "proj.lulc",
-      name: "Land cover and land use mapping, South Lebanon",
-      context: "UN-Habitat urban farming initiative",
-      year: "2024",
-      tools: ["Satellite imagery", "Python", "GIS"],
+      id: "proj.fraud-detection",
+      name: "Fraud detection on imbalanced transaction data",
+      context: "MSc coursework, Lebanese American University",
+      year: "2026",
+      emphasis: "machine-learning",
+      tools: ["Python", "scikit-learn", "Pandas", "Matplotlib"],
       headline: {
-        id: "proj.lulc.headline",
+        id: "proj.fraud-detection.headline",
         kind: "project",
-        text: "Satellite-based land cover and land use classification supporting an urban farming analysis.",
+        text: "An end-to-end study on 284,807 card transactions, of which 0.17 percent are fraudulent, comparing unsupervised anomaly detection with supervised classification under delayed-label and cost-sensitive constraints.",
         visibility: "public",
         status: "confirmed",
+        note: "Coursework, and labelled as such wherever it appears.",
+        evidence:
+          "https://github.com/Ramikhatib615/AAI614_Rami_ElKhatib — End_to_End_Credit_Card_Fraud_Detection_Unsupervised_and_Supervised_Learning_on_Imbalanced_Data.ipynb",
+        tags: ["machine-learning", "python", "statistics"],
       },
-      details: [],
+      details: [
+        {
+          id: "proj.fraud-detection.d1",
+          kind: "project",
+          text: "Set a rule-based baseline that flagged the top one percent of transaction amounts; it recovered 2.8 percent of fraud, establishing that magnitude alone is not a signal.",
+          visibility: "public",
+          status: "confirmed",
+          metrics: [{ claim: "baseline recall 0.028", evidence: "Notebook classification report." }],
+          evidence: "Notebook cell output: baseline classification report.",
+          tags: ["machine-learning"],
+        },
+        {
+          id: "proj.fraud-detection.d2",
+          kind: "project",
+          text: "An Isolation Forest trained without labels reached 0.26 recall at 0.22 precision, average precision 0.11 — the signal available when fraud labels have not arrived yet.",
+          visibility: "public",
+          status: "confirmed",
+          metrics: [
+            { claim: "recall 0.261, precision 0.222, AP 0.108", evidence: "Notebook model comparison table." },
+          ],
+          evidence: "Notebook cell output: model comparison table.",
+          tags: ["machine-learning"],
+        },
+        {
+          id: "proj.fraud-detection.d3",
+          kind: "project",
+          text: "Class-weighted logistic regression reached 0.89 recall at 0.05 precision, average precision 0.69, trading a heavy false-positive load for missing few frauds.",
+          visibility: "public",
+          status: "confirmed",
+          metrics: [
+            { claim: "recall 0.887, precision 0.053, AP 0.688", evidence: "Notebook classification report." },
+          ],
+          evidence: "Notebook cell output: supervised logistic regression results.",
+          tags: ["machine-learning", "statistics"],
+        },
+        {
+          id: "proj.fraud-detection.d4",
+          kind: "project",
+          text: "A random forest reached 0.96 precision at 0.71 recall, F1 0.82, the strongest balance of the three models.",
+          visibility: "public",
+          status: "confirmed",
+          metrics: [
+            { claim: "precision 0.962, recall 0.711, F1 0.818", evidence: "Notebook classification report." },
+          ],
+          evidence: "Notebook cell output: random forest results.",
+          tags: ["machine-learning"],
+        },
+        {
+          id: "proj.fraud-detection.d5",
+          kind: "project",
+          text: "Selecting the decision threshold on the precision–recall curve rather than accepting 0.5 moved logistic regression to F1 0.81, and Platt calibration made its probabilities usable for cost-based decisions.",
+          visibility: "public",
+          status: "confirmed",
+          metrics: [
+            {
+              claim: "tuned F1 0.807 at precision 0.852 and recall 0.768; calibrated AP 0.689",
+              evidence: "Notebook cell outputs: threshold optimisation and calibration.",
+            },
+          ],
+          evidence: "Notebook cell outputs: threshold optimisation and model calibration.",
+          tags: ["machine-learning", "statistics"],
+        },
+        {
+          id: "proj.fraud-detection.d6",
+          kind: "project",
+          text: "Removed 1,081 duplicate transactions before splitting and stratified the split, so the 473 remaining fraud cases stayed represented in both halves.",
+          visibility: "public",
+          status: "confirmed",
+          evidence: "Notebook cell outputs: duplicate removal and class counts.",
+          tags: ["machine-learning", "data-engineering"],
+        },
+      ],
       links: [
         {
-          label: "GitHub: land-use-land-cover-mapping-south-Lebanon-2024",
-          url: "https://github.com/Ramikhatib615/land-use-land-cover-mapping-south-Lebanon-2024",
-          status: "needs_confirmation",
+          label: "Notebook: end-to-end fraud detection",
+          url: "https://github.com/Ramikhatib615/AAI614_Rami_ElKhatib/blob/main/End_to_End_Credit_Card_Fraud_Detection_Unsupervised_and_Supervised_Learning_on_Imbalanced_Data.ipynb",
+          status: "confirmed",
         },
       ],
     },
     {
-      id: "proj.fraud-detection",
-      name: "Credit card fraud detection on imbalanced data",
-      context: "AAI614 coursework, Lebanese American University",
-      year: "2025–2026",
-      tools: ["Python", "scikit-learn"],
+      id: "proj.lulc",
+      name: "Land cover and land use mapping, South Lebanon",
+      context: "UN-Habitat urban farming initiative",
+      year: "2024",
+      emphasis: "machine-learning",
+      tools: ["Landsat 8", "ArcGIS Pro", "Supervised classification"],
       headline: {
-        id: "proj.fraud-detection.headline",
+        id: "proj.lulc.headline",
         kind: "project",
-        text: "An end-to-end study combining unsupervised anomaly detection with supervised models on a heavily imbalanced dataset, including threshold optimisation and probability calibration.",
+        text: "A supervised classification of 2024 Landsat 8 imagery across the South Lebanon Governorate into eight land cover and land use classes.",
         visibility: "public",
-        status: "needs_confirmation",
-        note: "Found in the AAI614_Rami_ElKhatib repository, not in the CV. It is the only machine-learning modelling work currently in evidence, so it is worth showing — but confirm you want coursework on the site, and label it as coursework.",
+        status: "confirmed",
         evidence:
-          "https://github.com/Ramikhatib615/AAI614_Rami_ElKhatib — End_to_End_Credit_Card_Fraud_Detection_Unsupervised_and_Supervised_Learning_on_Imbalanced_Data.ipynb",
+          "https://github.com/Ramikhatib615/land-use-land-cover-mapping-south-Lebanon-2024 — methodology document, classified outputs, and area analysis",
+        tags: ["remote-sensing", "machine-learning", "gis"],
       },
-      details: [],
-      links: [],
+      details: [
+        {
+          id: "proj.lulc.d1",
+          kind: "project",
+          text: "Classified urban areas, agricultural units, field crops, permanent crops, artificial vegetation, wooded land, bare soil, and water bodies from training samples drawn on clipped imagery.",
+          visibility: "public",
+          status: "confirmed",
+          evidence: "Repository methodology document and classified outputs.",
+          tags: ["remote-sensing", "machine-learning"],
+        },
+        {
+          id: "proj.lulc.d2",
+          kind: "project",
+          text: "Converted the classified raster to vector and computed class areas, publishing the result as shapefiles, maps, and a tabulated area analysis.",
+          visibility: "public",
+          status: "confirmed",
+          evidence: "Repository outputs: shapefiles, Excel area analysis, PDF maps, KML.",
+          tags: ["remote-sensing", "gis"],
+        },
+      ],
+      links: [
+        {
+          label: "Repository: land-use-land-cover-mapping-south-Lebanon-2024",
+          url: "https://github.com/Ramikhatib615/land-use-land-cover-mapping-south-Lebanon-2024",
+          status: "confirmed",
+        },
+      ],
     },
   ],
 
@@ -729,6 +841,15 @@ export const profile: Profile = {
       text: "ETL design, database architecture, data validation and cleaning, and People365.",
       visibility: "public",
       status: "confirmed",
+    },
+    {
+      id: "skill.ml.imbalanced",
+      kind: "skill",
+      text: "Imbalanced classification: anomaly detection, class weighting, precision–recall analysis, threshold selection, and probability calibration.",
+      visibility: "public",
+      status: "confirmed",
+      evidence: "Demonstrated in proj.fraud-detection.",
+      tags: ["machine-learning"],
     },
     {
       id: "skill.ml",

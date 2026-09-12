@@ -54,12 +54,12 @@ not a bug — it is what stops an unverified claim reaching an admissions commit
 12. **Research outputs:** any preprints, UN reports (the PA Index Project Document is authored work
     — is it public and citable?), theses, or technical reports that can be listed.
     `ANSWER:`
-13. **NLP/LLM work to show.** Research priority #1 is LLMs/NLP and there is currently no NLP work in
-    evidence. This repo has two substantial ML notebooks (credit-card fraud detection with
-    unsupervised + supervised models on imbalanced data, threshold optimisation, calibration) —
-    they are real ML, but they are coursework and they are not NLP. Which repos, notebooks, or
-    course projects should be shown, and is there an NLP project worth building in the next two
-    months? See flag B6.
+13. **NLP/LLM work to show.** **Partly answered 12 Sep 2026:** Rami asked to lead with the machine
+    learning work, so two projects are now confirmed and lead both the site and the CV — the
+    fraud-detection study (written up from the notebook's own outputs) and the South Lebanon land
+    cover classification (from the public repository). **The NLP half is still open**: nothing in
+    the record is text work, and that is research priority #1. Is there any NLP project to show,
+    or should the next two months produce one? See flag B6.
     `ANSWER:`
 14. **Constraints:** countries to exclude, minimum stipend, family/visa constraints. These feed the
     region component of the fit rubric (10 points) and stop the finder wasting AI budget on places
@@ -71,6 +71,24 @@ not a bug — it is what stops an unverified claim reaching an admissions commit
 16. Auth: GitHub OAuth (recommended) or email magic link? `ANSWER:`
 17. Vercel plan: Hobby or Pro? `ANSWER:`
 18. Build the program finder or the professor finder first? `ANSWER:`
+
+---
+
+## Status of the machine-learning work (12 Sep 2026)
+
+Confirmed and now leading the site and the CV, both written only from evidence that exists:
+
+- **Fraud detection on imbalanced transaction data** — every number comes from a stored output in
+  `End_to_End_Credit_Card_Fraud_Detection_...ipynb`: 284,807 transactions at 0.17 percent fraud, a
+  rule baseline recovering 2.8 percent, Isolation Forest at 0.26 recall / 0.22 precision, a
+  class-weighted logistic regression at 0.89 recall, a random forest at 0.96 precision / 0.71
+  recall, threshold selection to F1 0.81, and Platt calibration. Labelled as coursework wherever it
+  appears.
+- **Land cover and land use mapping, South Lebanon** — supervised classification of 2024 Landsat 8
+  imagery into eight classes, from the methodology and outputs in the public repository.
+
+Not shown: `regression_ipynb.ipynb` and `github_activity.ipynb` are short course exercises, and
+`Anomaly_Detection_Fraud_Project.ipynb` is the earlier unsupervised-only draft of the same study.
 
 ---
 

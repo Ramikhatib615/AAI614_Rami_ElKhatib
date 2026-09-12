@@ -1,10 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { profile } from "@/data/profile";
+import { profile, type Profile } from "@/data/profile";
 import {
   publishableEducation,
   publishableExperience,
   publishableProjects,
+  publishableProjectsFrom,
   publishableContacts,
   withheldFromPublicSite,
 } from "@/lib/site";
@@ -33,13 +34,36 @@ describe("what the public site may show", () => {
     }
   });
 
-  it("withholds the coursework project until Rami decides to show it", () => {
-    const ids = publishableProjects().map((record) => record.id);
-    expect(ids).not.toContain("proj.fraud-detection");
+  it("leads with the machine-learning projects", () => {
+    const emphases = publishableProjects().map((record) => record.emphasis);
+    const lastMl = emphases.lastIndexOf("machine-learning");
+    const firstOther = emphases.findIndex((value) => value !== "machine-learning");
+    expect(lastMl).toBeGreaterThanOrEqual(0);
+    expect(firstOther).toBeGreaterThan(lastMl);
   });
 
-  it("withholds an unconfirmed project link", () => {
-    const lulc = publishableProjects().find((record) => record.id === "proj.lulc");
+  it("shows the confirmed machine-learning work with its evidence", () => {
+    const fraud = publishableProjects().find((record) => record.id === "proj.fraud-detection");
+    expect(fraud).toBeDefined();
+    expect(fraud?.headline.evidence).toContain("github.com");
+    // Every number it reports is backed by a notebook output, not asserted.
+    for (const detail of fraud?.details ?? []) {
+      for (const metric of detail.metrics ?? []) {
+        expect(metric.evidence, `${detail.id} states a number with no evidence`).not.toBeNull();
+      }
+    }
+  });
+
+  it("still withholds a project link that is not confirmed", () => {
+    const withUnconfirmedLink: Profile = {
+      ...profile,
+      projects: profile.projects.map((record) =>
+        record.id === "proj.lulc"
+          ? { ...record, links: [{ label: "draft", url: "https://example.com", status: "needs_confirmation" as const }] }
+          : record,
+      ),
+    };
+    const lulc = publishableProjectsFrom(withUnconfirmedLink).find((r) => r.id === "proj.lulc");
     expect(lulc?.links).toEqual([]);
   });
 

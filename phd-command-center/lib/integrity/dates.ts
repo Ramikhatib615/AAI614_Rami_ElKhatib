@@ -35,7 +35,12 @@ function overlapMonths(a: ExperienceRecord, b: ExperienceRecord, now: string): n
  * legitimately overlap — but only once at least one of them is marked part-time. An overlap
  * between roles that are both full-time, or either of which is `unknown`, is reported for Rami to
  * resolve; it is never silently corrected.
+ *
+ * A single shared month is not an overlap. CV dates have month granularity, so a job ending in
+ * October and the next starting in October is an ordinary handover; flagging it would raise a
+ * warning on almost every pair of consecutive roles and teach Rami to ignore the warnings.
  */
+const HANDOVER_MONTHS = 1;
 export function findEmploymentOverlaps(profile: Profile, now: string): OverlapWarning[] {
   const warnings: OverlapWarning[] = [];
   const records = profile.experience;
@@ -45,7 +50,7 @@ export function findEmploymentOverlaps(profile: Profile, now: string): OverlapWa
       const a = records[i];
       const b = records[j];
       const months = overlapMonths(a, b, now);
-      if (months <= 0) continue;
+      if (months <= HANDOVER_MONTHS) continue;
       if (a.employmentType === "part_time" || b.employmentType === "part_time") continue;
 
       const unknown = [a, b].filter((record) => record.employmentType === "unknown");

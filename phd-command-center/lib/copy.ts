@@ -35,8 +35,13 @@ export const siteCopy = {
   },
   projectsIntro: {
     id: "copy.projects.intro",
-    text: "Geospatial and public-sector data work, mostly with UN agencies in Lebanon.",
-    factIds: ["exp.unhabitat.headline", "exp.escwa.headline"],
+    text: "Machine learning on imbalanced and geospatial data first, then the public-sector data work behind it.",
+    factIds: [
+      "proj.fraud-detection.headline",
+      "proj.lulc.headline",
+      "exp.unhabitat.headline",
+      "exp.escwa.headline",
+    ],
   },
   cvNote: {
     id: "copy.cv.note",
@@ -54,6 +59,6 @@ export const allCopyEntries: CopyEntry[] = Object.values(siteCopy);
 export const interestEvidenceTags: Record<string, string[]> = {
   "interest.llm-nlp": [],
   "interest.geoai": ["remote-sensing", "gis", "surveying"],
-  "interest.applied-ml": ["python", "data-engineering", "bi", "statistics"],
+  "interest.applied-ml": ["machine-learning", "python", "data-engineering", "bi", "statistics"],
   "interest.ai-for-development": ["research", "index-design", "data-collection"],
 };

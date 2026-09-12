@@ -32,7 +32,6 @@ test.describe("public site", () => {
     "Contract Officer", // the AUB title, unconfirmed with HR
     "Western Union", // exp.omt, employment type unresolved
     "NavLeb", // exp.navleb, dates unresolved
-    "fraud", // proj.fraud-detection, coursework Rami has not chosen to show
     "@lau.edu", // no permanent address confirmed
     "ESRI", // certification names unconfirmed
   ];

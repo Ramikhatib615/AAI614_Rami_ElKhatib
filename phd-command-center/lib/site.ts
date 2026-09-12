@@ -3,6 +3,7 @@ import {
   type EducationRecord,
   type ExperienceRecord,
   type Fact,
+  type Profile,
   type ProjectRecord,
 } from "@/data/profile";
 import { isPublishable } from "@/lib/integrity/facts";
@@ -32,9 +33,20 @@ export function publishableEducation(): EducationRecord[] {
     .map((record) => ({ ...record, details: record.details.filter(isPublishable) }));
 }
 
+const EMPHASIS_ORDER: Record<ProjectRecord["emphasis"], number> = {
+  "machine-learning": 0,
+  geospatial: 1,
+  policy: 2,
+};
+
 export function publishableProjects(): ProjectRecord[] {
-  return profile.projects
+  return publishableProjectsFrom(profile);
+}
+
+export function publishableProjectsFrom(source: Profile): ProjectRecord[] {
+  return source.projects
     .filter((record) => isPublishable(record.headline))
+    .sort((a, b) => EMPHASIS_ORDER[a.emphasis] - EMPHASIS_ORDER[b.emphasis])
     .map((record) => ({
       ...record,
       details: record.details.filter(isPublishable),

@@ -79,16 +79,23 @@ records live only in the database.
 
 ## Status
 
-Phases 1–2 complete.
+Phases 1–3 complete.
 
 - **Phase 1, foundation**: app, tokens, schema and migrations, auth with allowlist, env validation,
   profile and seed data.
 - **Phase 2, public site**: six pages built only from public, confirmed facts; a contour hero that
   responds to the pointer; OG image, sitemap, robots, JSON-LD.
+- **Phase 3, CV engine**: the master academic CV as a checkable document model, a two-page PDF, the
+  integrity checker that blocks export, and a diff showing what the open confirmations cost.
 
-49 unit tests and 45 end-to-end tests pass. Lighthouse on every public page: performance 97–99,
+66 unit tests and 45 end-to-end tests pass. Lighthouse on every public page: performance 97–99,
 accessibility 100, best practices 100, SEO 100.
 
 **The site is currently withholding Rami's current AUB role, the positioning sentence, the
-certifications and any contact address**, because those facts are not confirmed. The dashboard lists
-each one with the question that would release it. See `../docs/plan/open-questions.md`.
+certifications and any contact address**, because those facts are not confirmed, and **the CV
+export is blocked** for the last of those: a CV with no way to reply to it is not exportable. The
+dashboard lists each item with the question that would release it. See
+`../docs/plan/open-questions.md`.
+
+PDFs are streamed from `/api/cv/export` today. Storing them in Vercel Blob lands with the tailored
+variants, which are the first thing that needs a stored file.
