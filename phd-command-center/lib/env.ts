@@ -34,6 +34,12 @@ const ServerEnvSchema = z.object({
   AI_MONTHLY_BUDGET_USD: z.coerce.number().positive().default(25),
 
   OPENALEX_MAILTO: z.email(),
+  /**
+   * Optional but strongly recommended: OpenAlex meters usage (free tier $1/day, about 1,000
+   * requests; a free key raises that 10x). Without one, discovery runs against the shared
+   * anonymous budget and will be rate limited.
+   */
+  OPENALEX_API_KEY: z.string().min(1).optional(),
   SEMANTIC_SCHOLAR_API_KEY: z.string().min(1).optional(),
 
   CRON_SECRET: z.string().min(16, "CRON_SECRET must be at least 16 characters"),

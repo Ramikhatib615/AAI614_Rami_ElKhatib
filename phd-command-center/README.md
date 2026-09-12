@@ -77,6 +77,14 @@ model with no price on file raises rather than being costed at zero.
 with the error, then marked `needs_review` — it never writes a guess. And no code path may call a
 mail-send endpoint: `tests/unit/no-send.test.ts` walks the source and fails if one appears.
 
+## OpenAlex
+
+OpenAlex is metered: about $0.001 per request, $1 of free usage per account per day, and a **free
+API key raises that tenfold**. Set `OPENALEX_API_KEY` before running discovery — without it, every
+search shares an anonymous budget that is usually already spent, and the job pauses with the retry
+time rather than failing. Each response reports `meta.cost_usd`, which discovery records in its
+result.
+
 ## Private data
 
 Sensitive values are never written to a file in git. A fact declares `valueFrom: "PROFILE_PHONE"`
@@ -85,7 +93,7 @@ records live only in the database.
 
 ## Status
 
-Phases 1–4 complete.
+Phases 1–4 and 6 complete (5 and 6 were swapped: outreach is the time-critical path).
 
 - **Phase 1, foundation**: app, tokens, schema and migrations, auth with allowlist, env validation,
   profile and seed data.
@@ -93,11 +101,13 @@ Phases 1–4 complete.
   responds to the pointer; OG image, sitemap, robots, JSON-LD.
 - **Phase 3, CV engine**: the master academic CV as a checkable document model, a two-page PDF, the
   integrity checker that blocks export, and a diff showing what the open confirmations cost.
+- **Phase 6, professor finder**: the OpenAlex client, the transparent fit rubric, and faculty-page
+  verification where an email survives only if it appears verbatim in its own supporting quote.
 - **Phase 4, AI core**: the Claude client, structured output with one retry, web search and fetch
   with `pause_turn` resumption and in-body error detection, priced usage logging against a hard
   monthly cap, and the Postgres job queue with its worker.
 
-97 unit tests and 51 end-to-end tests pass. Lighthouse on every public page: performance 97–99,
+119 unit tests and 51 end-to-end tests pass. Lighthouse on every public page: performance 97–99,
 accessibility 100, best practices 100, SEO 100.
 
 **The site is currently withholding Rami's current AUB role, the positioning sentence, the

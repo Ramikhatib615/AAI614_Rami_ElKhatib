@@ -7,6 +7,7 @@ import { aiClient, modelFor } from "@/lib/ai/client";
 import { callStructured } from "@/lib/ai/invoke";
 import { monthToDateSpendUsd, recordUsage } from "@/lib/ai/usage";
 import { serverEnv } from "@/lib/env";
+import { discoverProfessors, verifyProfessorPage } from "./professor";
 import type { JobHandlerRegistry } from "../types";
 
 const probeSchema = z.object({
@@ -59,4 +60,7 @@ export const handlers: JobHandlerRegistry = {
     }
     return { status: "done", result: { note: result.data.note, costUsd: result.costUsd } };
   },
+
+  "professor.discover": discoverProfessors,
+  "professor.verify_page": verifyProfessorPage,
 };

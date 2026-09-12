@@ -41,6 +41,11 @@ Deploy everything to **Vercel** from a GitHub repository.
 - **Do not scrape Google Scholar** or any site whose terms or robots.txt forbid it. Link to Scholar profiles only when they are listed on the professor's own page.
 - Respect rate limits, cache responses, set a descriptive User-Agent/contact email for OpenAlex's polite pool.
 
+> **Correction, 12 September 2026:** OpenAlex is metered now (~$0.001 per request, $1 of free usage
+> per account per day, a free API key raises it 10x, sent as an `api_key` query parameter). The
+> `mailto` polite pool is no longer part of the scheme. `OPENALEX_API_KEY` is therefore required in
+> practice; see `docs/plan/open-questions.md` flag B9.
+
 ### 1.4 Security and privacy
 - All `/dashboard/**` pages and all `/api/**` routes except public ones require authentication, restricted to Rami's email allowlist.
 - API keys live only in server environment variables. Nothing secret reaches the client bundle.

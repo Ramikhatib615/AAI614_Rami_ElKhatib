@@ -16,12 +16,18 @@ function isFrameworkSignal(error: unknown): boolean {
 
 describe("framework signal detection", () => {
   it("recognises a dynamic-usage bailout", () => {
-    const error = Object.assign(new Error("Dynamic server usage"), { digest: "DYNAMIC_SERVER_USAGE" });
+    const error = Object.assign(new Error("Dynamic server usage"), {
+      digest: "DYNAMIC_SERVER_USAGE",
+    });
     expect(isFrameworkSignal(error)).toBe(true);
   });
 
   it("recognises a redirect", () => {
-    expect(isFrameworkSignal(Object.assign(new Error("redirect"), { digest: "NEXT_REDIRECT;replace;/signin" }))).toBe(true);
+    expect(
+      isFrameworkSignal(
+        Object.assign(new Error("redirect"), { digest: "NEXT_REDIRECT;replace;/signin" }),
+      ),
+    ).toBe(true);
   });
 
   it("does not mistake an ordinary failure for one", () => {

@@ -156,6 +156,16 @@ ELLIS Institute Finland carries a live date (21 Sep 2026). IMPRS-IS cites Nov 20
 ELLIS central call cite 2025. They all ship as `unverified` and must be re-fetched before use — the
 refresh job does this, but no decision should be made on those dates as written.
 
+**B9 — OpenAlex is no longer free to query at volume.** Checked 12 September 2026: usage is metered
+at roughly $0.001 per request, every account gets **$1 of usage per day free** (about 1,000
+requests), and a **free API key raises that tenfold**. The key goes in an `api_key` query parameter;
+the old `mailto` polite-pool parameter is gone from the scheme, so the contact address now just
+identifies us in the User-Agent. The shared address this session runs from had no budget left, so
+the client was built and tested against the documented response shape rather than a live call.
+**Action: create a free OpenAlex key at openalex.org and set `OPENALEX_API_KEY`** before running
+discovery, or every search will pause on a rate limit. The brief's §1.3 and §10 assume the older
+free-for-all model.
+
 **B8 — ELLIS Institute Finland closes on 21 September 2026 — ten days from now.** Fully funded,
 salaried, four-year contracts, and it accepts a master's "expected soon" (his completes Feb 2027).
 It wants a ≤2-page cover letter, CV, BSc and MSc transcripts, a completion plan, and 2–3 senior
