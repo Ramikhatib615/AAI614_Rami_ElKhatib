@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { PersonJsonLd } from "@/components/public/person-jsonld";
+
 const nav = [
   { href: "/research", label: "Research" },
   { href: "/projects", label: "Projects" },
@@ -31,6 +33,8 @@ export default function PublicLayout({ children }: LayoutProps<"/">) {
       </header>
 
       <main className="mx-auto max-w-5xl px-5 py-10">{children}</main>
+
+      <PersonJsonLd />
 
       <footer className="mt-16 border-t border-contour/60">
         <div className="mx-auto max-w-5xl px-5 py-6 text-sm text-ink-soft">

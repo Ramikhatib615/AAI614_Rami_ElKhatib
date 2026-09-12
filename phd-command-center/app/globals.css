@@ -104,8 +104,8 @@
     border-radius: 0;
   }
 
-  .plate::before,
-  .plate::after {
+  .plate-ticks::before,
+  .plate-ticks::after {
     content: "";
     position: absolute;
     width: 8px;
@@ -115,13 +115,13 @@
     border-style: solid;
   }
 
-  .plate::before {
+  .plate-ticks::before {
     top: 5px;
     left: 5px;
     border-width: var(--hairline) 0 0 var(--hairline);
   }
 
-  .plate::after {
+  .plate-ticks::after {
     bottom: 5px;
     right: 5px;
     border-width: 0 var(--hairline) var(--hairline) 0;
@@ -169,11 +169,85 @@
   }
 }
 
+@layer components {
+  /*
+   * The single orchestrated load moment (design-system.md "Motion"): the neatline draws in, the
+   * graticule ticks appear, the contour field rises (in the canvas), then the name arrives.
+   * Nothing else on any page animates on scroll.
+   */
+  .hero-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: var(--hairline) solid color-mix(in srgb, var(--contour) 75%, transparent);
+    pointer-events: none;
+    animation: neatline 420ms ease-out both;
+  }
+
+  .hero-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 7px;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to right,
+      color-mix(in srgb, var(--contour) 75%, transparent) 0 1px,
+      transparent 1px 36px
+    );
+    animation: ticks 360ms 220ms ease-out both;
+  }
+
+  .hero-rise {
+    animation: rise 420ms ease-out both;
+    animation-delay: 900ms;
+  }
+
+  .hero-rise:nth-of-type(2) {
+    animation-delay: 980ms;
+  }
+
+  .hero-rise:nth-of-type(3) {
+    animation-delay: 1040ms;
+  }
+}
+
+@keyframes neatline {
+  from {
+    clip-path: inset(0 100% 100% 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+
+@keyframes ticks {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    /* Delays must go too, or a deferred entrance animation leaves content invisible. */
+    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;

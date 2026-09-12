@@ -38,16 +38,16 @@ matches.
 
 ## Commands
 
-| Command | Purpose |
-|---|---|
-| `pnpm dev` | Dev server |
-| `pnpm verify` | The gate: typecheck, lint, unit tests, production build |
-| `pnpm test` | Vitest unit tests |
-| `pnpm test:e2e` | Playwright, at 390px and 1440px |
-| `pnpm db:generate` | Generate a migration from a schema change |
-| `pnpm db:migrate` | Apply migrations (never drops; `drizzle-kit push` is deliberately unwired) |
-| `pnpm db:seed` | Seed programs idempotently, without resetting anything Rami has verified |
-| `pnpm format` | Prettier |
+| Command            | Purpose                                                                    |
+| ------------------ | -------------------------------------------------------------------------- |
+| `pnpm dev`         | Dev server                                                                 |
+| `pnpm verify`      | The gate: typecheck, lint, unit tests, production build                    |
+| `pnpm test`        | Vitest unit tests                                                          |
+| `pnpm test:e2e`    | Playwright, at 390px and 1440px                                            |
+| `pnpm db:generate` | Generate a migration from a schema change                                  |
+| `pnpm db:migrate`  | Apply migrations (never drops; `drizzle-kit push` is deliberately unwired) |
+| `pnpm db:seed`     | Seed programs idempotently, without resetting anything Rami has verified   |
+| `pnpm format`      | Prettier                                                                   |
 
 ## Architecture
 
@@ -79,6 +79,16 @@ records live only in the database.
 
 ## Status
 
-Phase 1 (foundation) complete: app, tokens, schema and migrations, auth with allowlist, env
-validation, profile and seed data, 36 unit tests, 16 end-to-end tests. See `../docs/plan/` for the
-phase plan and the open questions.
+Phases 1–2 complete.
+
+- **Phase 1, foundation**: app, tokens, schema and migrations, auth with allowlist, env validation,
+  profile and seed data.
+- **Phase 2, public site**: six pages built only from public, confirmed facts; a contour hero that
+  responds to the pointer; OG image, sitemap, robots, JSON-LD.
+
+49 unit tests and 45 end-to-end tests pass. Lighthouse on every public page: performance 97–99,
+accessibility 100, best practices 100, SEO 100.
+
+**The site is currently withholding Rami's current AUB role, the positioning sentence, the
+certifications and any contact address**, because those facts are not confirmed. The dashboard lists
+each one with the question that would release it. See `../docs/plan/open-questions.md`.

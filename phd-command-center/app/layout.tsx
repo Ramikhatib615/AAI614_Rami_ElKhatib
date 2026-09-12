@@ -23,7 +23,10 @@ const plexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
+import { siteConfig } from "@/lib/site";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: "Rami El Khatib",
     template: "%s — Rami El Khatib",

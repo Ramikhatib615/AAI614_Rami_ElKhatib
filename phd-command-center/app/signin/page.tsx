@@ -15,7 +15,7 @@ export default function SignInPage() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-center px-5">
-      <div className="plate p-8">
+      <div className="plate plate-ticks p-8">
         <h1 className="font-display text-2xl">Command center</h1>
         <p className="measure mt-3 text-sm text-ink-soft">
           Private. Sign in with the GitHub account whose email is on the allowlist.
