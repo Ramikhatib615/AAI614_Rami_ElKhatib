@@ -15,6 +15,7 @@ const nav = [
   { href: "/dashboard/programs", label: "Programs" },
   { href: "/dashboard/cv", label: "CV" },
   { href: "/dashboard/applications", label: "Applications" },
+  { href: "/dashboard/jobs", label: "Queue" },
 ];
 
 export default async function DashboardLayout({ children }: LayoutProps<"/dashboard">) {

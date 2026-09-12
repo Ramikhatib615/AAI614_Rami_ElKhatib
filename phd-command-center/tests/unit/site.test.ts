@@ -59,7 +59,16 @@ describe("what the public site may show", () => {
       ...profile,
       projects: profile.projects.map((record) =>
         record.id === "proj.lulc"
-          ? { ...record, links: [{ label: "draft", url: "https://example.com", status: "needs_confirmation" as const }] }
+          ? {
+              ...record,
+              links: [
+                {
+                  label: "draft",
+                  url: "https://example.com",
+                  status: "needs_confirmation" as const,
+                },
+              ],
+            }
           : record,
       ),
     };

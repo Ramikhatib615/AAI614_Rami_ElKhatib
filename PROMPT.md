@@ -172,6 +172,20 @@ Create `data/profile.ts` exporting a typed profile where **every fact has a stab
 - Use prompt caching for the long static system prompt and profile.
 - Log tokens and estimated cost per job to the `ai_usage` table; enforce `AI_MONTHLY_BUDGET_USD`.
 
+> **Correction, 12 September 2026** (checked against platform.claude.com, not memory — the brief's
+> strings above are stale and are kept only for the record):
+> - Web search and fetch: the current dynamic-filtering versions are **`web_search_20260209`** and
+>   **`web_fetch_20260209`** on Opus 5 and Sonnet 5. There is no `web_search_20260318`;
+>   `web_search_20250305` is the older basic variant for pre-4.6 models.
+> - The fast model id is **`claude-haiku-4-5`**, with no date suffix.
+> - Extended thinking uses `thinking: {type: "adaptive"}` with `output_config.effort`;
+>   `budget_tokens` is rejected with a 400 on Opus 5 and Sonnet 5.
+> - Structured output goes through `client.messages.parse()` with `zodOutputFormat(schema)` and
+>   `output_config.format`; the older `output_format` parameter is deprecated.
+> - Prices per million tokens: Opus 5 $5 in / $25 out, Sonnet 5 $2 / $10, Haiku 4.5 $1 / $5;
+>   5-minute cache writes 1.25x input, cache reads 0.1x. Web search is $10 per 1,000 searches and
+>   an errored search is not billed; web fetch adds no charge beyond tokens.
+
 ### 3.2 Long-running work on Vercel
 - Never run a whole "search the world" task in one request. Break it into small jobs (one region, one university, or one professor per step), persist job state in Postgres, and process steps through a cron-triggered worker route and/or user-triggered calls.
 - Check current Vercel function duration limits for the plan and set `maxDuration` accordingly.

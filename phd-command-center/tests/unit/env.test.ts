@@ -17,7 +17,7 @@ describe("parseServerEnv", () => {
     const env = parseServerEnv(valid);
     expect(env.ANTHROPIC_MODEL_RESEARCH).toBe("claude-sonnet-5");
     expect(env.ANTHROPIC_MODEL_WRITING).toBe("claude-opus-5");
-    expect(env.ANTHROPIC_MODEL_FAST).toBe("claude-haiku-4-5-20251001");
+    expect(env.ANTHROPIC_MODEL_FAST).toBe("claude-haiku-4-5");
     expect(env.AI_MONTHLY_BUDGET_USD).toBe(25);
     expect(env.NEXT_PUBLIC_SITE_URL).toBe("http://localhost:3000");
   });

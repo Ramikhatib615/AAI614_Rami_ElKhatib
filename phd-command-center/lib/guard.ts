@@ -10,15 +10,37 @@ export interface Viewer {
   email: string;
 }
 
+function isFrameworkSignal(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "digest" in error &&
+    typeof (error as { digest?: unknown }).digest === "string"
+  );
+}
+
 /**
  * The data access layer check (Next.js authentication guide): every dashboard page and every
  * private route handler calls this, close to the data, rather than trusting the proxy redirect.
  */
 export async function currentViewer(): Promise<Viewer | null> {
-  const session = await auth();
-  const email = session?.user?.email ?? null;
-  if (!isAllowedEmail(email, serverEnv().AUTH_ALLOWED_EMAILS)) return null;
-  return { email: email as string };
+  try {
+    const session = await auth();
+    const email = session?.user?.email ?? null;
+    if (!isAllowedEmail(email, serverEnv().AUTH_ALLOWED_EMAILS)) return null;
+    return { email: email as string };
+  } catch (error: unknown) {
+    // Next.js signals control flow with thrown errors carrying a `digest` — bailing out of static
+    // rendering, redirects, not-found. Swallowing those would break rendering and could let a
+    // private page be prerendered, so they are re-thrown untouched.
+    if (isFrameworkSignal(error)) throw error;
+
+    // A genuine failure to resolve the session or the environment means no viewer is established.
+    // Answering "not authorised" is both truthful and safe: throwing would return a 500 carrying
+    // configuration detail to an anonymous caller. The cause is still logged.
+    console.error("Could not establish a viewer:", error);
+    return null;
+  }
 }
 
 /** For pages: redirects to sign-in when there is no allowed viewer. */

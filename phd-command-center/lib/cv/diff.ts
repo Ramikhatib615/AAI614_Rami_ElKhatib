@@ -46,7 +46,8 @@ function collect(document: CvDocument, heading: string): Map<string, string> {
   const section = document.sections.find((candidate) => candidate.heading === heading);
   const map = new Map<string, string>();
   for (const entry of section?.entries ?? []) {
-    if (entry.heading.trim()) map.set(entry.id, `${entry.heading}${entry.meta ? ` — ${entry.meta}` : ""}`);
+    if (entry.heading.trim())
+      map.set(entry.id, `${entry.heading}${entry.meta ? ` — ${entry.meta}` : ""}`);
     for (const line of entry.lines) map.set(line.id, line.text);
   }
   return map;

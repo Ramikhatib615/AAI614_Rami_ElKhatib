@@ -691,7 +691,9 @@ export const profile: Profile = {
           text: "Set a rule-based baseline that flagged the top one percent of transaction amounts; it recovered 2.8 percent of fraud, establishing that magnitude alone is not a signal.",
           visibility: "public",
           status: "confirmed",
-          metrics: [{ claim: "baseline recall 0.028", evidence: "Notebook classification report." }],
+          metrics: [
+            { claim: "baseline recall 0.028", evidence: "Notebook classification report." },
+          ],
           evidence: "Notebook cell output: baseline classification report.",
           tags: ["machine-learning"],
         },
@@ -702,7 +704,10 @@ export const profile: Profile = {
           visibility: "public",
           status: "confirmed",
           metrics: [
-            { claim: "recall 0.261, precision 0.222, AP 0.108", evidence: "Notebook model comparison table." },
+            {
+              claim: "recall 0.261, precision 0.222, AP 0.108",
+              evidence: "Notebook model comparison table.",
+            },
           ],
           evidence: "Notebook cell output: model comparison table.",
           tags: ["machine-learning"],
@@ -714,7 +719,10 @@ export const profile: Profile = {
           visibility: "public",
           status: "confirmed",
           metrics: [
-            { claim: "recall 0.887, precision 0.053, AP 0.688", evidence: "Notebook classification report." },
+            {
+              claim: "recall 0.887, precision 0.053, AP 0.688",
+              evidence: "Notebook classification report.",
+            },
           ],
           evidence: "Notebook cell output: supervised logistic regression results.",
           tags: ["machine-learning", "statistics"],
@@ -726,7 +734,10 @@ export const profile: Profile = {
           visibility: "public",
           status: "confirmed",
           metrics: [
-            { claim: "precision 0.962, recall 0.711, F1 0.818", evidence: "Notebook classification report." },
+            {
+              claim: "precision 0.962, recall 0.711, F1 0.818",
+              evidence: "Notebook classification report.",
+            },
           ],
           evidence: "Notebook cell output: random forest results.",
           tags: ["machine-learning"],

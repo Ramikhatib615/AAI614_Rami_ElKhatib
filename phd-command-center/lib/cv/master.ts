@@ -30,7 +30,9 @@ function admits(fact: Fact, options: MasterCvOptions): boolean {
 
 function monthLabel(value: string): string {
   const [year, month] = value.split("-");
-  const name = new Date(Number(year), Number(month) - 1, 1).toLocaleString("en", { month: "short" });
+  const name = new Date(Number(year), Number(month) - 1, 1).toLocaleString("en", {
+    month: "short",
+  });
   return `${name} ${year}`;
 }
 
@@ -144,7 +146,9 @@ export function buildMasterCv(
   }
   const location = source.identity.find((fact) => fact.id === "identity.location");
   if (location && admits(location, options)) {
-    contact.push(factLine(location, `${location.text.replace(/^Based in /, "").replace(/\.$/, "")}`));
+    contact.push(
+      factLine(location, `${location.text.replace(/^Based in /, "").replace(/\.$/, "")}`),
+    );
   }
 
   const education = source.education.filter((record) => admits(record.headline, options));
@@ -196,7 +200,9 @@ export function buildMasterCv(
         }));
 
   return {
-    label: options.includeUnconfirmed ? "Master CV, if everything were confirmed" : "Master academic CV",
+    label: options.includeUnconfirmed
+      ? "Master CV, if everything were confirmed"
+      : "Master academic CV",
     contact,
     sections,
     omissions,

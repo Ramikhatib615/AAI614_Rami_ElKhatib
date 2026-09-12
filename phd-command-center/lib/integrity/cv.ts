@@ -98,7 +98,11 @@ export function checkCvDocument(
 
   // A CV nobody can reply to is not a CV. This is what currently blocks the master export: no
   // permanent email address has been confirmed.
-  if (document.contact.filter((line) => line.factIds.some((id) => byId.get(id)?.tags?.includes("contact"))).length === 0) {
+  if (
+    document.contact.filter((line) =>
+      line.factIds.some((id) => byId.get(id)?.tags?.includes("contact")),
+    ).length === 0
+  ) {
     errors.push({
       code: "no_contact",
       message:

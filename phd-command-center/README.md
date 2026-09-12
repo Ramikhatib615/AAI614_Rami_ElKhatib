@@ -69,7 +69,13 @@ Vercel's Hobby plan cron fires only once a day, so the primary path is the dashb
 button, which drains the queue for up to ~240s while the UI polls; cron handles maintenance.
 
 **Cost control**: every AI step checks month-to-date spend in `ai_usage` against
-`AI_MONTHLY_BUDGET_USD` before calling the model, and pauses the job instead of overspending.
+`AI_MONTHLY_BUDGET_USD` before calling the model, and pauses the job instead of overspending. Prices
+live in one table (`lib/ai/pricing.ts`), taken from the published rates on 12 September 2026; a
+model with no price on file raises rather than being costed at zero.
+
+**Two AI rules the code enforces.** A structured call that fails schema validation is retried once
+with the error, then marked `needs_review` — it never writes a guess. And no code path may call a
+mail-send endpoint: `tests/unit/no-send.test.ts` walks the source and fails if one appears.
 
 ## Private data
 
@@ -79,7 +85,7 @@ records live only in the database.
 
 ## Status
 
-Phases 1–3 complete.
+Phases 1–4 complete.
 
 - **Phase 1, foundation**: app, tokens, schema and migrations, auth with allowlist, env validation,
   profile and seed data.
@@ -87,8 +93,11 @@ Phases 1–3 complete.
   responds to the pointer; OG image, sitemap, robots, JSON-LD.
 - **Phase 3, CV engine**: the master academic CV as a checkable document model, a two-page PDF, the
   integrity checker that blocks export, and a diff showing what the open confirmations cost.
+- **Phase 4, AI core**: the Claude client, structured output with one retry, web search and fetch
+  with `pause_turn` resumption and in-body error detection, priced usage logging against a hard
+  monthly cap, and the Postgres job queue with its worker.
 
-66 unit tests and 45 end-to-end tests pass. Lighthouse on every public page: performance 97–99,
+97 unit tests and 51 end-to-end tests pass. Lighthouse on every public page: performance 97–99,
 accessibility 100, best practices 100, SEO 100.
 
 **The site is currently withholding Rami's current AUB role, the positioning sentence, the

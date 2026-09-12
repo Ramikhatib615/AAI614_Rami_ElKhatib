@@ -30,7 +30,7 @@ const ServerEnvSchema = z.object({
   ANTHROPIC_API_KEY: z.string().min(1).optional(),
   ANTHROPIC_MODEL_RESEARCH: z.string().min(1).default("claude-sonnet-5"),
   ANTHROPIC_MODEL_WRITING: z.string().min(1).default("claude-opus-5"),
-  ANTHROPIC_MODEL_FAST: z.string().min(1).default("claude-haiku-4-5-20251001"),
+  ANTHROPIC_MODEL_FAST: z.string().min(1).default("claude-haiku-4-5"),
   AI_MONTHLY_BUDGET_USD: z.coerce.number().positive().default(25),
 
   OPENALEX_MAILTO: z.email(),

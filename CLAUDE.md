@@ -74,7 +74,13 @@ each phase and wait for Rami's approval before starting the next one.
   `docs/plan/design-system.md` — including the list of generic patterns that are banned here.
 - Long AI work is split into small jobs; a single request never does a whole sweep.
 - Before writing AI code, check the current Claude docs for model IDs and tool version strings
-  (`https://platform.claude.com/docs`) instead of relying on memory.
+  (`https://platform.claude.com/docs`) instead of relying on memory. Verified 12 Sep 2026 and now
+  in code: `web_search_20260209` / `web_fetch_20260209`, model ids `claude-opus-5`,
+  `claude-sonnet-5`, `claude-haiku-4-5` (no date suffix), `thinking: {type: "adaptive"}` with
+  `output_config.effort`, structured output through `messages.parse()` + `zodOutputFormat`. See the
+  correction block in `PROMPT.md` §3.1 and the price table in `lib/ai/pricing.ts`.
+- Never catch an error without re-throwing Next.js control-flow signals (anything with a string
+  `digest`) — swallowing one breaks rendering and can let a private page be prerendered.
 
 ## Git
 

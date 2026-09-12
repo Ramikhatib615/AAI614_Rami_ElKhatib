@@ -29,7 +29,10 @@ export default function DashboardCvPage() {
           </p>
         </div>
         {report.exportable ? (
-          <a href="/api/cv/export" className="plate plate-raised bg-ground px-4 py-2 text-sm font-medium">
+          <a
+            href="/api/cv/export"
+            className="plate plate-raised bg-ground px-4 py-2 text-sm font-medium"
+          >
             Download PDF
           </a>
         ) : (
@@ -44,7 +47,10 @@ export default function DashboardCvPage() {
           <h2 className="font-display text-lg">What blocks the export</h2>
           <ul className="mt-3 space-y-2 text-sm">
             {report.errors.map((issue) => (
-              <li key={`${issue.code}-${issue.lineId ?? issue.factId ?? issue.message}`} className="measure">
+              <li
+                key={`${issue.code}-${issue.lineId ?? issue.factId ?? issue.message}`}
+                className="measure"
+              >
                 <span aria-hidden className="status-warn">
                   !
                 </span>{" "}
@@ -124,7 +130,10 @@ export default function DashboardCvPage() {
                   .filter((line) => line.change !== "unchanged")
                   .map((line) => (
                     <li key={line.id} className="measure flex gap-2">
-                      <span aria-hidden className={line.change === "added" ? "status-unverified" : "status-warn"}>
+                      <span
+                        aria-hidden
+                        className={line.change === "added" ? "status-unverified" : "status-warn"}
+                      >
                         {line.change === "added" ? "+" : "−"}
                       </span>
                       <span>{line.text}</span>

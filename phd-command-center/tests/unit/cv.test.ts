@@ -58,7 +58,10 @@ describe("the master CV", () => {
     expect(withoutPrivate.some((line) => line.factIds.includes("identity.phone"))).toBe(false);
 
     const withPrivate = documentLines(
-      buildMasterCv(profile, { includePrivate: true, privateValues: { PROFILE_PHONE: "+961 00 000 000" } }),
+      buildMasterCv(profile, {
+        includePrivate: true,
+        privateValues: { PROFILE_PHONE: "+961 00 000 000" },
+      }),
     );
     expect(withPrivate.some((line) => line.factIds.includes("identity.phone"))).toBe(true);
   });
@@ -76,7 +79,14 @@ describe("the integrity checker blocks export", () => {
       {
         id: "test",
         heading: "Test",
-        entries: [{ id: "test.entry", heading: "Entry", factIds: ["edu.msc.lau.headline"], lines: [{ id: "test.line", text, factIds }] }],
+        entries: [
+          {
+            id: "test.entry",
+            heading: "Entry",
+            factIds: ["edu.msc.lau.headline"],
+            lines: [{ id: "test.line", text, factIds }],
+          },
+        ],
       },
     ],
   });
@@ -126,7 +136,10 @@ describe("the integrity checker blocks export", () => {
               ...record,
               headline: { ...record.headline, status: "confirmed" as const },
               employmentType: "part_time" as const,
-              bullets: record.bullets.map((bullet) => ({ ...bullet, status: "confirmed" as const })),
+              bullets: record.bullets.map((bullet) => ({
+                ...bullet,
+                status: "confirmed" as const,
+              })),
             }
           : record,
       ),
@@ -166,6 +179,8 @@ describe("the PDF", () => {
 
   it("names files the way applications expect", () => {
     expect(cvFileName()).toBe("ElKhatib_Rami_CV_Master.pdf");
-    expect(cvFileName("ELLIS Institute Finland")).toBe("ElKhatib_Rami_CV_ELLIS-Institute-Finland.pdf");
+    expect(cvFileName("ELLIS Institute Finland")).toBe(
+      "ElKhatib_Rami_CV_ELLIS-Institute-Finland.pdf",
+    );
   });
 });
