@@ -9,6 +9,7 @@ import { monthToDateSpendUsd, recordUsage } from "@/lib/ai/usage";
 import { serverEnv } from "@/lib/env";
 import { draftOutreach } from "./outreach";
 import { discoverPrograms, extractProgram, refreshProgram } from "./program";
+import { draftStatement } from "./statement";
 import { discoverProfessors, verifyProfessorPage } from "./professor";
 import type { JobHandlerRegistry } from "../types";
 
@@ -69,4 +70,5 @@ export const handlers: JobHandlerRegistry = {
   "program.discover": discoverPrograms,
   "program.extract": extractProgram,
   "program.refresh": refreshProgram,
+  "statement.draft": draftStatement,
 };

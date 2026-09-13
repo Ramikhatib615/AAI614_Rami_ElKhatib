@@ -14,6 +14,7 @@ const nav = [
   { href: "/dashboard/outreach", label: "Outreach" },
   { href: "/dashboard/programs", label: "Programs" },
   { href: "/dashboard/cv", label: "CV" },
+  { href: "/dashboard/statements", label: "Statements" },
   { href: "/dashboard/applications", label: "Applications" },
   { href: "/dashboard/jobs", label: "Queue" },
 ];
