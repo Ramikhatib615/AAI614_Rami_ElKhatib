@@ -8,6 +8,7 @@ import { callStructured } from "@/lib/ai/invoke";
 import { monthToDateSpendUsd, recordUsage } from "@/lib/ai/usage";
 import { serverEnv } from "@/lib/env";
 import { draftOutreach } from "./outreach";
+import { discoverPrograms, extractProgram, refreshProgram } from "./program";
 import { discoverProfessors, verifyProfessorPage } from "./professor";
 import type { JobHandlerRegistry } from "../types";
 
@@ -65,4 +66,7 @@ export const handlers: JobHandlerRegistry = {
   "professor.discover": discoverProfessors,
   "professor.verify_page": verifyProfessorPage,
   "outreach.draft": draftOutreach,
+  "program.discover": discoverPrograms,
+  "program.extract": extractProgram,
+  "program.refresh": refreshProgram,
 };
