@@ -95,7 +95,7 @@ records live only in the database.
 
 ## Status
 
-Phases 1–4, 6 and 7 complete (5 and 6 were swapped: outreach is the time-critical path).
+All ten phases built. Phase 10 is deploy-_ready_: the deploy itself needs Rami's accounts — see `SETUP.md`.
 
 - **Phase 1, foundation**: app, tokens, schema and migrations, auth with allowlist, env validation,
   profile and seed data.
@@ -103,6 +103,13 @@ Phases 1–4, 6 and 7 complete (5 and 6 were swapped: outreach is the time-criti
   responds to the pointer; OG image, sitemap, robots, JSON-LD.
 - **Phase 3, CV engine**: the master academic CV as a checkable document model, a two-page PDF, the
   integrity checker that blocks export, and a diff showing what the open confirmations cost.
+- **Phase 5, program finder**: extraction with per-field evidence, a shown rubric, refresh with a
+  diff, and CSV and calendar exports that carry each deadline's verification status.
+- **Phase 8, statements and tracker**: statements under enforced word limits, checklists generated
+  from what a program actually asks for, and a Kanban that only ever tracks.
+- **Phase 9, hardening**: security headers, rate limits on the endpoints that spend, error
+  boundaries, and a full JSON backup.
+- **Phase 10, deploy**: CI running the gate on every push, `pnpm preflight`, and `SETUP.md`.
 - **Phase 7, outreach**: drafts checked against the profile and the professor's verified papers,
   near-duplicate detection between letters, and a workflow that ends at copy and a mailto link.
 - **Phase 6, professor finder**: the OpenAlex client, the transparent fit rubric, and faculty-page
@@ -111,7 +118,7 @@ Phases 1–4, 6 and 7 complete (5 and 6 were swapped: outreach is the time-criti
   with `pause_turn` resumption and in-body error detection, priced usage logging against a hard
   monthly cap, and the Postgres job queue with its worker.
 
-139 unit tests and 51 end-to-end tests pass. Lighthouse on every public page: performance 97–99,
+182 unit tests and 59 end-to-end tests pass. `pnpm report` writes the standing status report to `../docs/plan/status-report.md`. Lighthouse on every public page: performance 97–99,
 accessibility 100, best practices 100, SEO 100.
 
 **The site is currently withholding Rami's current AUB role, the positioning sentence, the

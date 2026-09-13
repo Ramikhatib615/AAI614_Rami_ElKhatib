@@ -73,6 +73,20 @@ describe("profile facts", () => {
     expect(offenders).toEqual([]);
   });
 
+  it("never leaves a confirmation blocking a fact that is already confirmed", () => {
+    // A stale entry here shows a resolved question as still open, which is how the dashboard
+    // quietly lies. Caught once in review; this keeps it caught.
+    const byId = new Map(allFacts().map((fact) => [fact.id, fact]));
+    for (const item of profile.openConfirmations) {
+      for (const blocked of item.blocks) {
+        expect(
+          byId.get(blocked)?.status,
+          `${item.id} still blocks ${blocked}, which is already confirmed`,
+        ).toBe("needs_confirmation");
+      }
+    }
+  });
+
   it("points every open confirmation at real fact ids", () => {
     const ids = new Set(allFacts().map((fact) => fact.id));
     for (const item of profile.openConfirmations) {

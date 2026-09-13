@@ -109,7 +109,11 @@ export interface ProjectRecord {
 export interface OpenConfirmation {
   id: string;
   question: string;
-  /** What stays blocked until it is answered. */
+  /**
+   * Facts that cannot ship until this is answered — every id here must be `needs_confirmation`,
+   * and a test enforces it. A question that would *add* a fact rather than release one lists
+   * nothing, or the dashboard shows a resolved item as still open.
+   */
   blocks: string[];
 }
 
@@ -1039,14 +1043,15 @@ export const profile: Profile = {
     {
       id: "confirm.research-outputs",
       question:
-        "Are there preprints, UN reports, or theses that can be listed as research outputs?",
-      blocks: ["exp.escwa.b2"],
+        "Are there preprints, UN reports, or theses that can be listed as research outputs? The ESCWA project document (exp.escwa.b2) is the likeliest candidate — is it public and citable?",
+      // Nothing is blocked: answering this adds a research output, it does not release a held fact.
+      blocks: [],
     },
     {
       id: "confirm.nlp-projects",
       question:
-        "Which NLP or ML projects should be shown, and is the AAI614 fraud-detection work one of them?",
-      blocks: ["proj.fraud-detection.headline"],
+        "The machine-learning projects are confirmed and now lead the site and the CV. NLP is still the gap: is there any text work to show, or should the next two months produce one NLP artefact?",
+      blocks: [],
     },
     {
       id: "confirm.constraints",

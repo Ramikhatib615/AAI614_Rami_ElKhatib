@@ -1,4 +1,5 @@
 import { requireViewerApi } from "@/lib/guard";
+import { drainLimiter, rateLimitResponse } from "@/lib/rate-limit";
 import { handlers } from "@/lib/jobs/handlers";
 import { drainQueue } from "@/lib/jobs/worker";
 
@@ -11,6 +12,9 @@ export const maxDuration = 300;
 export async function POST(): Promise<Response> {
   const guard = await requireViewerApi();
   if ("response" in guard) return guard.response;
+
+  const limit = drainLimiter.check(guard.viewer.email);
+  if (!limit.ok) return rateLimitResponse(limit);
 
   const summary = await drainQueue(handlers);
   return Response.json(summary, { headers: { "X-Robots-Tag": "noindex, nofollow" } });
