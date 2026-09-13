@@ -23,6 +23,8 @@ The brief is `../PROMPT.md`; the rules every session follows are `../CLAUDE.md`;
 
 ## Setup
 
+`SETUP.md` is the full runbook, about 40 minutes. In short:
+
 ```bash
 pnpm install
 cp .env.example .env.local     # then fill it in
@@ -93,7 +95,7 @@ records live only in the database.
 
 ## Status
 
-Phases 1–4 and 6 complete (5 and 6 were swapped: outreach is the time-critical path).
+Phases 1–4, 6 and 7 complete (5 and 6 were swapped: outreach is the time-critical path).
 
 - **Phase 1, foundation**: app, tokens, schema and migrations, auth with allowlist, env validation,
   profile and seed data.
@@ -101,13 +103,15 @@ Phases 1–4 and 6 complete (5 and 6 were swapped: outreach is the time-critical
   responds to the pointer; OG image, sitemap, robots, JSON-LD.
 - **Phase 3, CV engine**: the master academic CV as a checkable document model, a two-page PDF, the
   integrity checker that blocks export, and a diff showing what the open confirmations cost.
+- **Phase 7, outreach**: drafts checked against the profile and the professor's verified papers,
+  near-duplicate detection between letters, and a workflow that ends at copy and a mailto link.
 - **Phase 6, professor finder**: the OpenAlex client, the transparent fit rubric, and faculty-page
   verification where an email survives only if it appears verbatim in its own supporting quote.
 - **Phase 4, AI core**: the Claude client, structured output with one retry, web search and fetch
   with `pause_turn` resumption and in-body error detection, priced usage logging against a hard
   monthly cap, and the Postgres job queue with its worker.
 
-119 unit tests and 51 end-to-end tests pass. Lighthouse on every public page: performance 97–99,
+139 unit tests and 51 end-to-end tests pass. Lighthouse on every public page: performance 97–99,
 accessibility 100, best practices 100, SEO 100.
 
 **The site is currently withholding Rami's current AUB role, the positioning sentence, the

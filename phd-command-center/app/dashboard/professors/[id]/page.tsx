@@ -1,7 +1,24 @@
 import { notFound } from "next/navigation";
+import { revalidatePath } from "next/cache";
+import Link from "next/link";
 
+import { requireViewer } from "@/lib/guard";
+import { enqueue } from "@/lib/jobs/queue";
+import { draftsForProfessor } from "@/lib/outreach/store";
 import type { FitComponent } from "@/lib/scoring/professor-fit";
 import { getProfessor } from "@/lib/professors/store";
+
+async function queueDraft(formData: FormData) {
+  "use server";
+  await requireViewer();
+  const professorId = String(formData.get("professorId"));
+  await enqueue({
+    type: "outreach.draft",
+    payload: { professorId },
+    dedupeKey: `outreach.draft:${professorId}`,
+  });
+  revalidatePath(`/dashboard/professors/${professorId}`);
+}
 
 export const metadata = { title: "Professor", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
@@ -18,6 +35,8 @@ export default async function ProfessorPage({ params }: PageProps<"/dashboard/pr
   if (!professor) notFound();
 
   const rationale = (professor.fitRationale ?? {}) as Rationale;
+  const drafts = await draftsForProfessor(professor.id);
+  const verifiedPapers = professor.recentPapers.filter((paper) => paper.verified);
 
   return (
     <div className="space-y-8">
@@ -106,6 +125,40 @@ export default async function ProfessorPage({ params }: PageProps<"/dashboard/pr
             </dd>
           </div>
         </dl>
+      </section>
+
+      <section className="plate plate-ticks p-5">
+        <h2 className="font-display text-lg">Outreach</h2>
+        {drafts.length > 0 ? (
+          <ul className="mt-3 space-y-1 text-sm">
+            {drafts.map((draft) => (
+              <li key={draft.id}>
+                <Link href={`/dashboard/outreach/${draft.id}`} className="link">
+                  {draft.isFollowUp ? "Follow-up" : "Draft"} — {draft.status.replace(/_/g, " ")}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : professor.whyNotContact ? (
+          <p className="measure mt-2 text-sm status-warn">
+            Their page asks not to be contacted, so no draft can be written.
+          </p>
+        ) : verifiedPapers.length === 0 ? (
+          <p className="measure mt-2 text-sm text-ink-soft">
+            No verified paper on record yet. A letter with nothing specific in it is not worth
+            sending, so drafting is held until the page is verified.
+          </p>
+        ) : (
+          <form action={queueDraft} className="mt-3">
+            <input type="hidden" name="professorId" value={professor.id} />
+            <button
+              type="submit"
+              className="plate plate-raised bg-ground px-4 py-2 text-sm font-medium"
+            >
+              Queue a draft
+            </button>
+          </form>
+        )}
       </section>
 
       <section className="plate plate-ticks p-5">
