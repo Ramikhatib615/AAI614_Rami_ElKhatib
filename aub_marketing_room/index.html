@@ -126,6 +126,23 @@ h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
   color:var(--maroon);margin:20px 0 7px}
 .brief .body h3:first-child{margin-top:0}
 
+.speak{margin-left:8px;border:1px solid var(--line-2);background:transparent;
+  color:var(--ink-3);border-radius:999px;width:29px;height:29px;cursor:pointer;padding:0;
+  display:inline-flex;align-items:center;justify-content:center;flex:none}
+.speak:hover{border-color:var(--maroon);color:var(--maroon)}
+.speak:focus-visible{outline:2px solid var(--maroon);outline-offset:2px}
+.speak svg{width:14px;height:14px;fill:currentColor}
+.speak.on{border-color:var(--maroon);background:var(--maroon);color:#fff}
+.speak.on svg{animation:sound .9s ease-in-out infinite}
+@keyframes sound{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.speak.on svg{animation:none}}
+.audiobar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 0;
+  padding-top:14px;border-top:1px dashed var(--line)}
+.audiobar .hint{font-size:12.5px;color:var(--ink-3)}
+.voiceof{font:500 10px/1 "JetBrains Mono",monospace;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-3)}
+.brief>header{display:flex;align-items:center;gap:8px;margin:0 0 14px}
+.brief>header .voiceof{margin-left:auto}
 .empty{color:var(--ink-3);font-size:14px;padding:16px 0}
 footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
   color:var(--ink-3);font-size:12.5px;line-height:1.6}
@@ -154,6 +171,11 @@ footer a{color:var(--maroon)}
       <button class="ghost" id="stop" hidden>Stop</button>
       <span class="status" id="status"></span>
     </div>
+    <div class="audiobar" id="audiobar" hidden>
+      <button class="ghost" id="playAll" disabled>▶ Play the whole meeting</button>
+      <button class="ghost" id="hush" hidden>■ Stop audio</button>
+      <span class="hint" id="audioHint">Each manager has their own voice.</span>
+    </div>
   </section>
 
   <h2 class="sec">The room</h2>
@@ -164,7 +186,9 @@ footer a{color:var(--maroon)}
     The chair decides who is needed once you convene the room.</p></div>
 
   <h2 class="sec">Executive brief — Chair</h2>
-  <div class="brief"><div class="body" id="brief"><p class="empty" style="padding:0">
+  <div class="brief">
+    <header><span class="voiceof" id="chairVoice"></span></header>
+    <div class="body" id="brief"><p class="empty" style="padding:0">
     The brief appears here once the managers have reported.</p></div></div>
 
   <footer>
@@ -257,6 +281,110 @@ function md(text) {
   return out.join("");
 }
 
+/* ---------- voices: every manager sounds like themselves ----------
+   Web Speech API, so it costs nothing and needs no service. Voice choice is
+   deterministic per manager, so RIMA sounds like RIMA on every run. */
+const synth = window.speechSynthesis;
+let voices = [];
+
+async function loadVoices() {
+  if (!synth) return [];
+  const en = () => synth.getVoices().filter((v) => /^en/i.test(v.lang));
+  if (en().length) return en();
+  await new Promise((r) => {
+    const t = setTimeout(r, 1500);
+    synth.addEventListener("voiceschanged", () => { clearTimeout(t); r(); }, { once: true });
+  });
+  return en();
+}
+
+/* Spread across whatever voices exist, and vary pitch/rate so the managers
+   stay distinguishable even on a device that ships only one voice. */
+const PITCH = [1.06, 0.84, 1.14, 0.80, 0.98, 0.90, 0.88];
+const RATE  = [1.00, 1.05, 0.97, 0.94, 1.02, 0.99, 0.96];
+function voiceFor(i) {
+  return { voice: voices.length ? voices[i % voices.length] : null,
+           pitch: PITCH[i % PITCH.length], rate: RATE[i % RATE.length] };
+}
+const VOICE_IDX = Object.fromEntries(ROSTER.map((m, i) => [m.id, i]));
+const CHAIR_IDX = ROSTER.length;   // the chair gets its own slot
+
+/* Markdown is for the eye; strip it for the ear. */
+function speakable(md) {
+  return String(md || "")
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/\[(.*?)\]\(.*?\)/g, "$1")
+    .replace(/[*_`#>|]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+let speakToken = 0;
+function hush() {
+  speakToken++;
+  try { synth?.cancel(); } catch {}
+  document.querySelectorAll(".speak.on").forEach((b) => b.classList.remove("on"));
+  $("hush").hidden = true;
+}
+
+/* Chrome silently drops utterances longer than ~15s, so queue sentence-sized
+   chunks rather than one long one. */
+function chunk(text) {
+  const parts = text.match(/[^.!?]+[.!?]*\s*/g) || [text];
+  const out = []; let buf = "";
+  for (const c of parts) {
+    if ((buf + c).length > 170 && buf) { out.push(buf); buf = c; } else buf += c;
+  }
+  if (buf.trim()) out.push(buf);
+  return out;
+}
+
+function speakOne(text, idx, btn) {
+  return new Promise((resolve) => {
+    if (!synth) return resolve();
+    const mine = speakToken;
+    const { voice, pitch, rate } = voiceFor(idx);
+    const pieces = chunk(speakable(text));
+    if (!pieces.length) return resolve();
+    btn?.classList.add("on");
+    $("hush").hidden = false;
+    let i = 0;
+    const next = () => {
+      if (mine !== speakToken) { btn?.classList.remove("on"); return resolve(); }
+      if (i >= pieces.length) { btn?.classList.remove("on"); return resolve(); }
+      const u = new SpeechSynthesisUtterance(pieces[i++]);
+      if (voice) u.voice = voice;
+      u.pitch = pitch; u.rate = rate;
+      u.onend = next;
+      u.onerror = () => { btn?.classList.remove("on"); resolve(); };
+      synth.speak(u);
+    };
+    next();
+  });
+}
+
+/* Play a list in order, each in its own voice. */
+async function speakSequence(items) {
+  hush();
+  const mine = ++speakToken;
+  $("hush").hidden = false;
+  for (const it of items) {
+    if (mine !== speakToken) return;
+    speakToken = mine;            // speakOne checks against this
+    await speakOne(it.text, it.idx, it.btn);
+  }
+  if (mine === speakToken) $("hush").hidden = true;
+}
+
+function speakBtn(label) {
+  const b = document.createElement("button");
+  b.className = "speak"; b.type = "button";
+  b.setAttribute("aria-label", label);
+  b.title = label;
+  b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm11.5 3c0-1.4-.8-2.6-2-3.2v6.4c1.2-.6 2-1.8 2-3.2zM13.5 3.2v2.1c2.9.9 5 3.5 5 6.7s-2.1 5.8-5 6.7v2.1c4-1 7-4.5 7-8.8s-3-7.8-7-8.8z"/></svg>';
+  return b;
+}
+
 /* ---------- roster UI ---------- */
 const LABEL = { idle: "standing by", briefed: "briefed", working: "working",
                 done: "reported", failed: "unavailable", skipped: "not needed" };
@@ -293,6 +421,12 @@ function card(m, task) {
   el.querySelector("em").textContent = m.title;
   el.querySelector(".tag").textContent = "thinking";
   el.querySelector(".task").textContent = task;
+  if (synth) {
+    const b = speakBtn(`Hear ${m.display}`);
+    b.disabled = true;                    // enabled once they have finished
+    el.querySelector("header").append(b);
+    el._speak = b;
+  }
   $("feed").append(el);
   return el;
 }
@@ -308,6 +442,9 @@ async function convene() {
   const signal = ctl.signal;
   runBtn.disabled = true; stopBtn.hidden = false;
   statusEl.className = "status";
+  hush();
+  $("playAll").disabled = true;
+  meeting = [];
   $("feed").textContent = "";
   $("brief").innerHTML = '<p class="empty" style="padding:0">Waiting on the managers…</p>';
   for (const m of ROSTER) setState(m.id, "idle");
@@ -343,7 +480,12 @@ async function convene() {
         body.innerHTML = md(text);
         el.querySelector(".tag").textContent = "reported";
         setState(p.m.id, "done");
-        return { ...p, answer: text };
+        if (el._speak) {
+          el._speak.disabled = false;
+          el._speak.onclick = () =>
+            speakSequence([{ text, idx: VOICE_IDX[p.m.id], btn: el._speak }]);
+        }
+        return { ...p, answer: text, idx: VOICE_IDX[p.m.id], btn: el._speak };
       } catch (e) {
         body.classList.remove("cursor");
         if (e?.code === "cancelled") throw e;
@@ -371,6 +513,20 @@ async function convene() {
     briefEl.classList.remove("cursor");
     briefEl.innerHTML = md(brief);
     statusEl.textContent = `${good.length} consulted · brief ready`;
+
+    if (synth) {
+      const chairBtn = $("chairBtn");
+      meeting = good
+        .map((g) => ({ text: `${g.m.display}, ${g.m.title}. ${g.answer}`,
+                       idx: g.idx, btn: g.btn }))
+        .concat([{ text: `The chair's brief. ${brief}`, idx: CHAIR_IDX, btn: chairBtn }]);
+      chairBtn.disabled = false;
+      chairBtn.onclick = () => speakSequence([meeting[meeting.length - 1]]);
+      $("playAll").disabled = false;
+      $("audioHint").textContent =
+        `${good.length + 1} voices ready — about ${Math.round(
+          meeting.reduce((n, m) => n + speakable(m.text).length, 0) / 15)}s to play.`;
+    }
   } catch (e) {
     statusEl.className = "status err";
     statusEl.textContent = errCopy(e);
@@ -393,7 +549,24 @@ for (const p of PRESETS) {
   ph.append(b);
 }
 runBtn.onclick = convene;
-stopBtn.onclick = () => ctl?.abort();
+stopBtn.onclick = () => { ctl?.abort(); hush(); };
+
+let meeting = [];
+if (synth) {
+  $("audiobar").hidden = false;
+  const chairBtn = speakBtn("Hear the chair's brief");
+  chairBtn.id = "chairBtn"; chairBtn.disabled = true;
+  document.querySelector(".brief > header").prepend(chairBtn);
+  $("chairVoice").textContent = "chair";
+  $("playAll").onclick = () => speakSequence(meeting);
+  $("hush").onclick = hush;
+  loadVoices().then((v) => {
+    voices = v;
+    if (!v.length) $("audioHint").textContent =
+      "Your browser has no speech voices installed, so playback may be silent.";
+  });
+  window.addEventListener("pagehide", hush);
+}
 
 (async () => {
   if (window.claude?.use) {

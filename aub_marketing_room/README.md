@@ -19,6 +19,21 @@ then adjudicates where they disagree.
 
 `CHAIR` orchestrates: routes, then synthesises.
 
+## Hearing them
+
+Every manager has a distinct voice. Once a manager reports, a speaker button
+appears on their card; when the brief lands, **Play the whole meeting** reads the
+session end to end — each manager in their own voice, then the chair.
+
+It runs on the browser's Web Speech API, so it costs nothing and needs no
+service. Voice assignment is deterministic per manager, so RIMA sounds like RIMA
+on every run; pitch and rate vary too, so they stay distinguishable on a device
+that ships only one voice. Long answers are queued in sentence-sized chunks
+because Chrome silently drops utterances longer than about fifteen seconds.
+
+If a browser has no speech voices installed the page says so rather than playing
+silence.
+
 ## How it works
 
 ```
