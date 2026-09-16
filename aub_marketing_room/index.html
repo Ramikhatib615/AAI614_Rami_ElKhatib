@@ -1,0 +1,423 @@
+<title>AUB Marketing Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root{
+  --maroon:#7a1f3d; --maroon-deep:#591428; --maroon-soft:#f0dfe4;
+  --ink:#1b1719; --ink-2:#4a4145; --ink-3:#7d7276;
+  --paper:#efedea; --card:#fbfaf8; --card-2:#f4f2ee;
+  --line:#ddd8d4; --line-2:#c9c2bd;
+  --teal:#1c6b66; --amber:#a96a16;
+  --shadow:0 1px 2px rgba(27,23,25,.06);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --maroon:#d4718f; --maroon-deep:#e795ab; --maroon-soft:#3d1a26;
+  --ink:#f2eeec; --ink-2:#bdb3b6; --ink-3:#8d8286;
+  --paper:#161314; --card:#211d1f; --card-2:#1a1718;
+  --line:#332c2f; --line-2:#463c40;
+  --teal:#5cb5ae; --amber:#d9a04e;
+  --shadow:0 1px 2px rgba(0,0,0,.3);
+}}
+:root[data-theme=dark]{
+  --maroon:#d4718f; --maroon-deep:#e795ab; --maroon-soft:#3d1a26;
+  --ink:#f2eeec; --ink-2:#bdb3b6; --ink-3:#8d8286;
+  --paper:#161314; --card:#211d1f; --card-2:#1a1718;
+  --line:#332c2f; --line-2:#463c40;
+  --teal:#5cb5ae; --amber:#d9a04e;
+  --shadow:0 1px 2px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);
+  font:400 15px/1.62 Archivo,ui-sans-serif,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:960px;margin:0 auto;padding-block:28px 72px;padding-left:20px;padding-right:20px}
+
+/* ---- header ---- */
+.eyebrow{font:500 11px/1 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--maroon);margin:0 0 10px}
+h1{font:800 clamp(30px,6vw,46px)/1.02 "Bricolage Grotesque",Georgia,serif;
+  letter-spacing:-.025em;margin:0 0 10px;text-wrap:balance}
+.lede{margin:0;color:var(--ink-2);max-width:62ch;font-size:15.5px}
+.rule{height:3px;background:var(--maroon);width:52px;margin:22px 0 26px;border-radius:2px}
+
+/* ---- ask ---- */
+.ask{background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:18px;box-shadow:var(--shadow)}
+label.lbl{display:block;font:500 11px/1 "JetBrains Mono",monospace;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);margin:0 0 9px}
+textarea{width:100%;min-height:82px;resize:vertical;padding:12px 13px;
+  border:1px solid var(--line-2);border-radius:8px;background:var(--paper);color:var(--ink);
+  font:400 15px/1.55 Archivo,sans-serif}
+textarea:focus-visible{outline:2px solid var(--maroon);outline-offset:1px;border-color:var(--maroon)}
+.presets{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0 0}
+.preset{font:400 13px/1 Archivo,sans-serif;padding:8px 11px;border-radius:999px;
+  border:1px solid var(--line-2);background:transparent;color:var(--ink-2);cursor:pointer;
+  text-align:left;line-height:1.35}
+.preset:hover{border-color:var(--maroon);color:var(--maroon)}
+.preset:focus-visible{outline:2px solid var(--maroon);outline-offset:2px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:16px 0 0}
+button.go{font:600 14px/1 Archivo,sans-serif;padding:12px 22px;border-radius:8px;border:0;
+  background:var(--maroon);color:#fff;cursor:pointer}
+button.go:hover:not(:disabled){background:var(--maroon-deep)}
+button.go:disabled{opacity:.45;cursor:not-allowed}
+button.ghost{font:500 13px/1 Archivo,sans-serif;padding:11px 15px;border-radius:8px;
+  border:1px solid var(--line-2);background:transparent;color:var(--ink-2);cursor:pointer}
+button.ghost:hover{border-color:var(--maroon);color:var(--maroon)}
+button:focus-visible{outline:2px solid var(--maroon);outline-offset:2px}
+.status{font:500 12.5px/1.4 "JetBrains Mono",monospace;color:var(--ink-3);margin-left:auto;
+  text-align:right}
+.status.err{color:var(--amber)}
+
+/* ---- section heads ---- */
+h2.sec{font:500 11px/1 "JetBrains Mono",monospace;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);margin:38px 0 13px;display:flex;align-items:center;gap:10px}
+h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* ---- roster ---- */
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(224px,1fr));gap:9px}
+.mgr{background:var(--card-2);border:1px solid var(--line);border-radius:10px;
+  padding:12px 13px;display:flex;gap:11px;align-items:flex-start;transition:border-color .2s}
+.mgr .bar{width:3px;align-self:stretch;min-height:34px;border-radius:2px;background:var(--line-2);
+  transition:background .2s}
+.mgr b{display:block;font:600 13.5px/1.2 Archivo,sans-serif;letter-spacing:.03em}
+.mgr span.t{display:block;font-size:12.5px;color:var(--ink-3);line-height:1.35;margin-top:2px}
+.mgr span.st{display:block;font:500 10px/1 "JetBrains Mono",monospace;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:7px}
+.mgr[data-s=briefed]{border-color:var(--maroon)} .mgr[data-s=briefed] .bar{background:var(--maroon)}
+.mgr[data-s=briefed] span.st{color:var(--maroon)}
+.mgr[data-s=working]{border-color:var(--maroon)} .mgr[data-s=working] .bar{background:var(--maroon);
+  animation:pulse 1.3s ease-in-out infinite}
+.mgr[data-s=working] span.st{color:var(--maroon)}
+.mgr[data-s=done] .bar{background:var(--teal)} .mgr[data-s=done] span.st{color:var(--teal)}
+.mgr[data-s=failed] .bar{background:var(--amber)} .mgr[data-s=failed] span.st{color:var(--amber)}
+.mgr[data-s=idle]{opacity:.62}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.32}}
+@media (prefers-reduced-motion:reduce){.mgr .bar{animation:none!important}}
+
+/* ---- consultations ---- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:17px 18px;
+  margin-bottom:10px;box-shadow:var(--shadow)}
+.card>header{display:flex;flex-wrap:wrap;gap:9px;align-items:baseline;margin-bottom:11px}
+.card>header b{font:600 14.5px/1 Archivo,sans-serif;letter-spacing:.04em}
+.card>header em{font-style:normal;font-size:13px;color:var(--ink-3)}
+.card>header .tag{margin-left:auto;font:500 10px/1 "JetBrains Mono",monospace;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink-3);border:1px solid var(--line-2);
+  border-radius:999px;padding:4px 9px}
+.task{font-size:13.5px;color:var(--ink-2);border-left:2px solid var(--maroon);padding-left:12px;
+  margin:0 0 13px;font-style:italic}
+.body{font-size:14.5px}
+.body p{margin:0 0 9px} .body ul{margin:0 0 9px;padding-left:20px} .body li{margin:0 0 4px}
+.body strong{font-weight:600;color:var(--ink)}
+.body h3{font:600 14px/1.3 Archivo,sans-serif;margin:15px 0 6px;color:var(--maroon)}
+.body h3:first-child{margin-top:0}
+.body code{font:500 12.5px "JetBrains Mono",monospace;background:var(--card-2);
+  padding:1px 5px;border-radius:4px}
+.cursor::after{content:"▍";color:var(--maroon);animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.cursor::after{animation:none}}
+
+/* ---- brief ---- */
+.brief{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--maroon);
+  border-radius:4px 4px 12px 12px;padding:22px 22px 24px;box-shadow:var(--shadow)}
+.brief .body{font-size:15.5px}
+.brief .body h3{font:800 17px/1.25 "Bricolage Grotesque",Georgia,serif;letter-spacing:-.01em;
+  color:var(--maroon);margin:20px 0 7px}
+.brief .body h3:first-child{margin-top:0}
+
+.empty{color:var(--ink-3);font-size:14px;padding:16px 0}
+footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+  color:var(--ink-3);font-size:12.5px;line-height:1.6}
+footer a{color:var(--maroon)}
+.warn{background:var(--maroon-soft);border:1px solid var(--maroon);border-radius:10px;
+  padding:13px 15px;font-size:14px;margin:0 0 18px}
+[hidden]{display:none!important}
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">Maroun Semaan Faculty of Engineering &amp; Architecture</p>
+  <h1>AUB Marketing Room</h1>
+  <p class="lede">Six specialist managers, briefed on AUB's real enrollment and
+    affordability situation. A chair routes your question to the two or three who
+    actually own it, then adjudicates where they disagree.</p>
+  <div class="rule"></div>
+
+  <div id="unavailable" class="warn" hidden></div>
+
+  <section class="ask">
+    <label class="lbl" for="q">The request on the table</label>
+    <textarea id="q" spellcheck="true">Applications from Lebanese students are down and our Instagram engagement is flat. Should we move budget into TikTok for the next intake cycle?</textarea>
+    <div class="presets" id="presets"></div>
+    <div class="actions">
+      <button class="go" id="run">Convene the room</button>
+      <button class="ghost" id="stop" hidden>Stop</button>
+      <span class="status" id="status"></span>
+    </div>
+  </section>
+
+  <h2 class="sec">The room</h2>
+  <div class="roster" id="roster"></div>
+
+  <h2 class="sec">Consultations</h2>
+  <div id="feed"><p class="empty" id="feedEmpty">No one has been consulted yet.
+    The chair decides who is needed once you convene the room.</p></div>
+
+  <h2 class="sec">Executive brief — Chair</h2>
+  <div class="brief"><div class="body" id="brief"><p class="empty" style="padding:0">
+    The brief appears here once the managers have reported.</p></div></div>
+
+  <footer>
+    Figures briefed into the managers are drawn from AUB's registrar and admissions
+    pages, reporting on Lebanon's higher-education funding crisis
+    (L'Orient Today, LCPS, Xinhua), and 2026 higher-education marketing benchmarks
+    (Search Influence, RC Strategies, KEG/UCAS). The managers cite them; they are
+    told to label anything else as an estimate.
+    <br><br>
+    <strong>This is a decision-support tool, not an oracle.</strong> Six confident
+    managers can be wrong together. Treat the brief as a structured starting argument
+    and check any number before it reaches a real budget.
+  </footer>
+</div>
+
+<script type="module">
+import { ROSTER, ROSTER_BY_ID, routerPrompt, managerPrompt, synthesisPrompt }
+  from "./roster.js";
+
+const $ = (id) => document.getElementById(id);
+const statusEl = $("status"), runBtn = $("run"), stopBtn = $("stop"), qEl = $("q");
+
+const PRESETS = [
+  "Applications from Lebanese students are down and our Instagram engagement is flat. Should we move budget into TikTok for the next intake cycle?",
+  "We have $60k to promote MSFEA graduate programs for Fall. Where should it go?",
+  "Gulf applications dropped 30% this year. What do we do before the next cycle?",
+  "Should we publish net prices after aid on the programs pages instead of list tuition?",
+];
+
+/* ---------- transport: artifact runtime, else the Vercel function ---------- */
+let sampleFn = null, mode = "http";
+
+async function ask(prompt, { onText, signal, tier = "default", json = false } = {}) {
+  if (sampleFn) {
+    const opts = { signal, modelTier: tier };
+    if (onText) opts.onText = onText;
+    return json ? sampleFn.json(prompt, opts) : (await sampleFn(prompt, opts)).text;
+  }
+  const r = await fetch("/api/ask", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ prompt, tier, json }),
+    signal,
+  });
+  if (!r.ok) {
+    const e = await r.json().catch(() => ({}));
+    throw { code: e.code || "upstream_error", message: e.error || `HTTP ${r.status}` };
+  }
+  const data = await r.json();
+  if (onText) onText({ text: data.text, delta: data.text });
+  return json ? data.json : data.text;
+}
+
+const ERRS = {
+  not_granted: "You declined Claude access, so the room cannot meet. Reload to be asked again.",
+  sampling_disabled: "Claude is not available on this account.",
+  rate_limited: "Too many requests. Wait a minute, then convene the room again.",
+  session_expired: "Your session expired — sign in again.",
+  refused: "Claude declined that request. Try rephrasing it.",
+  invalid_json: "The chair's routing reply could not be read. Try again.",
+  prompt_too_large: "That request is too long. Shorten it.",
+  empty_completion: "No answer came back. Try a more specific request.",
+  cancelled: "Stopped.",
+};
+const errCopy = (e) => ERRS[e?.code] || e?.message || "Something went wrong. Try again.";
+
+/* ---------- tiny markdown renderer ---------- */
+const esc = (s) => s.replace(/[&<>"]/g, (c) =>
+  ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const BULLET = /^\s*[-*]\s+/;
+function md(text) {
+  const out = [];
+  for (const block of esc(String(text || "").trim()).split(/\n\s*\n/)) {
+    const b = block.trim();
+    if (!b) continue;
+    const lines = b.split("\n");
+    const inline = (s) => s
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+      .replace(/`(.+?)`/g, "<code>$1</code>");
+    if (lines.every((l) => BULLET.test(l))) {
+      out.push("<ul>" + lines.map((l) => "<li>" + inline(l.replace(BULLET, "")) + "</li>").join("") + "</ul>");
+    } else if (lines.length === 1 && /^#{1,4}\s/.test(b)) {
+      out.push("<h3>" + inline(b.replace(/^#{1,4}\s*/, "")) + "</h3>");
+    } else if (lines.length === 1 && /^\*\*[^*]+\*\*$/.test(b)) {
+      out.push("<h3>" + b.replace(/\*\*/g, "") + "</h3>");
+    } else {
+      out.push("<p>" + lines.map(inline).join("<br>") + "</p>");
+    }
+  }
+  return out.join("");
+}
+
+/* ---------- roster UI ---------- */
+const LABEL = { idle: "standing by", briefed: "briefed", working: "working",
+                done: "reported", failed: "unavailable", skipped: "not needed" };
+const cells = {};
+function buildRoster() {
+  const host = $("roster");
+  host.textContent = "";
+  for (const m of ROSTER) {
+    const el = document.createElement("div");
+    el.className = "mgr";
+    el.dataset.s = "idle";
+    el.innerHTML = `<div class="bar"></div><div><b></b><span class="t"></span>
+      <span class="st"></span></div>`;
+    el.querySelector("b").textContent = m.display;
+    el.querySelector(".t").textContent = m.title;
+    el.querySelector(".st").textContent = LABEL.idle;
+    host.append(el);
+    cells[m.id] = el;
+  }
+}
+function setState(id, s) {
+  const el = cells[id];
+  if (!el) return;
+  el.dataset.s = s;
+  el.querySelector(".st").textContent = LABEL[s] || s;
+}
+
+function card(m, task) {
+  const el = document.createElement("div");
+  el.className = "card";
+  el.innerHTML = `<header><b></b><em></em><span class="tag"></span></header>
+    <p class="task"></p><div class="body cursor"></div>`;
+  el.querySelector("b").textContent = m.display;
+  el.querySelector("em").textContent = m.title;
+  el.querySelector(".tag").textContent = "thinking";
+  el.querySelector(".task").textContent = task;
+  $("feed").append(el);
+  return el;
+}
+
+/* ---------- the run ---------- */
+let ctl = null;
+
+async function convene() {
+  const question = qEl.value.trim();
+  if (!question) { statusEl.textContent = "Type a request first."; return; }
+
+  ctl = new AbortController();
+  const signal = ctl.signal;
+  runBtn.disabled = true; stopBtn.hidden = false;
+  statusEl.className = "status";
+  $("feed").textContent = "";
+  $("brief").innerHTML = '<p class="empty" style="padding:0">Waiting on the managers…</p>';
+  for (const m of ROSTER) setState(m.id, "idle");
+
+  try {
+    /* Stage 1 — the chair routes. */
+    statusEl.textContent = "chair is routing…";
+    let picks = await ask(routerPrompt(question), { signal, tier: "quick", json: true });
+    if (!Array.isArray(picks)) throw { code: "invalid_json", message: "not an array" };
+    picks = picks
+      .map((p) => ({ m: ROSTER_BY_ID[String(p?.manager || "").toLowerCase()],
+                     task: String(p?.task || "").trim() }))
+      .filter((p) => p.m && p.task)
+      .slice(0, 3);
+    if (!picks.length) throw { code: "invalid_json", message: "no valid managers picked" };
+
+    const chosen = new Set(picks.map((p) => p.m.id));
+    for (const m of ROSTER) if (!chosen.has(m.id)) setState(m.id, "skipped");
+    for (const p of picks) setState(p.m.id, "briefed");
+
+    /* Stage 2 — managers answer in parallel, each blind to the others. */
+    statusEl.textContent = `${picks.length} managers working…`;
+    const results = await Promise.all(picks.map(async (p) => {
+      setState(p.m.id, "working");
+      const el = card(p.m, p.task);
+      const body = el.querySelector(".body");
+      try {
+        const text = await ask(managerPrompt(p.m, p.task), {
+          signal, tier: "default",
+          onText: ({ text }) => { body.innerHTML = md(text); },
+        });
+        body.classList.remove("cursor");
+        body.innerHTML = md(text);
+        el.querySelector(".tag").textContent = "reported";
+        setState(p.m.id, "done");
+        return { ...p, answer: text };
+      } catch (e) {
+        body.classList.remove("cursor");
+        if (e?.code === "cancelled") throw e;
+        body.innerHTML = md(e?.text || `_${errCopy(e)}_`);
+        el.querySelector(".tag").textContent = "unavailable";
+        setState(p.m.id, "failed");
+        return null;
+      }
+    }));
+
+    const good = results.filter(Boolean);
+    if (!good.length) throw { code: "upstream_error", message: "every manager failed" };
+
+    /* Stage 3 — the chair adjudicates. */
+    statusEl.textContent = "chair is writing the brief…";
+    const briefEl = $("brief");
+    briefEl.innerHTML = ""; briefEl.classList.add("cursor");
+    const payload = good.map((g) => ({
+      display: g.m.display, title: g.m.title, task: g.task, answer: g.answer,
+    }));
+    const brief = await ask(synthesisPrompt(question, payload), {
+      signal, tier: "default",
+      onText: ({ text }) => { briefEl.innerHTML = md(text); },
+    });
+    briefEl.classList.remove("cursor");
+    briefEl.innerHTML = md(brief);
+    statusEl.textContent = `${good.length} consulted · brief ready`;
+  } catch (e) {
+    statusEl.className = "status err";
+    statusEl.textContent = errCopy(e);
+    $("brief").classList.remove("cursor");
+    if (e?.code === "cancelled") statusEl.className = "status";
+  } finally {
+    runBtn.disabled = false; stopBtn.hidden = true; ctl = null;
+  }
+}
+
+/* ---------- boot ---------- */
+buildRoster();
+const ph = $("presets");
+for (const p of PRESETS) {
+  const b = document.createElement("button");
+  b.className = "preset"; b.type = "button";
+  b.textContent = p.length > 66 ? p.slice(0, 64) + "…" : p;
+  b.title = p;
+  b.onclick = () => { qEl.value = p; qEl.focus(); };
+  ph.append(b);
+}
+runBtn.onclick = convene;
+stopBtn.onclick = () => ctl?.abort();
+
+(async () => {
+  if (window.claude?.use) {
+    sampleFn = await window.claude.use("sample").catch(() => null);
+    if (sampleFn) { mode = "sample"; statusEl.textContent = "ready"; return; }
+  }
+  // No artifact runtime: we are on Vercel (or similar) and talk to /api/ask.
+  try {
+    const r = await fetch("/api/ask", { method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ ping: true }) });
+    if (r.ok) { statusEl.textContent = "ready"; return; }
+    const e = await r.json().catch(() => ({}));
+    throw new Error(e.error || `HTTP ${r.status}`);
+  } catch (err) {
+    runBtn.disabled = true;
+    const w = $("unavailable");
+    w.hidden = false;
+    w.innerHTML = "<strong>The room cannot meet from here.</strong> This page needs "
+      + "either the Claude artifact runtime or a deployed <code>/api/ask</code> "
+      + "function with <code>ANTHROPIC_API_KEY</code> set. "
+      + "Everything else on the page is real — only the model calls are unavailable.";
+    statusEl.className = "status err";
+    statusEl.textContent = "no model access";
+  }
+})();
+</script>
