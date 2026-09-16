@@ -1,11 +1,15 @@
 import { fileURLToPath } from "node:url";
 
-import tsconfigPaths from "vite-tsconfig-paths";
 import { defineConfig } from "vitest/config";
 
+/**
+ * `.mts` rather than `.ts`: Vite's native config loader treats a `.ts` config as CommonJS unless
+ * the package is a module, and warns that this will become the default. Path aliases come from
+ * tsconfig natively, so the vite-tsconfig-paths plugin is no longer needed.
+ */
 export default defineConfig({
-  plugins: [tsconfigPaths()],
   resolve: {
+    tsconfigPaths: true,
     alias: {
       "server-only": fileURLToPath(new URL("./tests/stubs/server-only.ts", import.meta.url)),
     },
