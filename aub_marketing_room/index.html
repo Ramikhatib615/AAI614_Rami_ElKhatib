@@ -155,9 +155,10 @@ footer a{color:var(--maroon)}
 <div class="wrap">
   <p class="eyebrow">Maroun Semaan Faculty of Engineering &amp; Architecture</p>
   <h1>AUB Marketing Room</h1>
-  <p class="lede">Six specialist managers, briefed on AUB's real enrollment and
-    affordability situation. A chair routes your question to the two or three who
-    actually own it, then adjudicates where they disagree.</p>
+  <p class="lede">Five specialist managers, briefed on AUB's real enrollment and
+    affordability situation. WOLF routes your question to the two or three who
+    actually own it, then adjudicates where they disagree. They answer in
+    Lebanese Arabic when you play them aloud.</p>
   <div class="rule"></div>
 
   <div id="unavailable" class="warn" hidden></div>
@@ -174,6 +175,7 @@ footer a{color:var(--maroon)}
     <div class="audiobar" id="audiobar" hidden>
       <button class="ghost" id="playAll" disabled>▶ Play the whole meeting</button>
       <button class="ghost" id="hush" hidden>■ Stop audio</button>
+      <button class="ghost" id="langBtn" aria-pressed="true">🇱🇧 باللبناني</button>
       <span class="hint" id="audioHint">Each manager has their own voice.</span>
     </div>
   </section>
@@ -185,7 +187,7 @@ footer a{color:var(--maroon)}
   <div id="feed"><p class="empty" id="feedEmpty">No one has been consulted yet.
     The chair decides who is needed once you convene the room.</p></div>
 
-  <h2 class="sec">Executive brief — Chair</h2>
+  <h2 class="sec">Executive brief — WOLF</h2>
   <div class="brief">
     <header><span class="voiceof" id="chairVoice"></span></header>
     <div class="body" id="brief"><p class="empty" style="padding:0">
@@ -285,26 +287,41 @@ function md(text) {
    Web Speech API, so it costs nothing and needs no service. Voice choice is
    deterministic per manager, so RIMA sounds like RIMA on every run. */
 const synth = window.speechSynthesis;
-let voices = [];
+let voicesAr = [], voicesEn = [];
+let speakLang = "ar";            // the room speaks Lebanese by default
 
+/* No mainstream OS ships an ar-LB voice. Arabic TTS is ar-SA, sometimes ar-EG.
+   So we take the best Arabic voice available and make them speak real Lebanese,
+   which is the part that actually matters. */
 async function loadVoices() {
-  if (!synth) return [];
-  const en = () => synth.getVoices().filter((v) => /^en/i.test(v.lang));
-  if (en().length) return en();
+  if (!synth) return;
+  const grab = () => {
+    const all = synth.getVoices();
+    voicesAr = all.filter((v) => /^ar/i.test(v.lang));
+    voicesEn = all.filter((v) => /^en/i.test(v.lang));
+    return voicesAr.length || voicesEn.length;
+  };
+  if (grab()) return;
   await new Promise((r) => {
     const t = setTimeout(r, 1500);
     synth.addEventListener("voiceschanged", () => { clearTimeout(t); r(); }, { once: true });
   });
-  return en();
+  grab();
 }
+const pool = () => (speakLang === "ar" && voicesAr.length ? voicesAr : voicesEn);
 
 /* Spread across whatever voices exist, and vary pitch/rate so the managers
    stay distinguishable even on a device that ships only one voice. */
 const PITCH = [1.06, 0.84, 1.14, 0.80, 0.98, 0.90, 0.88];
 const RATE  = [1.00, 1.05, 0.97, 0.94, 1.02, 0.99, 0.96];
 function voiceFor(i) {
-  return { voice: voices.length ? voices[i % voices.length] : null,
-           pitch: PITCH[i % PITCH.length], rate: RATE[i % RATE.length] };
+  const p = pool();
+  // Arabic TTS reads faster than it sounds natural; ease it off a touch.
+  const slow = speakLang === "ar" && voicesAr.length ? 0.94 : 1;
+  return { voice: p.length ? p[i % p.length] : null,
+           pitch: PITCH[i % PITCH.length],
+           rate: RATE[i % RATE.length] * slow,
+           lang: speakLang === "ar" && voicesAr.length ? undefined : undefined };
 }
 const VOICE_IDX = Object.fromEntries(ROSTER.map((m, i) => [m.id, i]));
 const CHAIR_IDX = ROSTER.length;   // the chair gets its own slot
@@ -317,6 +334,26 @@ function speakable(md) {
     .replace(/[*_`#>|]/g, "")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+/* Ask Claude to say it the way a Beiruti manager would say it out loud. */
+const lebCache = new Map();
+async function toLebanese(text, who) {
+  const key = who + "|" + text;
+  if (lebCache.has(key)) return lebCache.get(key);
+  const out = await ask(
+    `Render the following into spoken Lebanese Arabic, as ${who} would actually say it ` +
+    `out loud in a meeting in Beirut.\n` +
+    `- Natural spoken Lebanese dialect, NOT Modern Standard Arabic.\n` +
+    `- Keep every number, percentage, currency and figure exactly as it is.\n` +
+    `- Keep the English marketing and university terms in English the way people ` +
+    `really mix them in Beirut: TikTok, Instagram, LinkedIn, CTR, CPM, funnel, budget, ` +
+    `campaign, financial aid, application, MSFEA, AUB.\n` +
+    `- Plain sentences for speaking aloud. No markdown, no headings, no bullet characters.\n` +
+    `- Reply with ONLY the Lebanese Arabic text.\n\n` + text,
+    { tier: "quick" });
+  lebCache.set(key, out);
+  return out;
 }
 
 let speakToken = 0;
@@ -368,12 +405,29 @@ async function speakSequence(items) {
   hush();
   const mine = ++speakToken;
   $("hush").hidden = false;
+  const hint = $("audioHint");
+  const restore = hint.textContent;
+
   for (const it of items) {
     if (mine !== speakToken) return;
-    speakToken = mine;            // speakOne checks against this
-    await speakOne(it.text, it.idx, it.btn);
+    let line = it.text;
+    if (speakLang === "ar") {
+      it.btn?.classList.add("on");
+      hint.textContent = `Putting ${it.who || "it"} into Lebanese…`;
+      try {
+        line = await toLebanese(it.text, it.who || "a manager");
+      } catch (e) {
+        hint.textContent = "Could not render Lebanese — speaking English instead.";
+        line = it.text;
+      }
+      it.btn?.classList.remove("on");
+      if (mine !== speakToken) return;
+    }
+    hint.textContent = it.who ? `Now: ${it.who}` : restore;
+    speakToken = mine;
+    await speakOne(line, it.idx, it.btn);
   }
-  if (mine === speakToken) $("hush").hidden = true;
+  if (mine === speakToken) { $("hush").hidden = true; hint.textContent = restore; }
 }
 
 function speakBtn(label) {
@@ -483,7 +537,8 @@ async function convene() {
         if (el._speak) {
           el._speak.disabled = false;
           el._speak.onclick = () =>
-            speakSequence([{ text, idx: VOICE_IDX[p.m.id], btn: el._speak }]);
+            speakSequence([{ text, idx: VOICE_IDX[p.m.id], btn: el._speak,
+                             who: p.m.display }]);
         }
         return { ...p, answer: text, idx: VOICE_IDX[p.m.id], btn: el._speak };
       } catch (e) {
@@ -518,8 +573,9 @@ async function convene() {
       const chairBtn = $("chairBtn");
       meeting = good
         .map((g) => ({ text: `${g.m.display}, ${g.m.title}. ${g.answer}`,
-                       idx: g.idx, btn: g.btn }))
-        .concat([{ text: `The chair's brief. ${brief}`, idx: CHAIR_IDX, btn: chairBtn }]);
+                       idx: g.idx, btn: g.btn, who: g.m.display }))
+        .concat([{ text: `WOLF's brief. ${brief}`, idx: CHAIR_IDX, btn: chairBtn,
+                   who: "WOLF" }]);
       chairBtn.disabled = false;
       chairBtn.onclick = () => speakSequence([meeting[meeting.length - 1]]);
       $("playAll").disabled = false;
@@ -554,17 +610,42 @@ stopBtn.onclick = () => { ctl?.abort(); hush(); };
 let meeting = [];
 if (synth) {
   $("audiobar").hidden = false;
-  const chairBtn = speakBtn("Hear the chair's brief");
+  const chairBtn = speakBtn("Hear WOLF's brief");
   chairBtn.id = "chairBtn"; chairBtn.disabled = true;
   document.querySelector(".brief > header").prepend(chairBtn);
-  $("chairVoice").textContent = "chair";
+  $("chairVoice").textContent = "wolf";
   $("playAll").onclick = () => speakSequence(meeting);
   $("hush").onclick = hush;
-  loadVoices().then((v) => {
-    voices = v;
-    if (!v.length) $("audioHint").textContent =
-      "Your browser has no speech voices installed, so playback may be silent.";
-  });
+  $("langBtn").onclick = () => {
+    hush();
+    speakLang = speakLang === "ar" ? "en" : "ar";
+    const ar = speakLang === "ar";
+    $("langBtn").textContent = ar ? "🇱🇧 باللبناني" : "🇬🇧 English";
+    $("langBtn").setAttribute("aria-pressed", String(ar));
+    describeVoices();
+  };
+
+  function describeVoices() {
+    const hint = $("audioHint");
+    if (!voicesAr.length && !voicesEn.length) {
+      hint.textContent = "Your browser has no speech voices installed, so playback "
+        + "will be silent. Chrome or Safari on a desktop usually has them.";
+      return;
+    }
+    if (speakLang === "ar") {
+      hint.textContent = voicesAr.length
+        ? `Speaking Lebanese Arabic through ${voicesAr.length} Arabic `
+          + `${voicesAr.length === 1 ? "voice" : "voices"} (${voicesAr[0].lang}). `
+          + "No system ships a Lebanese-accent voice — the words are Lebanese, the accent is not."
+        : "No Arabic voice is installed on this device, so Lebanese playback would be "
+          + "silent. Switch to English, or install an Arabic voice in your system settings.";
+      return;
+    }
+    hint.textContent = `Speaking English through ${voicesEn.length} `
+      + `${voicesEn.length === 1 ? "voice" : "voices"}.`;
+  }
+
+  loadVoices().then(describeVoices);
   window.addEventListener("pagehide", hush);
 }
 

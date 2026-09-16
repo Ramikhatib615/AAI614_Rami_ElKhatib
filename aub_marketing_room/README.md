@@ -1,63 +1,77 @@
 # AUB Marketing Room
 
-Six specialist AI managers, briefed on AUB's real enrollment and affordability
-situation. A chair routes each question to the two or three who actually own it,
+Five specialist AI managers, briefed on AUB's real enrollment and affordability
+situation. WOLF routes each question to the two or three who actually own it,
 then adjudicates where they disagree.
 
 **Live (no setup, no API key):** https://claude.ai/artifact/GiwGdBFsfdsG6vpxhAb2EW
 
 ## The room
 
+Named after the room in the original post: LEEN, SOFIA, YARA, HOPE, LAYAN — with
+WOLF in WOLF.
+
 | Manager | Owns |
 |---|---|
-| **RIMA** | Undergraduate recruitment — Lebanese school market, feeder schools, inquiry→deposit funnel |
-| **KARIM** | Digital & paid media — channel mix, creative, budget, cost per enrolled student |
-| **NOUR** | Graduate & research recruitment — MSFEA pipelines, GA/GRA/Fellowship funding as the real lever |
-| **TAREK** | Regional & diaspora — Gulf, Arab world, full-tuition international students |
-| **MAYA** | Affordability messaging — net price vs list price, aid nobody hears about |
-| **SAMI** | Brand, reputation & risk — the counterweight to short-term enrollment tactics |
+| **LEEN** | Student recruitment — Lebanese feeder schools, Gulf and diaspora families, inquiry→deposit funnel |
+| **SOFIA** | Digital & paid media — channel mix, creative, budget, cost per enrolled student |
+| **YARA** | Graduate & research recruitment — MSFEA pipelines, GA/GRA/Fellowship funding as the real lever |
+| **HOPE** | Brand, reputation & risk — the counterweight to short-term enrollment tactics |
+| **LAYAN** | Affordability & financial aid — net price vs list price, aid nobody hears about |
 
-`CHAIR` orchestrates: routes, then synthesises.
+`WOLF` orchestrates: routes, then synthesises. The post's roster is five plus
+WOLF, so domestic and diaspora recruitment sit together under LEEN; split them
+back into two managers in `roster.js` if that tension matters to you.
 
-## Hearing them
+## Hearing them — in Lebanese
 
-Every manager has a distinct voice. Once a manager reports, a speaker button
-appears on their card; when the brief lands, **Play the whole meeting** reads the
-session end to end — each manager in their own voice, then the chair.
+Every manager has a distinct voice, and by default **they speak Lebanese Arabic**.
+Once a manager reports, a speaker button appears on their card; when the brief
+lands, **Play the whole meeting** reads the session end to end — each manager in
+their own voice, then WOLF. The 🇱🇧 button switches between Lebanese and English.
 
-It runs on the browser's Web Speech API, so it costs nothing and needs no
-service. Voice assignment is deterministic per manager, so RIMA sounds like RIMA
+Lebanese playback works in two steps: the answer is rendered into spoken Lebanese
+dialect (numbers preserved exactly, English marketing terms left in English the
+way people actually mix them in Beirut), then spoken through an Arabic system
+voice. Renderings are cached per run, so replaying a manager costs nothing.
+
+**One honest limitation.** No mainstream operating system ships a Lebanese-accent
+TTS voice — Arabic voices are `ar-SA`, occasionally `ar-EG`. So the *words* are
+Lebanese; the *accent* is whatever Arabic voice the device has. The page reports
+exactly which voices it found rather than pretending. If no Arabic voice is
+installed it says so and points you at the English toggle instead of playing
+silence.
+
+Playback runs on the browser's Web Speech API, so it costs nothing and needs no
+service. Voice assignment is deterministic per manager, so LEEN sounds like LEEN
 on every run; pitch and rate vary too, so they stay distinguishable on a device
 that ships only one voice. Long answers are queued in sentence-sized chunks
 because Chrome silently drops utterances longer than about fifteen seconds.
-
-If a browser has no speech voices installed the page says so rather than playing
-silence.
 
 ## How it works
 
 ```
   your question
        │
-       ▼   stage 1 — CHAIR routes (JSON, fast tier)
+       ▼   stage 1 — WOLF routes (JSON, fast tier)
    picks 2-3 managers and writes each a self-contained brief
        │
-       ├──▶ RIMA   ─┐
-       ├──▶ KARIM  ─┤  stage 2 — parallel, each blind to the others
-       └──▶ MAYA   ─┘
+       ├──▶ LEEN   ─┐
+       ├──▶ SOFIA  ─┤  stage 2 — parallel, each blind to the others
+       └──▶ LAYAN  ─┘
        │
-       ▼   stage 3 — CHAIR adjudicates
+       ▼   stage 3 — WOLF adjudicates
   Read · Recommendation · Tensions · Open questions
 ```
 
 Three design decisions carry it:
 
-1. **Agents as tools.** Routing is the chair selecting from a roster, so adding a
+1. **Agents as tools.** Routing is WOLF selecting from a roster, so adding a
    manager to `roster.js` is the only change needed to extend the room.
 2. **Context isolation.** Each manager answers in a fresh call and never sees the
    others. That is the feature — it keeps contexts small, lets them run in
    parallel, and produces *real* disagreement because nobody is anchored.
-3. **Preserved disagreement.** The chair is instructed that conflict between
+3. **Preserved disagreement.** WOLF is instructed that conflict between
    managers IS the finding. The lazy version averages everyone into consensus,
    which is what makes most multi-agent demos useless.
 
@@ -122,18 +136,19 @@ access.
   effort or the prompts grow, calls start hitting the wall — lower the effort in
   `EFFORT` or move to a paid plan.
 - **Cost is per manager, per run.** Three managers plus routing plus synthesis is
-  five model calls. The chair is capped at three managers for exactly this reason.
+  five model calls. WOLF is capped at three managers for exactly this reason. Lebanese playback
+  adds one cheap call per manager on top.
 - **The key never goes in the browser.** It is read from `process.env` inside the
   function only. Anything in client-side JavaScript is public.
 - **Visitor input is untrusted.** It goes into a prompt, so someone can try to
-  steer the chair. It stays in the user turn and the managers have no tools.
+  steer WOLF. It stays in the user turn and the managers have no tools.
 - **Rate limiting is not implemented.** Before this faces anyone outside your
   team, add per-IP limiting — one visitor in a loop is how the budget actually
   disappears.
 
 ## What this is not
 
-It cannot check its own work. Six confident managers can be wrong together and
+It cannot check its own work. Five confident managers can be wrong together and
 the brief will still read as authoritative. Personas change framing, not
 knowledge — the real gains here are context isolation, parallelism, and forced
 disagreement. Treat the brief as a structured starting argument, and verify any
