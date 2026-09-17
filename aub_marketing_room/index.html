@@ -1,13 +1,13 @@
-<title>غرفة المدراء</title>
+<title>The Managers Room</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Almarai:wght@700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap">
 <style>
 :root{
   --bg:#f4f7fb; --bg-2:#eaf0f7; --card:#ffffff; --ink:#111a26; --ink-2:#4a5a6e;
   --ink-3:#8494a8; --line:#dfe7f0; --line-2:#c6d3e2;
-  --leen:#5b9dd9; --sofia:#d6a962; --yara:#3fb8ae; --hope:#6b74e8; --hope-2:#a86fe0;
-  --layan:#9b7ae0; --wolf:#8b95a5;
+  --bahaa:#5b9dd9; --majd:#d6a962; --rabih:#3fb8ae; --leen:#6b74e8; --leen-2:#a86fe0;
+  --rami:#9b7ae0; --wolf:#8b95a5;
   --ok:#2f9e6e; --warn:#d08b2a; --bad:#d1495b;
   --glow:rgba(107,116,232,.16);
 }
@@ -15,16 +15,16 @@
   --bg:#0b1119; --bg-2:#0f1721; --card:#141d29; --ink:#e8eef6; --ink-2:#a3b3c7;
   --ink-3:#6b7d92; --line:#222f3f; --line-2:#31415409;
   --line-2:#314154;
-  --leen:#7cb8ee; --sofia:#e6bd76; --yara:#5ad3c8; --hope:#8b93ff; --hope-2:#c08df5;
-  --layan:#b493f5; --wolf:#a4aebd;
+  --bahaa:#7cb8ee; --majd:#e6bd76; --rabih:#5ad3c8; --leen:#8b93ff; --leen-2:#c08df5;
+  --rami:#b493f5; --wolf:#a4aebd;
   --ok:#4fc08d; --warn:#e5a84a; --bad:#ef6b7d;
   --glow:rgba(139,147,255,.2);
 }}
 :root[data-theme=dark]{
   --bg:#0b1119; --bg-2:#0f1721; --card:#141d29; --ink:#e8eef6; --ink-2:#a3b3c7;
   --ink-3:#6b7d92; --line:#222f3f; --line-2:#314154;
-  --leen:#7cb8ee; --sofia:#e6bd76; --yara:#5ad3c8; --hope:#8b93ff; --hope-2:#c08df5;
-  --layan:#b493f5; --wolf:#a4aebd;
+  --bahaa:#7cb8ee; --majd:#e6bd76; --rabih:#5ad3c8; --leen:#8b93ff; --leen-2:#c08df5;
+  --rami:#b493f5; --wolf:#a4aebd;
   --ok:#4fc08d; --warn:#e5a84a; --bad:#ef6b7d;
   --glow:rgba(139,147,255,.2);
 }
@@ -33,20 +33,20 @@ html,body{margin:0}
 body{background:
     radial-gradient(1100px 620px at 50% -8%, var(--glow), transparent 62%),
     var(--bg);
-  color:var(--ink);direction:rtl;
-  font:400 15px/1.7 "IBM Plex Sans Arabic",ui-sans-serif,system-ui,sans-serif;
+  color:var(--ink);
+  font:400 15px/1.65 Inter,ui-sans-serif,system-ui,sans-serif;
   -webkit-font-smoothing:antialiased}
 .wrap{max-width:820px;margin:0 auto;padding-block:26px 64px;padding-left:18px;padding-right:18px}
 
 /* ===== header ===== */
 .top{text-align:center;position:relative}
-.floor{font:700 10.5px/1 "IBM Plex Sans Arabic",sans-serif;letter-spacing:.34em;
-  color:var(--ink-3);text-transform:uppercase;margin:0 0 8px;direction:ltr}
-h1{font:800 clamp(25px,6.4vw,36px)/1.15 Almarai,sans-serif;margin:0 0 9px;letter-spacing:-.01em}
+.floor{font:700 10.5px/1 Sora,sans-serif;letter-spacing:.34em;
+  color:var(--ink-3);text-transform:uppercase;margin:0 0 8px;}
+h1{font:700 clamp(26px,6.4vw,38px)/1.1 Sora,sans-serif;margin:0 0 9px;letter-spacing:-.01em}
 .tag{margin:0;color:var(--ink-2);font-size:14px;line-height:1.75}
-.live{position:absolute;inset-inline-end:0;top:2px;display:inline-flex;align-items:center;gap:6px;
+.live{position:absolute;right:0;top:2px;display:inline-flex;align-items:center;gap:6px;
   background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 11px;
-  font:600 10.5px/1 "IBM Plex Sans Arabic",sans-serif;letter-spacing:.14em;color:var(--ink-2);direction:ltr}
+  font:600 10.5px/1 Sora,sans-serif;letter-spacing:.14em;color:var(--ink-2);}
 .live i{width:6px;height:6px;border-radius:50%;background:var(--ok);
   box-shadow:0 0 0 3px rgba(47,158,110,.16);animation:bp 2s ease-in-out infinite}
 @keyframes bp{50%{opacity:.4}}
@@ -65,8 +65,7 @@ h1{font:800 clamp(25px,6.4vw,36px)/1.15 Almarai,sans-serif;margin:0 0 9px;letter
   border:1px dashed currentColor;opacity:.13}
 .node svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.7;
   stroke-linecap:round;stroke-linejoin:round}
-.node b{display:block;font:700 12px/1 "IBM Plex Sans Arabic",sans-serif;letter-spacing:.09em;
-  direction:ltr;margin-bottom:4px}
+.node b{display:block;font:600 12px/1 Sora,sans-serif;letter-spacing:.09em;margin-bottom:4px}
 .node .st{display:inline-flex;align-items:center;gap:4px;font:500 9.5px/1 sans-serif;
   color:var(--ink-3);letter-spacing:.02em}
 .node .st i{width:5px;height:5px;border-radius:50%;background:currentColor}
@@ -78,25 +77,53 @@ h1{font:800 clamp(25px,6.4vw,36px)/1.15 Almarai,sans-serif;margin:0 0 9px;letter
 .node[data-s=working] .st{color:inherit}
 .node[data-s=flagged] .st{color:var(--warn)}
 .node[data-s=idle]{opacity:.78}
-.n-leen{color:var(--leen);left:50%;top:13%}
-.n-sofia{color:var(--sofia);left:11%;top:41%}
-.n-yara{color:var(--yara);left:89%;top:41%}
-.n-layan{color:var(--layan);left:21%;top:83%}
+.n-bahaa{color:var(--bahaa);left:50%;top:13%}
+.n-majd{color:var(--majd);left:11%;top:41%}
+.n-rabih{color:var(--rabih);left:89%;top:41%}
+.n-rami{color:var(--rami);left:21%;top:83%}
 .n-wolf{color:var(--wolf);left:79%;top:83%}
-.n-hope{color:var(--hope);left:50%;top:52%;width:120px}
-.n-hope .ring{width:96px;height:96px;
-  background:radial-gradient(circle at 34% 30%,#fff 2%,var(--hope) 46%,var(--hope-2) 100%);
-  border:0;box-shadow:0 10px 34px -8px color-mix(in oklab,var(--hope) 55%,transparent)}
-.n-hope svg{width:33px;height:33px;stroke:#fff;stroke-width:1.5}
-.n-hope b{font-size:14px;margin-top:2px}
+.n-leen{color:var(--leen);left:50%;top:52%;width:120px}
+.n-leen .ring{width:96px;height:96px;
+  background:radial-gradient(circle at 34% 30%,#fff 2%,var(--leen) 46%,var(--leen-2) 100%);
+  border:0;box-shadow:0 10px 34px -8px color-mix(in oklab,var(--leen) 55%,transparent)}
+.n-leen svg{width:33px;height:33px;stroke:#fff;stroke-width:1.5}
+.n-leen b{font-size:14px;margin-top:2px}
 @media (prefers-reduced-motion:reduce){.node .ring::before,.live i{animation:none!important}}
+
+.node[data-s=speaking] .ring{box-shadow:0 0 0 5px color-mix(in oklab,currentColor 22%,transparent),
+  0 0 26px -4px currentColor;transform:scale(1.12)}
+.node[data-s=speaking] .ring::before{animation:halo 1.1s ease-in-out infinite}
+.node[data-s=speaking] .ring::after{animation:halo 1.1s ease-in-out infinite .2s}
+.node[data-s=speaking] .st{color:inherit;font-weight:700}
+.node[data-s=speaking] b{letter-spacing:.13em}
+
+/* ===== who has the floor ===== */
+.nowbar{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:14px 17px;margin:4px 0 0;border-left:3px solid currentColor;min-height:62px}
+.nowbar .who{display:flex;align-items:center;gap:8px;margin:0 0 6px}
+.nowbar .who b{font:600 12px/1 Sora,sans-serif;letter-spacing:.1em}
+.nowbar .who em{font-style:normal;font-size:12px;color:var(--ink-3)}
+.nowbar .who .wave{margin-left:auto;display:flex;gap:2px;align-items:flex-end;height:13px}
+.nowbar .who .wave span{width:2.5px;background:currentColor;border-radius:2px;
+  animation:wv .9s ease-in-out infinite}
+.nowbar .who .wave span:nth-child(1){height:5px;animation-delay:0s}
+.nowbar .who .wave span:nth-child(2){height:12px;animation-delay:.14s}
+.nowbar .who .wave span:nth-child(3){height:8px;animation-delay:.28s}
+.nowbar .who .wave span:nth-child(4){height:13px;animation-delay:.42s}
+@keyframes wv{50%{transform:scaleY(.32)}}
+.nowbar .cap{margin:0;color:var(--ink);font-size:14.5px;line-height:1.6}
+.nowbar[data-idle=true]{color:var(--ink-3);border-left-color:var(--line)}
+.nowbar[data-idle=true] .cap{color:var(--ink-3)}
+.nowbar[data-idle=true] .wave{display:none}
+@media (prefers-reduced-motion:reduce){.nowbar .wave span{animation:none}}
+.msg.hasfloor{border-color:currentColor;box-shadow:0 0 0 3px color-mix(in oklab,currentColor 10%,transparent)}
 
 /* ===== mission ===== */
 .mission{background:var(--card);border:1px solid var(--line);border-radius:14px;
   padding:15px 17px;margin:10px 0 0;display:flex;gap:13px;align-items:flex-start}
 .mission .dot{width:26px;height:26px;border-radius:50%;flex:none;margin-top:2px;
-  border:2px solid var(--hope);display:grid;place-items:center}
-.mission .dot span{width:9px;height:9px;border-radius:50%;background:var(--hope)}
+  border:2px solid var(--leen);display:grid;place-items:center}
+.mission .dot span{width:9px;height:9px;border-radius:50%;background:var(--leen)}
 .mission .lbl{font:500 10.5px/1 sans-serif;color:var(--ink-3);letter-spacing:.09em;margin:0 0 5px}
 .mission .txt{margin:0;font-size:15px;font-weight:500;line-height:1.6}
 
@@ -104,14 +131,14 @@ h1{font:800 clamp(25px,6.4vw,36px)/1.15 Almarai,sans-serif;margin:0 0 9px;letter
 .flowwrap{margin:22px 0 0}
 .flowhead{display:flex;align-items:baseline;gap:10px;margin:0 0 10px}
 .flowhead h2{font:600 11px/1 sans-serif;letter-spacing:.1em;color:var(--ink-3);margin:0}
-.flowhead .count{margin-inline-start:auto;font:600 11px/1 sans-serif;color:var(--ink-3)}
+.flowhead .count{margin-left:auto;font:600 11px/1 sans-serif;color:var(--ink-3)}
 .flow{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
 .step{flex:1 0 auto;min-width:92px;background:var(--card);border:1px solid var(--line);
   border-radius:10px;padding:9px 11px;text-align:center;transition:border-color .3s}
-.step b{display:block;font:700 11px/1 sans-serif;letter-spacing:.07em;direction:ltr;margin-bottom:4px}
+.step b{display:block;font:700 11px/1 sans-serif;letter-spacing:.07em;margin-bottom:4px}
 .step span{font:500 9.5px/1 sans-serif;color:var(--ink-3)}
-.step[data-s=working]{border-color:var(--hope)}
-.step[data-s=working] span{color:var(--hope)}
+.step[data-s=working]{border-color:var(--leen)}
+.step[data-s=working] span{color:var(--leen)}
 .step[data-s=done]{border-color:color-mix(in oklab,var(--ok) 45%,var(--line))}
 .step[data-s=done] span{color:var(--ok)}
 
@@ -120,74 +147,73 @@ h1{font:800 clamp(25px,6.4vw,36px)/1.15 Almarai,sans-serif;margin:0 0 9px;letter
 .msg{background:var(--card);border:1px solid var(--line);border-radius:14px;
   padding:15px 17px;margin:0 0 9px}
 .msg>header{display:flex;gap:9px;align-items:center;margin:0 0 9px}
-.msg>header b{font:700 12.5px/1 sans-serif;letter-spacing:.08em;direction:ltr}
+.msg>header b{font:700 12.5px/1 sans-serif;letter-spacing:.08em;}
 .msg>header em{font-style:normal;font-size:12.5px;color:var(--ink-3)}
-.msg>header .sp{margin-inline-start:auto;display:flex;gap:6px}
-.msg .q{font-size:13px;color:var(--ink-2);border-inline-start:2px solid currentColor;
-  padding-inline-start:11px;margin:0 0 11px}
+.msg>header .sp{margin-left:auto;display:flex;gap:6px}
+.msg .q{font-size:13px;color:var(--ink-2);border-left:2px solid currentColor;padding-left:11px;margin:0 0 11px}
 .body{font-size:14.5px}
-.body p{margin:0 0 9px}.body ul{margin:0 0 9px;padding-inline-start:21px}
+.body p{margin:0 0 9px}.body ul{margin:0 0 9px;padding-left:21px}
 .body li{margin:0 0 4px}.body strong{font-weight:600}
-.body h3{font:700 14.5px/1.4 Almarai,sans-serif;margin:16px 0 6px}
+.body h3{font:600 14.5px/1.4 Sora,sans-serif;margin:16px 0 6px}
 .body h3:first-child{margin-top:0}
 .cursor::after{content:"▍";animation:bl 1s step-end infinite}
 @keyframes bl{50%{opacity:0}}
 @media (prefers-reduced-motion:reduce){.cursor::after{animation:none}}
-.m-leen{color:var(--leen)}.m-sofia{color:var(--sofia)}.m-yara{color:var(--yara)}
-.m-layan{color:var(--layan)}.m-hope{color:var(--hope)}.m-wolf{color:var(--wolf)}
+.m-bahaa{color:var(--bahaa)}.m-majd{color:var(--majd)}.m-rabih{color:var(--rabih)}
+.m-rami{color:var(--rami)}.m-leen{color:var(--leen)}.m-wolf{color:var(--wolf)}
 .msg .body,.msg .q{color:var(--ink)}
 .msg .q{color:var(--ink-2)}
 
 /* decision + verdict */
-.decision{border:1px solid var(--line);border-top:3px solid var(--hope);
+.decision{border:1px solid var(--line);border-top:3px solid var(--leen);
   background:var(--card);border-radius:4px 4px 14px 14px;padding:20px}
 .verdict{border-radius:14px;padding:15px 17px;margin:10px 0 0;border:1px solid var(--line);
   background:var(--card)}
 .verdict[data-v=ready]{border-color:color-mix(in oklab,var(--ok) 50%,var(--line))}
 .verdict[data-v=blocked]{border-color:color-mix(in oklab,var(--warn) 55%,var(--line))}
 .verdict header{display:flex;align-items:center;gap:9px;margin:0 0 8px}
-.verdict header b{font:700 12.5px/1 sans-serif;letter-spacing:.08em;direction:ltr;color:var(--wolf)}
-.verdict .stamp{margin-inline-start:auto;font:600 10.5px/1 sans-serif;letter-spacing:.06em;
+.verdict header b{font:700 12.5px/1 sans-serif;letter-spacing:.08em;color:var(--wolf)}
+.verdict .stamp{margin-left:auto;font:600 10.5px/1 sans-serif;letter-spacing:.06em;
   border-radius:999px;padding:5px 11px;border:1px solid currentColor}
 .verdict[data-v=ready] .stamp{color:var(--ok)}
 .verdict[data-v=blocked] .stamp{color:var(--warn)}
 .flag{font-size:13.5px;padding:8px 0;border-top:1px solid var(--line);display:flex;gap:9px}
-.flag b{direction:ltr;font-size:12px;letter-spacing:.06em;flex:none;color:var(--ink-3)}
+.flag b{font-size:12px;letter-spacing:.06em;flex:none;color:var(--ink-3)}
 .flag[data-sev=high] b{color:var(--bad)}
 
 /* ===== composer ===== */
 .composer{background:var(--card);border:1px solid var(--line);border-radius:14px;
   padding:15px;margin:22px 0 0}
 textarea{width:100%;min-height:74px;resize:vertical;padding:11px 13px;border-radius:10px;
-  border:1px solid var(--line-2);background:var(--bg-2);color:var(--ink);direction:rtl;
-  font:400 15px/1.65 "IBM Plex Sans Arabic",sans-serif}
-textarea:focus-visible{outline:2px solid var(--hope);outline-offset:1px}
+  border:1px solid var(--line-2);background:var(--bg-2);color:var(--ink);
+  font:400 15px/1.65 Sora,sans-serif}
+textarea:focus-visible{outline:2px solid var(--leen);outline-offset:1px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin:11px 0 0}
-.chip{font:400 12.5px/1.4 "IBM Plex Sans Arabic",sans-serif;padding:7px 11px;border-radius:999px;
+.chip{font:400 12.5px/1.4 Sora,sans-serif;padding:7px 11px;border-radius:999px;
   border:1px solid var(--line-2);background:transparent;color:var(--ink-2);cursor:pointer;
-  text-align:start}
-.chip:hover{border-color:var(--hope);color:var(--hope)}
+  text-align:left}
+.chip:hover{border-color:var(--leen);color:var(--leen)}
 .row{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:14px 0 0}
-button{font-family:"IBM Plex Sans Arabic",sans-serif}
+button{font-family:Sora,sans-serif}
 .go{font-weight:600;font-size:14.5px;padding:12px 24px;border-radius:10px;border:0;cursor:pointer;
-  background:linear-gradient(135deg,var(--hope),var(--hope-2));color:#fff}
+  background:linear-gradient(135deg,var(--leen),var(--leen-2));color:#fff}
 .go:disabled{opacity:.42;cursor:not-allowed}
 .gh{font-weight:500;font-size:13px;padding:11px 14px;border-radius:10px;cursor:pointer;
   border:1px solid var(--line-2);background:transparent;color:var(--ink-2)}
-.gh:hover:not(:disabled){border-color:var(--hope);color:var(--hope)}
+.gh:hover:not(:disabled){border-color:var(--leen);color:var(--leen)}
 .gh:disabled{opacity:.42;cursor:not-allowed}
-.gh.on{background:var(--hope);border-color:var(--hope);color:#fff}
-button:focus-visible{outline:2px solid var(--hope);outline-offset:2px}
-.state{margin-inline-start:auto;font:500 12.5px/1.45 sans-serif;color:var(--ink-3);text-align:end}
+.gh.on{background:var(--leen);border-color:var(--leen);color:#fff}
+button:focus-visible{outline:2px solid var(--leen);outline-offset:2px}
+.state{margin-left:auto;font:500 12.5px/1.45 sans-serif;color:var(--ink-3);text-align:right}
 .state.err{color:var(--warn)}
 .mic{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;padding:0;flex:none}
 .mic svg{width:17px;height:17px;fill:currentColor}
 .mic.on{animation:mic 1.2s ease-in-out infinite}
-@keyframes mic{50%{box-shadow:0 0 0 7px color-mix(in oklab,var(--hope) 22%,transparent)}}
+@keyframes mic{50%{box-shadow:0 0 0 7px color-mix(in oklab,var(--leen) 22%,transparent)}}
 .sp button{width:28px;height:28px;border-radius:50%;padding:0;display:grid;place-items:center;
   border:1px solid var(--line-2);background:transparent;color:var(--ink-3);cursor:pointer}
 .sp button:hover:not(:disabled){border-color:currentColor}
-.sp button.on{background:var(--hope);border-color:var(--hope);color:#fff}
+.sp button.on{background:var(--leen);border-color:var(--leen);color:#fff}
 .sp button:disabled{opacity:.35;cursor:not-allowed}
 .sp svg{width:13px;height:13px;fill:currentColor}
 .note{background:var(--card);border:1px solid var(--warn);border-radius:12px;padding:13px 15px;
@@ -199,23 +225,23 @@ footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);
   color:var(--ink-3);font-size:12.5px;line-height:1.8}
 /* ===== live voice session ===== */
 .golive{font-weight:600;font-size:14px;padding:12px 18px;border-radius:10px;cursor:pointer;
-  border:1px solid var(--hope);background:transparent;color:var(--hope)}
-.golive.on{background:var(--hope);color:#fff;border-color:var(--hope)}
+  border:1px solid var(--leen);background:transparent;color:var(--leen)}
+.golive.on{background:var(--leen);color:#fff;border-color:var(--leen)}
 .golive:disabled{opacity:.4;cursor:not-allowed}
 .earbadge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 11px;
   border:1px solid var(--line);background:var(--card);
-  font:600 10px/1 sans-serif;letter-spacing:.1em;color:var(--ink-3);margin-inline-start:auto}
+  font:600 10px/1 sans-serif;letter-spacing:.1em;color:var(--ink-3);margin-left:auto}
 .earbadge i{width:6px;height:6px;border-radius:50%;background:var(--ink-3)}
 .earbadge[data-e=listening]{color:var(--ok);border-color:color-mix(in oklab,var(--ok) 45%,var(--line))}
 .earbadge[data-e=listening] i{background:var(--ok);animation:ear 1.1s ease-in-out infinite}
-.earbadge[data-e=thinking]{color:var(--hope);border-color:var(--hope)}
-.earbadge[data-e=thinking] i{background:var(--hope);animation:ear 1.1s ease-in-out infinite}
-.earbadge[data-e=speaking]{color:var(--layan);border-color:var(--layan)}
-.earbadge[data-e=speaking] i{background:var(--layan);animation:ear .7s ease-in-out infinite}
+.earbadge[data-e=thinking]{color:var(--leen);border-color:var(--leen)}
+.earbadge[data-e=thinking] i{background:var(--leen);animation:ear 1.1s ease-in-out infinite}
+.earbadge[data-e=speaking]{color:var(--rami);border-color:var(--rami)}
+.earbadge[data-e=speaking] i{background:var(--rami);animation:ear .7s ease-in-out infinite}
 @keyframes ear{50%{opacity:.25;transform:scale(1.5)}}
 @media (prefers-reduced-motion:reduce){.earbadge i{animation:none!important}}
 .runtime{font:500 10.5px/1.5 sans-serif;color:var(--ink-3);margin:9px 0 0;text-align:center}
-h2.sec .earbadge{margin-inline-start:auto}
+h2.sec .earbadge{margin-left:auto}
 h2.sec:has(.earbadge)::after{order:-1}
 
 /* phones: pull the outer nodes inward so their halo rings stay on screen */
@@ -225,11 +251,11 @@ h2.sec:has(.earbadge)::after{order:-1}
   .node .ring{width:52px;height:52px}
   .node svg{width:20px;height:20px}
   .node .ring::after{inset:-11px}
-  .n-hope{width:104px}
-  .n-hope .ring{width:82px;height:82px}
-  .n-hope svg{width:29px;height:29px}
-  .n-sofia{left:15%}.n-yara{left:85%}
-  .n-layan{left:24%}.n-wolf{left:76%}
+  .n-leen{width:104px}
+  .n-leen .ring{width:82px;height:82px}
+  .n-leen svg{width:29px;height:29px}
+  .n-majd{left:15%}.n-rabih{left:85%}
+  .n-rami{left:24%}.n-wolf{left:76%}
   textarea{min-height:108px}
 }
 [hidden]{display:none!important}
@@ -239,8 +265,8 @@ h2.sec:has(.earbadge)::after{order:-1}
   <div class="top">
     <span class="live"><i></i>LIVE</span>
     <p class="floor">Executive Floor</p>
-    <h1>غرفة المدراء</h1>
-    <p class="tag">عقول مختلفة. اتجاه واحد.<br>مدراء ذكاء اصطناعي بيحوّلو رؤيتك لواقع.</p>
+    <h1>The Managers Room</h1>
+    <p class="tag">Different minds. One direction.<br>Five specialists who hear each other out, then decide.</p>
   </div>
 
   <div id="note" class="note" hidden></div>
@@ -249,76 +275,81 @@ h2.sec:has(.earbadge)::after{order:-1}
     <div class="orbit"></div><div class="orbit two"></div>
   </div>
 
+  <div class="nowbar" id="nowbar" data-idle="true">
+    <div class="who"><b id="nowWho">ROOM</b><em id="nowRole">waiting to begin</em>
+      <span class="wave"><span></span><span></span><span></span><span></span></span></div>
+    <p class="cap" id="nowCap">Set a mission and the room will talk it through.</p>
+  </div>
+
   <div class="mission">
     <div class="dot"><span></span></div>
     <div>
-      <p class="lbl">المهمّة الحالية</p>
-      <p class="txt" id="missionTxt">الغرفة جاهزة — اكتب أو احكي لتبلّش.</p>
+      <p class="lbl">CURRENT MISSION</p>
+      <p class="txt" id="missionTxt">Room ready — type or speak to begin.</p>
     </div>
   </div>
 
   <div class="flowwrap">
     <div class="flowhead">
-      <h2>مسار الشغل</h2>
-      <span class="count" id="count">٠/٦ متحقّق</span>
+      <h2>LIVE TASK FLOW</h2>
+      <span class="count" id="count">0/6 verified</span>
     </div>
     <div class="flow" id="flow"></div>
   </div>
 
   <section class="composer">
-    <textarea id="q" spellcheck="true">يا بنات، راجعوا الهدف سوا. الطلبات من الطلاب اللبنانيين نازلة والـInstagram engagement واقف. نحوّل budget على TikTok للدورة الجاي؟</textarea>
+    <textarea id="q" spellcheck="true">Applications from Lebanese students are down and our Instagram engagement is flat. Should we move budget into TikTok for the next intake cycle?</textarea>
     <div class="chips" id="chips"></div>
     <p class="runtime" id="runtime"></p>
     <div class="row">
-      <button class="go" id="run">شغّل الغرفة</button>
-      <button class="gh mic" id="mic" title="احكي بدل ما تكتب" aria-label="احكي بدل ما تكتب">
+      <button class="go" id="run">Convene the room</button>
+      <button class="gh mic" id="mic" title="Start a voice session" aria-label="Start a voice session">
         <svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.9V22h2v-3.1A7 7 0 0 0 19 12h-2z"/></svg>
       </button>
-      <button class="gh" id="stop" hidden>إيقاف</button>
-      <button class="gh on" id="lang" aria-pressed="true">🔊 صوت</button>
-      <button class="golive" id="golive">🎙️ جلسة صوتية</button>
-      <button class="gh" id="playAll" disabled>▶ شغّل الجلسة كلها</button>
-      <span class="state" id="state">جاهزة</span>
+      <button class="gh" id="stop" hidden>Stop</button>
+      <button class="gh on" id="lang" aria-pressed="true">🔊 Sound on</button>
+      <button class="golive" id="golive">🎙️ Voice session</button>
+      <button class="gh" id="playAll" disabled>▶ Replay the meeting</button>
+      <span class="state" id="state">Ready</span>
     </div>
   </section>
 
-  <h2 class="sec">الحوار<span class="earbadge" id="ear" data-e="off"><i></i>OFF</span></h2>
-  <div class="conv" id="conv"><p style="color:var(--ink-3);font-size:14px">
-    HOPE: الغرفة جاهزة — احكي لتبلّش.</p></div>
+  <h2 class="sec">The conversation<span class="earbadge" id="ear" data-e="off"><i></i>OFF</span></h2>
+  <div class="conv" id="conv"><p style="color:var(--ink-3);font-size:14px">Nobody has spoken yet.</p></div>
 
-  <h2 class="sec">القرار — HOPE</h2>
+  <h2 class="sec">The decision — LEEN</h2>
   <div class="decision"><div class="body" id="decision"
-    style="color:var(--ink-3)">القرار بيطلع هون بعد ما المدراء يجاوبو.</div></div>
+    style="color:var(--ink-3)">The decision lands here once the room has talked it through.</div></div>
   <div class="verdict" id="verdict" hidden></div>
 
   <footer>
-    الأرقام المعطاة للمدراء مصدرها صفحات AUB الرسمية، وتقارير عن أزمة تمويل التعليم
-    العالي بلبنان (L'Orient Today، LCPS، Xinhua)، ومؤشرات التسويق الجامعي ٢٠٢٦
-    (Search Influence، RC Strategies، KEG/UCAS).
+    Figures briefed into the room come from AUB's own registrar and admissions pages,
+    reporting on Lebanon's higher-education funding crisis (L'Orient Today, LCPS,
+    Xinhua), and 2026 higher-education marketing benchmarks (Search Influence,
+    RC Strategies, KEG/UCAS).
     <br><br>
-    <strong>هيدي أداة بتساعد بالقرار، مش مرجع نهائي.</strong> خمس مدراء واثقين فيهن
-    يكونو غلط سوا. WOLF بيمسك جزء من هالخطر، بس مش كلّو — دقّق بأي رقم قبل ما يوصل
-    لـbudget حقيقي.
+    <strong>This supports a decision; it does not make one.</strong> Five confident
+    managers can be wrong together, and because they hear each other, later speakers
+    can anchor on earlier ones. WOLF catches some of that, not all of it — check any
+    number before it reaches a real budget.
   </footer>
 </div>
 
 <script type="module">
-import { ROSTER, ROSTER_BY_ID, HOST, VERIFIER,
-         hopePrompt, managerPrompt, synthesisPrompt, wolfPrompt } from "./roster.js";
+import { ROSTER, ROSTER_BY_ID, HOST, VERIFIER, openingPrompt, turnPrompt,
+         rebuttalPrompt, decisionPrompt, wolfPrompt } from "./roster.js";
 
 const $ = (id) => document.getElementById(id);
 const stateEl = $("state"), runBtn = $("run"), stopBtn = $("stop"), qEl = $("q");
-const AR = (n) => String(n).replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[d]);
 
 const GLYPH = {
-  leen:'<path d="M4 20V10M9 20V4M14 20v-7M19 20V8"/>',
-  sofia:'<path d="M20 4c0 8-5 13-12 13M20 4C10 4 5 8 5 13a4 4 0 0 0 4 4M4 21c2-4 5-6 9-7"/>',
-  yara:'<path d="M3 17l5-6 4 3 6-8M14 6h5v5"/>',
-  layan:'<path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17l9 5 9-5"/>',
+  bahaa:'<path d="M4 20V10M9 20V4M14 20v-7M19 20V8"/>',
+  majd:'<path d="M20 4c0 8-5 13-12 13M20 4C10 4 5 8 5 13a4 4 0 0 0 4 4M4 21c2-4 5-6 9-7"/>',
+  rabih:'<path d="M3 17l5-6 4 3 6-8M14 6h5v5"/>',
+  rami:'<path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17l9 5 9-5"/>',
   wolf:'<path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z"/><path d="M9 9l1.2 5L12 10l1.8 4L15 9"/>',
-  hope:'<path d="M9.5 14.5a3.5 3.5 0 0 1 0-5l1.8-1.8M14.5 9.5a3.5 3.5 0 0 1 0 5l-1.8 1.8"/><circle cx="12" cy="12" r="8.5"/>',
+  leen:'<path d="M9.5 14.5a3.5 3.5 0 0 1 0-5l1.8-1.8M14.5 9.5a3.5 3.5 0 0 1 0 5l-1.8 1.8"/><circle cx="12" cy="12" r="8.5"/>',
 };
-const LBL = { idle:"جاهزة", working:"عم تشتغل", done:"خلّصت", flagged:"عليها ملاحظة", failed:"ما زبطت" };
 
 /* ---------- transport ---------- */
 let sampleFn = null;
@@ -338,14 +369,17 @@ async function ask(prompt, { onText, signal, tier = "default", json = false } = 
   return json ? d.json : d.text;
 }
 const ERRS = {
-  not_granted:"رفضت الإذن، فالغرفة ما فيها تشتغل. عيد تحميل الصفحة لتنسأل مرة تانية.",
-  sampling_disabled:"Claude مش متاح على هالحساب.", rate_limited:"طلبات كتير. استنى دقيقة وعيد.",
-  session_expired:"انتهت الجلسة — سجّل دخول من جديد.", refused:"انرفض الطلب. جرّب تغيّر الصياغة.",
-  invalid_json:"ما قدرت اقرا رد التوزيع. جرّب مرة تانية.",
-  prompt_too_large:"الطلب طويل كتير. قصّرو.", empty_completion:"ما إجا جواب. كون أوضح.",
-  cancelled:"وقّفنا.",
+  not_granted:"You declined Claude access, so the room cannot meet. Reload to be asked again.",
+  sampling_disabled:"Claude is not available on this account.",
+  rate_limited:"Too many requests. Wait a minute, then convene again.",
+  session_expired:"Your session expired — sign in again.",
+  refused:"Claude declined that request. Try rephrasing it.",
+  invalid_json:"Could not read that reply. Try again.",
+  prompt_too_large:"That mission is too long. Shorten it.",
+  empty_completion:"No answer came back. Try something more specific.",
+  cancelled:"Stopped.",
 };
-const errCopy = (e) => ERRS[e?.code] || e?.message || "صار خطأ. جرّب مرة تانية.";
+const errCopy = (e) => ERRS[e?.code] || e?.message || "Something went wrong. Try again.";
 
 /* ---------- markdown ---------- */
 const esc = (s)=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -366,41 +400,44 @@ function md(t){
 }
 
 /* ---------- voices ---------- */
-const synth = window.speechSynthesis;
-let vAr=[], vEn=[], sound=true;
+const synth=window.speechSynthesis;
+let voices=[], sound=true;
 async function loadVoices(){
   if(!synth) return;
-  const grab=()=>{const a=synth.getVoices();vAr=a.filter(v=>/^ar/i.test(v.lang));
-    vEn=a.filter(v=>/^en/i.test(v.lang));return vAr.length||vEn.length;};
-  if(grab())return;
+  const grab=()=>{const a=synth.getVoices();
+    voices=a.filter(v=>/^en/i.test(v.lang)); return voices.length;};
+  if(grab()) return;
   await new Promise(r=>{const t=setTimeout(r,1500);
     synth.addEventListener("voiceschanged",()=>{clearTimeout(t);r();},{once:true});});
   grab();
 }
-const PITCH={leen:1.10,sofia:0.88,yara:1.16,layan:0.94,hope:1.02,wolf:0.78};
-const RATE ={leen:0.96,sofia:0.93,yara:0.98,layan:0.94,hope:0.95,wolf:0.90};
-function speakable(m){return String(m||"").replace(/```[\s\S]*?```/g," ")
-  .replace(/\[(.*?)\]\(.*?\)/g,"$1").replace(/[*_`#>|]/g,"").replace(/\s+/g," ").trim();}
+/* Deterministic per person, so BAHAA sounds like BAHAA every meeting, and
+   pitch/rate vary too in case the device ships only one voice. */
+const ORDER=["bahaa","majd","rabih","rami","leen","wolf"];
+const PITCH={bahaa:1.08,majd:0.86,rabih:1.16,rami:0.92,leen:1.02,wolf:0.74};
+const RATE ={bahaa:0.99,majd:0.96,rabih:1.02,rami:0.97,leen:0.98,wolf:0.92};
+const speakable=(m)=>String(m||"").replace(/```[\s\S]*?```/g," ")
+  .replace(/\[(.*?)\]\(.*?\)/g,"$1").replace(/[*_`#>|]/g,"").replace(/\s+/g," ").trim();
 let tok=0;
 function hush(){tok++;try{synth?.cancel();}catch{}
   document.querySelectorAll(".sp button.on").forEach(b=>b.classList.remove("on"));}
-function chunk(t){const p=t.match(/[^.!?،؟]+[.!?،؟]*\s*/g)||[t];const o=[];let b="";
-  for(const c of p){if((b+c).length>150&&b){o.push(b);b=c;}else b+=c;}
+function chunk(t){const parts=t.match(/[^.!?]+[.!?]*\s*/g)||[t];const o=[];let b="";
+  for(const c of parts){if((b+c).length>160&&b){o.push(b);b=c;}else b+=c;}
   if(b.trim())o.push(b);return o;}
-function speakOne(text,id,btn){
+/* onChunk lets the caption bar track the voice sentence by sentence. */
+function speakOne(text,id,btn,onChunk){
   return new Promise(res=>{
-    if(!synth||!sound) return res();
-    const mine=tok, pool=vAr.length?vAr:vEn;
-    if(!pool.length) return res();
-    const keys=Object.keys(PITCH), i=Math.max(0,keys.indexOf(id));
-    const v=pool[i%pool.length];
+    if(!synth||!sound||!voices.length) return res();
+    const mine=tok, i=Math.max(0,ORDER.indexOf(id)), v=voices[i%voices.length];
     const pieces=chunk(speakable(text)); if(!pieces.length) return res();
     btn?.classList.add("on");
     let k=0;
     const next=()=>{
       if(mine!==tok||k>=pieces.length){btn?.classList.remove("on");return res();}
-      const u=new SpeechSynthesisUtterance(pieces[k++]);
-      u.voice=v; u.lang=v.lang; u.pitch=PITCH[id]??1; u.rate=(RATE[id]??1);
+      const piece=pieces[k++];
+      onChunk?.(piece);
+      const u=new SpeechSynthesisUtterance(piece);
+      u.voice=v; u.lang=v.lang; u.pitch=PITCH[id]??1; u.rate=RATE[id]??1;
       u.onend=next; u.onerror=()=>{btn?.classList.remove("on");res();};
       synth.speak(u);
     };
@@ -409,7 +446,13 @@ function speakOne(text,id,btn){
 }
 async function speakSeq(items){
   hush(); const mine=++tok;
-  for(const it of items){ if(mine!==tok) return; tok=mine; await speakOne(it.text,it.id,it.btn); }
+  for(const it of items){
+    if(mine!==tok) return;
+    tok=mine;
+    floor(it.id,"speaking");
+    await speakOne(it.text,it.id,it.btn,(c)=>cap(c));
+  }
+  if(mine===tok) clearFloor();
 }
 function spBtn(label){
   const b=document.createElement("button"); b.type="button"; b.disabled=true;
@@ -419,107 +462,174 @@ function spBtn(label){
 }
 
 /* ---------- the room ---------- */
-const NODES=[...ROSTER.map(m=>({id:m.id,display:m.display,cls:"n-"+m.id})),
-  {id:"wolf",display:"WOLF",cls:"n-wolf"},{id:"hope",display:"HOPE",cls:"n-hope"}];
+const ALL=[...ROSTER,{id:"wolf",display:"WOLF",title:VERIFIER.title},
+           {id:"leen",display:"LEEN",title:HOST.title}];
+const META=Object.fromEntries(ALL.map(m=>[m.id,m]));
+const LBL={idle:"standing by",working:"thinking",speaking:"speaking",
+           done:"spoke",flagged:"flagged",failed:"unavailable"};
 const nodeEl={};
-for(const n of NODES){
+for(const n of ALL){
   const d=document.createElement("div");
-  d.className="node "+n.cls; d.dataset.s="idle";
+  d.className="node n-"+n.id; d.dataset.s="idle";
   d.innerHTML=`<div class="ring"><svg viewBox="0 0 24 24">${GLYPH[n.id]}</svg></div>
     <b>${n.display}</b><span class="st"><i></i><span class="lb">${LBL.idle}</span></span>`;
   $("stage").append(d); nodeEl[n.id]=d;
 }
-function node(id,s){const e=nodeEl[id];if(!e)return;e.dataset.s=s;
-  e.querySelector(".lb").textContent=LBL[s]||s;}
+function node(id,st){const e=nodeEl[id];if(!e)return;e.dataset.s=st;
+  e.querySelector(".lb").textContent=LBL[st]||st;}
 
-const STEPS=[{id:"you",display:"انت",sub:"حدّد الاتجاه"},
+/* who currently has the floor — the visible answer to "who is talking" */
+let floorCard=null;
+function floor(id,st="speaking"){
+  if(!id) return clearFloor();
+  const m=META[id]; if(!m) return;
+  for(const n of ALL) if(n.id!==id&&nodeEl[n.id].dataset.s==="speaking") node(n.id,"done");
+  node(id,st);
+  const bar=$("nowbar");
+  bar.dataset.idle="false";
+  bar.className="nowbar m-"+id;
+  $("nowWho").textContent=m.display;
+  $("nowRole").textContent=st==="working"?"thinking…":m.title;
+  document.querySelectorAll(".msg.hasfloor").forEach(e=>e.classList.remove("hasfloor"));
+  if(floorCard) floorCard.classList.add("hasfloor");
+}
+function cap(t){ $("nowCap").textContent=t; }
+function clearFloor(){
+  const bar=$("nowbar"); bar.dataset.idle="true"; bar.className="nowbar";
+  $("nowWho").textContent="ROOM"; $("nowRole").textContent="waiting";
+  document.querySelectorAll(".msg.hasfloor").forEach(e=>e.classList.remove("hasfloor"));
+  floorCard=null;
+  for(const n of ALL) if(nodeEl[n.id].dataset.s==="speaking") node(n.id,"done");
+}
+
+const STEPS=[{id:"you",display:"YOU",sub:"set direction"},
   ...ROSTER.map(m=>({id:m.id,display:m.display,sub:m.title})),
-  {id:"wolf",display:"WOLF",sub:"التحقّق"}];
+  {id:"wolf",display:"WOLF",sub:"verification"}];
 const stepEl={};
-for(const s of STEPS){
+for(const st of STEPS){
   const d=document.createElement("div"); d.className="step"; d.dataset.s="idle";
-  d.innerHTML=`<b>${s.display}</b><span>${s.sub}</span>`;
-  $("flow").append(d); stepEl[s.id]=d;
+  d.innerHTML=`<b>${st.display}</b><span>${st.sub}</span>`;
+  $("flow").append(d); stepEl[st.id]=d;
 }
 let verified=0;
-function step(id,s){const e=stepEl[id];if(!e)return;
-  const was=e.dataset.s; e.dataset.s=s;
-  if(s==="done"&&was!=="done"){verified++; $("count").textContent=`${AR(verified)}/٦ متحقّق`;}
-}
+function step(id,st){const e=stepEl[id];if(!e)return;const was=e.dataset.s;e.dataset.s=st;
+  if(st==="done"&&was!=="done"){verified++;$("count").textContent=`${verified}/6 verified`;}}
 
-function msg(id,display,title,q){
+function bubble(id,display,title){
   const el=document.createElement("div");
   el.className="msg m-"+id;
   el.innerHTML=`<header><b>${display}</b><em>${title}</em><span class="sp"></span></header>
-    ${q?'<p class="q"></p>':""}<div class="body cursor"></div>`;
-  if(q) el.querySelector(".q").textContent=q;
-  if(synth){const b=spBtn("اسمع "+display); el.querySelector(".sp").append(b); el._sp=b;}
+    <div class="body cursor"></div>`;
+  if(synth){const b=spBtn("Hear "+display); el.querySelector(".sp").append(b); el._sp=b;}
   $("conv").append(el);
+  el.scrollIntoView({behavior:"smooth",block:"center"});
   return el;
 }
 
-/* ---------- run ---------- */
-let ctl=null, playlist=[];
+/* ---------- one speaking turn ---------- */
+let ctl=null, playlist=[], transcript=[];
+async function turn(m,mission,nudge,signal){
+  node(m.id,"working"); step(m.id,"working");
+  const el=bubble(m.id,m.display,m.title);
+  floorCard=el; floor(m.id,"working"); cap("…");
+  const body=el.querySelector(".body");
+  try{
+    const text=await ask(turnPrompt(m,mission,transcript,nudge),
+      {signal,tier:"default",onText:({text})=>{
+        body.innerHTML=md(text);
+        cap(text.slice(-190));            // live caption follows the writing
+      }});
+    body.classList.remove("cursor"); body.innerHTML=md(text);
+    transcript.push({who:m.display,text});
+    if(el._sp){el._sp.disabled=false;
+      el._sp.onclick=()=>speakSeq([{text,id:m.id,btn:el._sp}]);}
+    node(m.id,"done"); step(m.id,"done");
+    if(sound&&voices.length){ floor(m.id,"speaking");
+      await speakOne(text,m.id,null,(c)=>cap(c)); }
+    node(m.id,"done");
+    return {m,text,btn:el._sp};
+  }catch(e){
+    body.classList.remove("cursor");
+    if(e?.code==="cancelled") throw e;
+    body.innerHTML=md(`_${errCopy(e)}_`);
+    node(m.id,"failed"); step(m.id,"idle");
+    return null;
+  }
+}
+
 async function convene(auto=false){
   const mission=qEl.value.trim();
-  if(!mission){stateEl.textContent="اكتب المهمّة أول شي.";return;}
-  if(auto) ear("thinking");
+  if(!mission){stateEl.textContent="Set a mission first.";return;}
   ctl=new AbortController(); const signal=ctl.signal;
   runBtn.disabled=true; stopBtn.hidden=false; stateEl.className="state";
-  hush(); playlist=[]; $("playAll").disabled=true;
-  verified=0; $("count").textContent="٠/٦ متحقّق";
-  for(const s of STEPS) step(s.id,"idle");
-  for(const n of NODES) node(n.id,"idle");
+  hush(); playlist=[]; transcript=[]; $("playAll").disabled=true;
+  verified=0; $("count").textContent="0/6 verified";
+  for(const st of STEPS) step(st.id,"idle");
+  for(const n of ALL) node(n.id,"idle");
   $("conv").textContent=""; $("verdict").hidden=true;
   $("decision").style.color=""; $("decision").innerHTML="";
   $("missionTxt").textContent=mission;
   step("you","done");
+  if(auto) ear("thinking");
 
   try{
-    node("hope","working"); stateEl.textContent="HOPE عم توزّع الشغل…";
-    let picks=await ask(hopePrompt(mission),{signal,tier:"quick",json:true});
-    if(!Array.isArray(picks)) throw {code:"invalid_json"};
-    picks=picks.map(p=>({m:ROSTER_BY_ID[String(p?.manager||"").toLowerCase()],
-                         task:String(p?.task||"").trim()}))
-               .filter(p=>p.m&&p.task);
-    if(!picks.length) throw {code:"invalid_json"};
-    node("hope","done");
+    /* LEEN opens the room out loud. */
+    node("leen","working"); floor("leen","working"); cap("…");
+    stateEl.textContent="LEEN is opening the meeting…";
+    const opening=await ask(openingPrompt(mission),{signal,tier:"quick"});
+    const oEl=bubble("leen","LEEN",HOST.title); floorCard=oEl; floor("leen","working");
+    oEl.querySelector(".body").classList.remove("cursor");
+    oEl.querySelector(".body").innerHTML=md(opening);
+    if(oEl._sp){oEl._sp.disabled=false;
+      oEl._sp.onclick=()=>speakSeq([{text:opening,id:"leen",btn:oEl._sp}]);}
+    transcript.push({who:"LEEN",text:opening});
+    node("leen","done");
+    if(sound&&voices.length){floor("leen","speaking");
+      await speakOne(opening,"leen",null,(c)=>cap(c));}
 
-    stateEl.textContent=`${AR(picks.length)} مدراء عم يشتغلو…`;
-    for(const p of picks){node(p.m.id,"working");step(p.m.id,"working");}
-    const results=await Promise.all(picks.map(async p=>{
-      const el=msg(p.m.id,p.m.display,p.m.title,p.task);
-      const body=el.querySelector(".body");
-      try{
-        const text=await ask(managerPrompt(p.m,p.task),
-          {signal,tier:"default",onText:({text})=>{body.innerHTML=md(text);}});
-        body.classList.remove("cursor"); body.innerHTML=md(text);
-        node(p.m.id,"done"); step(p.m.id,"done");
-        if(el._sp){el._sp.disabled=false;
-          el._sp.onclick=()=>speakSeq([{text,id:p.m.id,btn:el._sp}]);}
-        return {...p,answer:text,btn:el._sp};
-      }catch(e){
-        body.classList.remove("cursor");
-        if(e?.code==="cancelled") throw e;
-        body.innerHTML=md(`_${errCopy(e)}_`);
-        node(p.m.id,"failed"); step(p.m.id,"idle");
-        return null;
-      }
-    }));
-    const good=results.filter(Boolean);
-    if(!good.length) throw {code:"upstream_error"};
+    /* Round one: each manager speaks in turn, hearing everyone before them. */
+    const spoke=[];
+    for(const m of ROSTER){
+      if(signal.aborted) throw {code:"cancelled"};
+      stateEl.textContent=`${m.display} has the floor…`;
+      const r=await turn(m,mission,null,signal);
+      if(r) spoke.push(r);
+    }
+    if(!spoke.length) throw {code:"upstream_error"};
 
-    node("hope","working"); stateEl.textContent="HOPE عم تكتب القرار…";
+    /* Round two: LEEN presses whoever was actually challenged. */
+    stateEl.textContent="LEEN is looking for the real disagreement…";
+    let backs=[];
+    try{
+      const picked=await ask(rebuttalPrompt(mission,transcript),{signal,tier:"quick",json:true});
+      if(Array.isArray(picked)) backs=picked
+        .map(x=>({m:ROSTER_BY_ID[String(x?.manager||"").toLowerCase()],
+                  nudge:String(x?.nudge||"").trim()}))
+        .filter(x=>x.m&&x.nudge).slice(0,2);
+    }catch(e){ if(e?.code==="cancelled") throw e; }
+    for(const b of backs){
+      if(signal.aborted) throw {code:"cancelled"};
+      stateEl.textContent=`${b.m.display} answers back…`;
+      const r=await turn(b.m,mission,b.nudge,signal);
+      if(r) spoke.push(r);
+    }
+
+    /* LEEN closes. */
+    node("leen","working"); floor("leen","working"); floorCard=null;
+    stateEl.textContent="LEEN is calling it…";
     const dec=$("decision"); dec.classList.add("cursor");
-    const payload=good.map(g=>({display:g.m.display,title:g.m.title,task:g.task,answer:g.answer}));
-    const decision=await ask(synthesisPrompt(mission,payload),
-      {signal,tier:"default",onText:({text})=>{dec.innerHTML=md(text);}});
+    const decision=await ask(decisionPrompt(mission,transcript),
+      {signal,tier:"default",onText:({text})=>{dec.innerHTML=md(text);cap(text.slice(-190));}});
     dec.classList.remove("cursor"); dec.innerHTML=md(decision);
-    node("hope","done");
+    node("leen","done");
+    if(sound&&voices.length){floor("leen","speaking");
+      await speakOne(decision,"leen",null,(c)=>cap(c));}
 
-    node("wolf","working"); step("wolf","working"); stateEl.textContent="WOLF عم يتحقّق…";
+    /* WOLF verifies before it is called ready. */
+    node("wolf","working"); step("wolf","working"); floor("wolf","working");
+    stateEl.textContent="WOLF is verifying…";
     let v=null;
-    try{ v=await ask(wolfPrompt(mission,payload,decision),{signal,tier:"default",json:true}); }
+    try{ v=await ask(wolfPrompt(mission,transcript,decision),{signal,tier:"default",json:true}); }
     catch(e){ if(e?.code==="cancelled") throw e; }
     const box=$("verdict");
     if(v&&typeof v==="object"){
@@ -527,7 +637,7 @@ async function convene(auto=false){
       box.hidden=false; box.dataset.v=ready?"ready":"blocked";
       const flags=Array.isArray(v.flags)?v.flags:[];
       box.innerHTML=`<header><b>WOLF</b><span style="font-size:12.5px;color:var(--ink-3)">
-        ${VERIFIER.title}</span><span class="stamp">${ready?"جاهز":"موقوف"}</span></header>
+        ${VERIFIER.title}</span><span class="stamp">${ready?"READY":"BLOCKED"}</span></header>
         <p style="margin:0 0 6px">${esc(String(v.summary||""))}</p>`;
       for(const f of flags.slice(0,6)){
         const d=document.createElement("div");
@@ -536,28 +646,26 @@ async function convene(auto=false){
         box.append(d);
       }
       node("wolf",ready?"done":"flagged"); step("wolf","done");
-      for(const f of flags) if(nodeEl[String(f?.who||"").toLowerCase()])
-        node(String(f.who).toLowerCase(),"flagged");
-      stateEl.textContent=ready?"القرار جاهز":"WOLF وقّف القرار";
-      if(synth){
-        playlist=good.map(g=>({text:`${g.m.display}. ${g.answer}`,id:g.m.id,btn:g.btn}))
-          .concat([{text:`قرار HOPE. ${decision}`,id:"hope",btn:null},
-                   {text:`WOLF. ${v.summary||""}`,id:"wolf",btn:null}]);
-        $("playAll").disabled=false;
-      }
-      if(auto&&live){
-        ear("speaking");
-        await speakSeq([{text:decision,id:"hope",btn:null},
-                        {text:`WOLF. ${v.summary||""}`,id:"wolf",btn:null}]);
-      }
-    } else {
-      node("wolf","failed"); stateEl.textContent="القرار جاهز (WOLF ما تحقّق)";
-      if(auto&&live){ ear("speaking"); await speakSeq([{text:decision,id:"hope",btn:null}]); }
+      for(const f of flags){const k=String(f?.who||"").toLowerCase();
+        if(nodeEl[k]&&k!=="wolf") node(k,"flagged");}
+      stateEl.textContent=ready?"Decision ready":"WOLF blocked the decision";
+      if(sound&&voices.length){ floor("wolf","speaking");
+        await speakOne(String(v.summary||""),"wolf",null,(c)=>cap(c)); }
+      playlist=[{text:opening,id:"leen",btn:null}]
+        .concat(spoke.map(g=>({text:`${g.m.display}. ${g.text}`,id:g.m.id,btn:g.btn})))
+        .concat([{text:decision,id:"leen",btn:null},
+                 {text:`WOLF. ${v.summary||""}`,id:"wolf",btn:null}]);
+      if(synth) $("playAll").disabled=false;
+    }else{
+      node("wolf","failed");
+      stateEl.textContent="Decision ready (WOLF did not verify)";
     }
+    clearFloor();
   }catch(e){
     stateEl.className=e?.code==="cancelled"?"state":"state err";
     stateEl.textContent=errCopy(e);
     $("decision").classList.remove("cursor");
+    clearFloor();
   }finally{
     runBtn.disabled=false; stopBtn.hidden=true; ctl=null;
     if(live) resumeEar(); else ear("off");
@@ -565,23 +673,20 @@ async function convene(auto=false){
 }
 
 /* ---------- hands-free session ----------
-   The room listens continuously, submits on a pause, answers out loud, then
-   listens again. Recognition is suspended while we speak, otherwise the page
-   hears its own voice and talks to itself. */
+   The room listens, submits on a pause, talks it through out loud, then listens
+   again. Recognition is suspended while the page speaks, or the mic hears the
+   room's own voices and the meeting answers itself. */
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 let live=false, rec=null, recOn=false, suspended=false, quiet=null, heard="";
 let fails=0; const MAX_FAILS=4;
 const EAR={off:"OFF",listening:"LISTENING",thinking:"THINKING",speaking:"SPEAKING"};
 function ear(st){
-  const e=$("ear");
-  e.dataset.e=st;
-  e.textContent="";
+  const e=$("ear"); e.dataset.e=st; e.textContent="";
   e.append(document.createElement("i"), EAR[st]||st);
 }
-
 function startEar(){
   if(!SR||!live||suspended||recOn) return;
-  rec=new SR(); rec.lang="ar-LB"; rec.continuous=true; rec.interimResults=true;
+  rec=new SR(); rec.lang="en-US"; rec.continuous=true; rec.interimResults=true;
   rec.onstart=()=>{recOn=true; if(!suspended) ear("listening");};
   rec.onresult=(ev)=>{
     let interim="",fin="";
@@ -589,116 +694,111 @@ function startEar(){
       const r=ev.results[i];
       if(r.isFinal) fin+=r[0].transcript; else interim+=r[0].transcript;
     }
-    if(fin||interim) fails=0;          // hearing again: forget past blips
+    if(fin||interim) fails=0;
     if(fin) heard+=fin+" ";
     const shown=(heard+interim).trim();
     if(shown){ qEl.value=shown; $("missionTxt").textContent=shown; }
     clearTimeout(quiet);
-    if(heard.trim()) quiet=setTimeout(submitHeard,1700);   // a pause means "done"
+    if(heard.trim()) quiet=setTimeout(submitHeard,1700);
   };
   rec.onerror=(ev)=>{
     const e=ev.error;
-    if(e==="no-speech"||e==="aborted") return;          // routine, not a failure
-    if(e==="not-allowed"||e==="service-not-allowed"){   // only a denial really ends it
+    if(e==="no-speech"||e==="aborted") return;
+    if(e==="not-allowed"||e==="service-not-allowed"){
       stateEl.className="state err";
-      stateEl.textContent="ما في إذن للمايك. افتح إعدادات الموقع وسمّح للمايكروفون.";
+      stateEl.textContent="No microphone permission. Allow the mic in site settings.";
       endLive(); return;
     }
-    /* network and audio-capture blips are common mid-session (Chrome's
-       recognition is cloud-backed). Back off and retry rather than dropping
-       the room on the first hiccup. */
     fails++;
     if(fails>=MAX_FAILS){
       stateEl.className="state err";
-      stateEl.textContent="تعذّر الاستماع. تأكّد من الإنترنت والمايك وجرّب من جديد.";
+      stateEl.textContent="Could not keep listening. Check the mic and connection, then try again.";
       endLive(); return;
     }
     stateEl.className="state";
-    stateEl.textContent=`انقطع السمع — عم جرّب من جديد (${AR(fails)}/${AR(MAX_FAILS)})…`;
+    stateEl.textContent=`Listening dropped — retrying (${fails}/${MAX_FAILS})…`;
   };
-  rec.onend=()=>{ recOn=false;
-    if(!live||suspended) return;
-    setTimeout(startEar, fails?600*fails:350);   // Chrome ends it on its own
-  };
+  rec.onend=()=>{ recOn=false; if(!live||suspended) return;
+    setTimeout(startEar, fails?600*fails:350); };
   try{ rec.start(); }catch{ recOn=false; }
 }
-function suspendEar(){ suspended=true; clearTimeout(quiet);
-  try{ rec?.stop(); }catch{} }
+function suspendEar(){ suspended=true; clearTimeout(quiet); try{rec?.stop();}catch{} }
 function resumeEar(){ if(!live) return; suspended=false; heard="";
   setTimeout(startEar,400); ear("listening"); }
 function endLive(){
   live=false; suspended=false; clearTimeout(quiet); heard=""; fails=0;
-  try{ rec?.stop(); }catch{} rec=null; recOn=false;
-  $("golive").classList.remove("on"); $("golive").textContent="🎙️ جلسة صوتية";
+  try{rec?.stop();}catch{} rec=null; recOn=false;
+  $("golive").classList.remove("on"); $("golive").textContent="🎙️ Voice session";
   $("runtime").textContent=""; ear("off");
 }
 function submitHeard(){
   const text=heard.trim(); heard="";
-  if(text.length<6){ return; }        // a cough is not a mission
-  suspendEar(); qEl.value=text;
-  convene(true);
+  if(text.length<6) return;
+  suspendEar(); qEl.value=text; convene(true);
 }
 if(SR){
   $("golive").onclick=()=>{
-    if(live){ endLive(); stateEl.className="state"; stateEl.textContent="وقفت الجلسة"; return; }
+    if(live){ endLive(); stateEl.className="state"; stateEl.textContent="Session closed"; return; }
     live=true; heard=""; fails=0;
-    $("golive").classList.add("on"); $("golive").textContent="⏹ سكّر الجلسة";
+    $("golive").classList.add("on"); $("golive").textContent="⏹ End session";
     $("runtime").textContent="Private runtime ready · Hands-free listening";
-    stateEl.className="state"; stateEl.textContent="احكي — بسمعك";
+    stateEl.className="state"; stateEl.textContent="Speak — the room is listening";
     ear("listening"); startEar();
   };
 }else{
-  $("golive").disabled=true;
-  $("golive").title="متصفحك ما بيدعم الإدخال الصوتي — جرّب Chrome";
+  $("golive").disabled=true; $("mic").disabled=true;
+  $("golive").title="This browser has no speech input — try Chrome";
 }
-$("mic").onclick=()=>$("golive").click();   // the mic is a shortcut to the session
-if(!SR) $("mic").disabled=true;
+$("mic").onclick=()=>$("golive").click();
 
 /* ---------- boot ---------- */
 const CHIPS=[
-  "يا بنات، راجعوا الهدف سوا. الطلبات من الطلاب اللبنانيين نازلة والـInstagram engagement واقف. نحوّل budget على TikTok للدورة الجاي؟",
-  "عنّا ٦٠ ألف دولار لبرامج MSFEA للدراسات العليا. وين نحطّهن؟",
-  "طلبات الخليج نزلت ٣٠٪ هالسنة. شو منعمل قبل الدورة الجاي؟",
-  "ننشر السعر بعد الـfinancial aid على صفحات البرامج بدل القسط الكامل؟",
+  "Applications from Lebanese students are down and our Instagram engagement is flat. Should we move budget into TikTok for the next intake cycle?",
+  "We have $60k to promote MSFEA graduate programs for Fall. Where should it go?",
+  "Gulf applications dropped 30% this year. What do we do before the next cycle?",
+  "Should we publish net prices after aid on the programs pages instead of list tuition?",
 ];
 for(const c of CHIPS){
   const b=document.createElement("button"); b.className="chip"; b.type="button";
-  b.textContent=c.length>52?c.slice(0,50)+"…":c; b.title=c;
+  b.textContent=c.length>58?c.slice(0,56)+"…":c; b.title=c;
   b.onclick=()=>{qEl.value=c;qEl.focus();};
   $("chips").append(b);
 }
 runBtn.onclick=()=>convene(false);
-stopBtn.onclick=()=>{ctl?.abort();hush();if(live)endLive();};
+stopBtn.onclick=()=>{ctl?.abort();hush();clearFloor();if(live)endLive();};
 $("playAll").onclick=()=>speakSeq(playlist);
 $("lang").onclick=()=>{
-  sound=!sound; if(!sound)hush();
+  sound=!sound; if(!sound){hush();clearFloor();}
   $("lang").classList.toggle("on",sound);
   $("lang").setAttribute("aria-pressed",String(sound));
-  $("lang").textContent=sound?"🔊 صوت":"🔇 بلا صوت";
+  $("lang").textContent=sound?"🔊 Sound on":"🔇 Sound off";
 };
 if(synth) loadVoices().then(()=>{
-  if(!vAr.length&&!vEn.length){ $("lang").disabled=true;
-    $("playAll").title="ما في أصوات مركّبة على هالمتصفح"; }
+  if(!voices.length){
+    $("lang").disabled=true;
+    $("playAll").title="No speech voices installed in this browser";
+  }
 });
 window.addEventListener("pagehide",hush);
 
 (async()=>{
   if(window.claude?.use){
     sampleFn=await window.claude.use("sample").catch(()=>null);
-    if(sampleFn){stateEl.textContent="جاهزة";return;}
+    if(sampleFn){stateEl.textContent="Ready";return;}
   }
   try{
     const r=await fetch("/api/ask",{method:"POST",
       headers:{"content-type":"application/json"},body:JSON.stringify({ping:true})});
-    if(r.ok){stateEl.textContent="جاهزة";return;}
+    if(r.ok){stateEl.textContent="Ready";return;}
     throw new Error("no api");
   }catch{
     runBtn.disabled=true;
     const n=$("note"); n.hidden=false;
-    n.innerHTML="<strong>الغرفة ما فيها تجتمع من هون.</strong> هالصفحة بدها يا "
-      +"runtime تبع Claude، يا function مرفوعة على <code>/api/ask</code> مع "
-      +"<code>ANTHROPIC_API_KEY</code>. كل شي تاني بالصفحة شغّال.";
-    stateEl.className="state err"; stateEl.textContent="ما في وصول للموديل";
+    n.innerHTML="<strong>The room cannot meet from here.</strong> This page needs "
+      +"either the Claude artifact runtime, or a deployed <code>/api/ask</code> "
+      +"function with <code>ANTHROPIC_API_KEY</code> set. Everything else on the "
+      +"page is real — only the model calls are unavailable.";
+    stateEl.className="state err"; stateEl.textContent="No model access";
   }
 })();
 </script>

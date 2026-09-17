@@ -8,93 +8,43 @@ then adjudicates where they disagree.
 
 ## The room
 
-Named after the room in the original post: LEEN, SOFIA, YARA, HOPE, LAYAN — with
-WOLF in WOLF.
-
-| Manager | Owns |
+| | |
 |---|---|
-| **LEEN** | Student recruitment — Lebanese feeder schools, Gulf and diaspora families, inquiry→deposit funnel |
-| **SOFIA** | Digital & paid media — channel mix, creative, budget, cost per enrolled student |
-| **YARA** | Graduate & research recruitment — MSFEA pipelines, GA/GRA/Fellowship funding as the real lever |
-| **HOPE** | Brand, reputation & risk — the counterweight to short-term enrollment tactics |
-| **LAYAN** | Affordability & financial aid — net price vs list price, aid nobody hears about |
-
-`WOLF` orchestrates: routes, then synthesises. The post's roster is five plus
-WOLF, so domestic and diaspora recruitment sit together under LEEN; split them
-back into two managers in `roster.js` if that tension matters to you.
-
-## Live voice session
-
-The 🎙️ button opens a hands-free session, the way the reference post does it.
-The room listens continuously, submits when you pause for about 1.7 seconds,
-runs, answers out loud, then listens again. A badge on the conversation header
-tracks the cycle: LISTENING → THINKING → SPEAKING → LISTENING.
-
-Two details that matter more than they look:
-
-- **Recognition is suspended while the page speaks.** Otherwise the microphone
-  hears the synthesised voice and the room starts answering itself.
-- **A transient error does not end the session.** Chrome's recognition is
-  cloud-backed, so `network` and `audio-capture` blips happen mid-session. Those
-  retry with backoff and a visible counter, and a clean result resets the count.
-  Only a real permission denial (`not-allowed` / `service-not-allowed`) ends the
-  session immediately; repeated failures give up after four with a message that
-  says what to check.
-
-Speech input runs at `ar-LB`, which Chrome does accept as a recognition locale
-even though no system ships an ar-LB *playback* voice.
-
-## Hearing them — in Lebanese
-
-Every manager has a distinct voice, and by default **they speak Lebanese Arabic**.
-Once a manager reports, a speaker button appears on their card; when the brief
-lands, **Play the whole meeting** reads the session end to end — each manager in
-their own voice, then WOLF. The 🇱🇧 button switches between Lebanese and English.
-
-Lebanese playback works in two steps: the answer is rendered into spoken Lebanese
-dialect (numbers preserved exactly, English marketing terms left in English the
-way people actually mix them in Beirut), then spoken through an Arabic system
-voice. Renderings are cached per run, so replaying a manager costs nothing.
-
-**One honest limitation.** No mainstream operating system ships a Lebanese-accent
-TTS voice — Arabic voices are `ar-SA`, occasionally `ar-EG`. So the *words* are
-Lebanese; the *accent* is whatever Arabic voice the device has. The page reports
-exactly which voices it found rather than pretending. If no Arabic voice is
-installed it says so and points you at the English toggle instead of playing
-silence.
-
-Playback runs on the browser's Web Speech API, so it costs nothing and needs no
-service. Voice assignment is deterministic per manager, so LEEN sounds like LEEN
-on every run; pitch and rate vary too, so they stay distinguishable on a device
-that ships only one voice. Long answers are queued in sentence-sized chunks
-because Chrome silently drops utterances longer than about fifteen seconds.
+| **BAHAA** | Evidence & numbers — measurement, attribution, what can actually be proven |
+| **MAJD** | Growth path — channels, paid media, budget, cost per result |
+| **RABIH** | Enrollment opportunity — Lebanon, the Gulf, the diaspora, MSFEA pipelines |
+| **RAMI** | Operational dependencies — pricing presentation, capacity, what must exist first |
+| **LEEN** | Room lead — opens the meeting, presses the disagreements, calls the decision |
+| **WOLF** | Verification — audits the decision before it is called ready |
 
 ## How it works
 
 ```
-  your question
+  your mission
        │
-       ▼   stage 1 — WOLF routes (JSON, fast tier)
-   picks 2-3 managers and writes each a self-contained brief
+       ▼   LEEN opens the meeting out loud
+  BAHAA ─▶ MAJD ─▶ RABIH ─▶ RAMI      each hears everyone before them
        │
-       ├──▶ LEEN   ─┐
-       ├──▶ SOFIA  ─┤  stage 2 — parallel, each blind to the others
-       └──▶ LAYAN  ─┘
+       ▼   LEEN presses the one or two real disagreements
+   whoever was challenged answers back
        │
-       ▼   stage 3 — WOLF adjudicates
-  Read · Recommendation · Tensions · Open questions
+       ▼   LEEN calls it, then WOLF verifies
+  ready / blocked, with per-manager flags
 ```
 
 Three design decisions carry it:
 
-1. **Agents as tools.** Routing is WOLF selecting from a roster, so adding a
-   manager to `roster.js` is the only change needed to extend the room.
-2. **Context isolation.** Each manager answers in a fresh call and never sees the
-   others. That is the feature — it keeps contexts small, lets them run in
-   parallel, and produces *real* disagreement because nobody is anchored.
-3. **Preserved disagreement.** WOLF is instructed that conflict between
-   managers IS the finding. The lazy version averages everyone into consensus,
-   which is what makes most multi-agent demos useless.
+1. **They take turns and hear each other.** Each manager sees the transcript so
+   far and is told to name people and push back. That is what makes it a meeting
+   rather than five monologues stapled together.
+2. **The trade-off is real and worth knowing.** Because later speakers hear
+   earlier ones, they anchor. Isolated parallel answers gave more independent
+   judgement; this gives a genuine argument. The prompts push against anchoring,
+   they do not eliminate it.
+3. **WOLF is a gate, not a chair.** After LEEN decides, WOLF audits for unsourced
+   figures, internal numbers asserted as fact, recommendations needing capacity
+   nobody has, and disagreements that got smoothed over — then returns ready or
+   blocked. A manager who said "I don't have that number" counts as transparency.
 
 ## Grounded, not improvised
 
