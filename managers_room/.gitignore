@@ -1,0 +1,6 @@
+# generated run artifacts
+room.html
+run.json
+*.html
+*.json
+__pycache__/
