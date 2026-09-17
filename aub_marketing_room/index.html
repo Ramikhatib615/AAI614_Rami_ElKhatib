@@ -197,6 +197,27 @@ h2.sec{font:600 11px/1 sans-serif;letter-spacing:.11em;color:var(--ink-3);
 h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
 footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);
   color:var(--ink-3);font-size:12.5px;line-height:1.8}
+/* ===== live voice session ===== */
+.golive{font-weight:600;font-size:14px;padding:12px 18px;border-radius:10px;cursor:pointer;
+  border:1px solid var(--hope);background:transparent;color:var(--hope)}
+.golive.on{background:var(--hope);color:#fff;border-color:var(--hope)}
+.golive:disabled{opacity:.4;cursor:not-allowed}
+.earbadge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 11px;
+  border:1px solid var(--line);background:var(--card);
+  font:600 10px/1 sans-serif;letter-spacing:.1em;color:var(--ink-3);margin-inline-start:auto}
+.earbadge i{width:6px;height:6px;border-radius:50%;background:var(--ink-3)}
+.earbadge[data-e=listening]{color:var(--ok);border-color:color-mix(in oklab,var(--ok) 45%,var(--line))}
+.earbadge[data-e=listening] i{background:var(--ok);animation:ear 1.1s ease-in-out infinite}
+.earbadge[data-e=thinking]{color:var(--hope);border-color:var(--hope)}
+.earbadge[data-e=thinking] i{background:var(--hope);animation:ear 1.1s ease-in-out infinite}
+.earbadge[data-e=speaking]{color:var(--layan);border-color:var(--layan)}
+.earbadge[data-e=speaking] i{background:var(--layan);animation:ear .7s ease-in-out infinite}
+@keyframes ear{50%{opacity:.25;transform:scale(1.5)}}
+@media (prefers-reduced-motion:reduce){.earbadge i{animation:none!important}}
+.runtime{font:500 10.5px/1.5 sans-serif;color:var(--ink-3);margin:9px 0 0;text-align:center}
+h2.sec .earbadge{margin-inline-start:auto}
+h2.sec:has(.earbadge)::after{order:-1}
+
 /* phones: pull the outer nodes inward so their halo rings stay on screen */
 @media (max-width:470px){
   .stage{max-width:320px;margin-top:20px}
@@ -247,6 +268,7 @@ footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);
   <section class="composer">
     <textarea id="q" spellcheck="true">يا بنات، راجعوا الهدف سوا. الطلبات من الطلاب اللبنانيين نازلة والـInstagram engagement واقف. نحوّل budget على TikTok للدورة الجاي؟</textarea>
     <div class="chips" id="chips"></div>
+    <p class="runtime" id="runtime"></p>
     <div class="row">
       <button class="go" id="run">شغّل الغرفة</button>
       <button class="gh mic" id="mic" title="احكي بدل ما تكتب" aria-label="احكي بدل ما تكتب">
@@ -254,12 +276,13 @@ footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);
       </button>
       <button class="gh" id="stop" hidden>إيقاف</button>
       <button class="gh on" id="lang" aria-pressed="true">🔊 صوت</button>
+      <button class="golive" id="golive">🎙️ جلسة صوتية</button>
       <button class="gh" id="playAll" disabled>▶ شغّل الجلسة كلها</button>
       <span class="state" id="state">جاهزة</span>
     </div>
   </section>
 
-  <h2 class="sec">الحوار</h2>
+  <h2 class="sec">الحوار<span class="earbadge" id="ear" data-e="off"><i></i>OFF</span></h2>
   <div class="conv" id="conv"><p style="color:var(--ink-3);font-size:14px">
     HOPE: الغرفة جاهزة — احكي لتبلّش.</p></div>
 
@@ -437,9 +460,10 @@ function msg(id,display,title,q){
 
 /* ---------- run ---------- */
 let ctl=null, playlist=[];
-async function convene(){
+async function convene(auto=false){
   const mission=qEl.value.trim();
   if(!mission){stateEl.textContent="اكتب المهمّة أول شي.";return;}
+  if(auto) ear("thinking");
   ctl=new AbortController(); const signal=ctl.signal;
   runBtn.disabled=true; stopBtn.hidden=false; stateEl.className="state";
   hush(); playlist=[]; $("playAll").disabled=true;
@@ -521,34 +545,114 @@ async function convene(){
                    {text:`WOLF. ${v.summary||""}`,id:"wolf",btn:null}]);
         $("playAll").disabled=false;
       }
+      if(auto&&live){
+        ear("speaking");
+        await speakSeq([{text:decision,id:"hope",btn:null},
+                        {text:`WOLF. ${v.summary||""}`,id:"wolf",btn:null}]);
+      }
     } else {
       node("wolf","failed"); stateEl.textContent="القرار جاهز (WOLF ما تحقّق)";
+      if(auto&&live){ ear("speaking"); await speakSeq([{text:decision,id:"hope",btn:null}]); }
     }
   }catch(e){
     stateEl.className=e?.code==="cancelled"?"state":"state err";
     stateEl.textContent=errCopy(e);
     $("decision").classList.remove("cursor");
-  }finally{ runBtn.disabled=false; stopBtn.hidden=true; ctl=null; }
+  }finally{
+    runBtn.disabled=false; stopBtn.hidden=true; ctl=null;
+    if(live) resumeEar(); else ear("off");
+  }
 }
 
-/* ---------- mic ---------- */
+/* ---------- hands-free session ----------
+   The room listens continuously, submits on a pause, answers out loud, then
+   listens again. Recognition is suspended while we speak, otherwise the page
+   hears its own voice and talks to itself. */
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-let rec=null;
-if(SR){
-  $("mic").onclick=()=>{
-    if(rec){rec.stop();return;}
-    rec=new SR(); rec.lang="ar-LB"; rec.interimResults=true; rec.continuous=false;
-    $("mic").classList.add("on"); stateEl.className="state"; stateEl.textContent="عم اسمع…";
-    let base=qEl.value?qEl.value+" ":"";
-    rec.onresult=(ev)=>{let s="";for(const r of ev.results)s+=r[0].transcript;
-      qEl.value=base+s;};
-    rec.onerror=(ev)=>{stateEl.className="state err";
-      stateEl.textContent=ev.error==="not-allowed"?"ما في إذن للمايك.":"ما قدرت اسمع.";};
-    rec.onend=()=>{$("mic").classList.remove("on");rec=null;
-      if(stateEl.textContent==="عم اسمع…")stateEl.textContent="جاهزة";};
-    rec.start();
+let live=false, rec=null, recOn=false, suspended=false, quiet=null, heard="";
+let fails=0; const MAX_FAILS=4;
+const EAR={off:"OFF",listening:"LISTENING",thinking:"THINKING",speaking:"SPEAKING"};
+function ear(st){
+  const e=$("ear");
+  e.dataset.e=st;
+  e.textContent="";
+  e.append(document.createElement("i"), EAR[st]||st);
+}
+
+function startEar(){
+  if(!SR||!live||suspended||recOn) return;
+  rec=new SR(); rec.lang="ar-LB"; rec.continuous=true; rec.interimResults=true;
+  rec.onstart=()=>{recOn=true; if(!suspended) ear("listening");};
+  rec.onresult=(ev)=>{
+    let interim="",fin="";
+    for(let i=ev.resultIndex;i<ev.results.length;i++){
+      const r=ev.results[i];
+      if(r.isFinal) fin+=r[0].transcript; else interim+=r[0].transcript;
+    }
+    if(fin||interim) fails=0;          // hearing again: forget past blips
+    if(fin) heard+=fin+" ";
+    const shown=(heard+interim).trim();
+    if(shown){ qEl.value=shown; $("missionTxt").textContent=shown; }
+    clearTimeout(quiet);
+    if(heard.trim()) quiet=setTimeout(submitHeard,1700);   // a pause means "done"
   };
-}else{ $("mic").disabled=true; $("mic").title="متصفحك ما بيدعم الإدخال الصوتي"; }
+  rec.onerror=(ev)=>{
+    const e=ev.error;
+    if(e==="no-speech"||e==="aborted") return;          // routine, not a failure
+    if(e==="not-allowed"||e==="service-not-allowed"){   // only a denial really ends it
+      stateEl.className="state err";
+      stateEl.textContent="ما في إذن للمايك. افتح إعدادات الموقع وسمّح للمايكروفون.";
+      endLive(); return;
+    }
+    /* network and audio-capture blips are common mid-session (Chrome's
+       recognition is cloud-backed). Back off and retry rather than dropping
+       the room on the first hiccup. */
+    fails++;
+    if(fails>=MAX_FAILS){
+      stateEl.className="state err";
+      stateEl.textContent="تعذّر الاستماع. تأكّد من الإنترنت والمايك وجرّب من جديد.";
+      endLive(); return;
+    }
+    stateEl.className="state";
+    stateEl.textContent=`انقطع السمع — عم جرّب من جديد (${AR(fails)}/${AR(MAX_FAILS)})…`;
+  };
+  rec.onend=()=>{ recOn=false;
+    if(!live||suspended) return;
+    setTimeout(startEar, fails?600*fails:350);   // Chrome ends it on its own
+  };
+  try{ rec.start(); }catch{ recOn=false; }
+}
+function suspendEar(){ suspended=true; clearTimeout(quiet);
+  try{ rec?.stop(); }catch{} }
+function resumeEar(){ if(!live) return; suspended=false; heard="";
+  setTimeout(startEar,400); ear("listening"); }
+function endLive(){
+  live=false; suspended=false; clearTimeout(quiet); heard=""; fails=0;
+  try{ rec?.stop(); }catch{} rec=null; recOn=false;
+  $("golive").classList.remove("on"); $("golive").textContent="🎙️ جلسة صوتية";
+  $("runtime").textContent=""; ear("off");
+}
+function submitHeard(){
+  const text=heard.trim(); heard="";
+  if(text.length<6){ return; }        // a cough is not a mission
+  suspendEar(); qEl.value=text;
+  convene(true);
+}
+if(SR){
+  $("golive").onclick=()=>{
+    if(live){ endLive(); stateEl.className="state"; stateEl.textContent="وقفت الجلسة"; return; }
+    live=true; heard=""; fails=0;
+    $("golive").classList.add("on"); $("golive").textContent="⏹ سكّر الجلسة";
+    $("runtime").textContent="Private runtime ready · Hands-free listening";
+    stateEl.className="state"; stateEl.textContent="احكي — بسمعك";
+    ear("listening"); startEar();
+  };
+}else{
+  $("golive").disabled=true;
+  $("golive").title="متصفحك ما بيدعم الإدخال الصوتي — جرّب Chrome";
+}
+$("mic").onclick=()=>$("golive").click();   // the mic is a shortcut to the session
+if(!SR) $("mic").disabled=true;
 
 /* ---------- boot ---------- */
 const CHIPS=[
@@ -563,8 +667,8 @@ for(const c of CHIPS){
   b.onclick=()=>{qEl.value=c;qEl.focus();};
   $("chips").append(b);
 }
-runBtn.onclick=convene;
-stopBtn.onclick=()=>{ctl?.abort();hush();};
+runBtn.onclick=()=>convene(false);
+stopBtn.onclick=()=>{ctl?.abort();hush();if(live)endLive();};
 $("playAll").onclick=()=>speakSeq(playlist);
 $("lang").onclick=()=>{
   sound=!sound; if(!sound)hush();

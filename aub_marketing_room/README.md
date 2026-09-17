@@ -23,6 +23,27 @@ WOLF in WOLF.
 WOLF, so domestic and diaspora recruitment sit together under LEEN; split them
 back into two managers in `roster.js` if that tension matters to you.
 
+## Live voice session
+
+The 🎙️ button opens a hands-free session, the way the reference post does it.
+The room listens continuously, submits when you pause for about 1.7 seconds,
+runs, answers out loud, then listens again. A badge on the conversation header
+tracks the cycle: LISTENING → THINKING → SPEAKING → LISTENING.
+
+Two details that matter more than they look:
+
+- **Recognition is suspended while the page speaks.** Otherwise the microphone
+  hears the synthesised voice and the room starts answering itself.
+- **A transient error does not end the session.** Chrome's recognition is
+  cloud-backed, so `network` and `audio-capture` blips happen mid-session. Those
+  retry with backoff and a visible counter, and a clean result resets the count.
+  Only a real permission denial (`not-allowed` / `service-not-allowed`) ends the
+  session immediately; repeated failures give up after four with a message that
+  says what to check.
+
+Speech input runs at `ar-LB`, which Chrome does accept as a recognition locale
+even though no system ships an ar-LB *playback* voice.
+
 ## Hearing them — in Lebanese
 
 Every manager has a distinct voice, and by default **they speak Lebanese Arabic**.
