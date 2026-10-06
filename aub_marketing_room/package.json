@@ -1,0 +1,11 @@
+{
+  "name": "aub-marketing-room",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.126.0"
+  }
+}
