@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>All Tire Supply — Concept Boards</title>
+<style>
+@font-face{font-family:'Archivo';src:url(../site/fonts/archivo.woff2) format('woff2');font-weight:100 900;font-stretch:62% 125%;font-display:block}
+@font-face{font-family:'Inter';src:url(../site/fonts/inter.woff2) format('woff2');font-weight:100 900;font-display:block}
+@font-face{font-family:'JB';src:url(../site/fonts/mono.woff2) format('woff2');font-weight:100 800;font-display:block}
+:root{--bg:#08090B;--text:#F3F4F6;--muted:#A3A9B2;--dim:#6B717B;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--accent:#FF5B1F;--accent2:#FF9A3C;--ok:#3DDC97;--grad:linear-gradient(100deg,#FF5B1F 0%,#FF7A2E 45%,#FFB347 100%)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;font-family:'Inter',sans-serif;color:var(--text);-webkit-font-smoothing:antialiased}
+.board{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--bg);margin:0 auto 40px}
+.board::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:80px 80px;-webkit-mask-image:radial-gradient(ellipse 80% 70% at 70% 45%,#000 10%,transparent 75%);pointer-events:none}
+.glow{position:absolute;border-radius:50%;filter:blur(110px);pointer-events:none}
+.disp{font-family:'Archivo';font-stretch:125%;font-weight:800;letter-spacing:-.025em;line-height:.95}
+.mono{font-family:'JB'}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{font-family:'JB';font-size:15px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent2);display:inline-flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:28px;height:1px;background:currentColor}
+.top{position:absolute;left:80px;right:80px;top:56px;display:flex;justify-content:space-between;align-items:center;z-index:5}
+.logo{display:flex;align-items:center;gap:14px}
+.logo b{font-family:'Archivo';font-stretch:125%;font-weight:850;font-size:21px;letter-spacing:.02em;display:block;line-height:1}
+.logo i{font-style:normal;font-family:'JB';font-size:11px;letter-spacing:.2em;color:var(--dim);display:block;margin-top:6px}
+.meta{display:flex;gap:12px}
+.chip{font-family:'JB';font-size:13px;letter-spacing:.08em;color:#d6d9de;border:1px solid var(--line2);border-radius:999px;padding:9px 16px;background:rgba(255,255,255,.03);display:inline-flex;align-items:center;gap:8px}
+.chip.hot{background:var(--grad);color:#170800;border:0;font-weight:700}
+.spark{width:14px;height:14px}
+.foot{position:absolute;left:80px;right:80px;bottom:44px;display:flex;justify-content:space-between;align-items:center;font-family:'JB';font-size:12.5px;color:var(--dim);letter-spacing:.06em;z-index:5}
+.pg{color:var(--accent2)}
+
+/* board 1 */
+.b1 .left{position:absolute;left:80px;top:170px;width:690px;z-index:4}
+.b1 h1{font-size:80px;margin:24px 0 26px}
+.b1 p.lead{font-size:21px;color:var(--muted);line-height:1.5;max-width:620px}
+.b1 p.lead b{color:#fff;font-weight:600}
+.feats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:38px;max-width:640px}
+.feat{border:1px solid var(--line2);border-radius:18px;padding:18px 20px;background:rgba(255,255,255,.025)}
+.feat .n{font-family:'JB';font-size:12px;color:var(--accent2);letter-spacing:.14em}
+.feat b{display:block;font-size:20px;margin:6px 0 4px}
+.feat span{font-size:15px;color:var(--muted)}
+.laptop{position:absolute;left:770px;top:178px;width:1110px;z-index:2}
+.lap-screen{background:#0b0c0e;border-radius:26px 26px 0 0;padding:16px 16px 18px;border:2px solid #2a2e35;box-shadow:0 60px 140px -40px rgba(0,0,0,.95),0 0 120px -30px rgba(255,91,31,.35)}
+.lap-screen img{display:block;width:100%;border-radius:8px}
+.lap-cam{position:absolute;top:6px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:#1d2026}
+.lap-base{height:26px;margin:0 -64px;background:linear-gradient(180deg,#3a3e46,#1c1f24 60%,#0e1013);border-radius:0 0 22px 22px;position:relative;box-shadow:0 30px 60px -20px rgba(0,0,0,.9)}
+.lap-base::before{content:"";position:absolute;left:50%;top:0;width:180px;height:10px;margin-left:-90px;background:#15171b;border-radius:0 0 12px 12px}
+.phone{position:absolute;width:318px;height:668px;border-radius:56px;background:#050505;padding:11px;border:2px solid #30343b;box-shadow:0 50px 120px -30px rgba(0,0,0,.95),inset 0 0 0 2px #15171b;z-index:3}
+.phone .scr{position:relative;width:100%;height:100%;border-radius:45px;overflow:hidden;background:#0a0b0d}
+.phone .scr img{width:100%;display:block}
+.sb{height:50px;display:flex;justify-content:space-between;align-items:center;padding:6px 28px 0 34px;font-weight:600;font-size:15px;background:#0a0b0d}
+.sb .ic{display:flex;gap:3px;align-items:flex-end}
+.sb .ic i{width:3.5px;background:#fff;border-radius:1px}
+.sb .ic i:nth-child(1){height:6px}.sb .ic i:nth-child(2){height:9px}.sb .ic i:nth-child(3){height:12px}
+.sb .ic b{width:24px;height:12px;border:1.5px solid #fff;border-radius:4px;margin-left:6px;position:relative}
+.sb .ic b::after{content:'';position:absolute;inset:1.5px 5px 1.5px 1.5px;background:#fff;border-radius:1.5px}
+.phone .isl{position:absolute;top:12px;left:50%;width:96px;height:28px;margin-left:-48px;border-radius:16px;background:#000;z-index:2}
+.callout{position:absolute;z-index:6;display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;background:rgba(14,16,20,.9);border:1px solid var(--line2);border-radius:14px;padding:10px 14px;box-shadow:0 20px 50px -14px rgba(0,0,0,.8);backdrop-filter:blur(10px)}
+.callout .d{width:26px;height:26px;border-radius:8px;background:var(--grad);color:#170800;display:grid;place-items:center;font-family:'JB';font-size:12px;font-weight:800}
+
+/* board 2 */
+.b2 .head{position:absolute;left:80px;top:140px;right:80px;display:flex;justify-content:space-between;align-items:flex-end}
+.b2 h2{font-size:76px;margin-top:18px}
+.b2 .head p{font-size:20px;color:var(--muted);max-width:520px;line-height:1.5;text-align:right}
+.grid2{position:absolute;left:80px;right:80px;top:350px;bottom:100px;display:grid;grid-template-columns:1.02fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:20px}
+.cd{position:relative;border-radius:24px;background:#111317;border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column}
+.cd.tall{grid-row:span 2}
+.cd .hd{padding:20px 22px 14px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;position:relative;z-index:2}
+.cd .hd .n{font-family:'JB';font-size:12px;color:var(--accent2);letter-spacing:.14em}
+.cd .hd b{display:block;font-family:'Archivo';font-stretch:118%;font-weight:800;font-size:25px;letter-spacing:-.01em;margin-top:4px}
+.cd .hd span{display:block;font-size:14.5px;color:var(--muted);margin-top:4px;max-width:360px}
+.lever{flex:none;font-family:'JB';font-size:11.5px;letter-spacing:.06em;color:var(--ok);border:1px solid rgba(61,220,151,.35);background:rgba(61,220,151,.07);border-radius:999px;padding:6px 11px;white-space:nowrap}
+.cd .im{flex:1;position:relative;overflow:hidden;margin:0 14px 14px;border-radius:16px;background:#0b0c0e;border:1px solid var(--line)}
+.cd .im img{position:absolute;left:0;top:0;width:100%}
+.cd .im::after{content:"";position:absolute;inset:auto 0 0 0;height:60px;background:linear-gradient(transparent,#0b0c0e)}
+
+/* board 3 */
+.b3 .l{position:absolute;left:80px;top:140px;width:1010px}
+.b3 h2{font-size:76px;margin:18px 0 34px}
+table.lv{width:100%;border-collapse:collapse}
+.lv th{font-family:'JB';font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);text-align:left;font-weight:500;padding:0 0 14px}
+.lv td{padding:17px 16px 17px 0;border-top:1px solid var(--line);font-size:16px;color:#dfe2e6;vertical-align:top;line-height:1.45}
+.lv td:first-child{font-weight:700;color:#fff;font-size:17px;width:200px}
+.lv td .f{display:inline-flex;align-items:center;gap:6px;font-family:'JB';font-size:12.5px;color:var(--accent2);border:1px solid rgba(255,91,31,.35);border-radius:8px;padding:3px 8px;white-space:nowrap}
+.lv td.t{font-family:'Archivo';font-stretch:112%;font-weight:800;font-size:22px;color:#fff;white-space:nowrap;text-align:right;padding-right:0}
+.lv td.t small{display:block;font-family:'Inter';font-weight:500;font-size:12.5px;color:var(--dim);font-stretch:100%}
+.note{margin-top:16px;font-family:'JB';font-size:12.5px;color:var(--dim)}
+.dlv{margin-top:44px;border-top:1px solid var(--line);padding-top:26px}
+.dlv h4{font-family:'JB';font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);font-weight:500;margin-bottom:16px}
+.pills{display:flex;flex-wrap:wrap;gap:10px}
+.pills span{font-size:15.5px;font-weight:600;border:1px solid var(--line2);border-radius:999px;padding:10px 16px;background:rgba(255,255,255,.03)}
+.pills span:nth-child(-n+2){border-color:rgba(255,91,31,.5);background:rgba(255,91,31,.08)}
+.b3 .r{position:absolute;right:80px;top:140px;width:640px;display:grid;gap:20px}
+.box{border-radius:24px;background:#111317;border:1px solid var(--line);padding:26px 28px}
+.box h4{font-family:'JB';font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);font-weight:500;margin-bottom:18px}
+.ph{display:grid;grid-template-columns:86px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--line)}
+.ph:first-of-type{border-top:0;padding-top:0}
+.ph .w{font-family:'JB';font-size:12.5px;color:var(--accent2);letter-spacing:.06em;padding-top:3px}
+.ph b{display:block;font-size:18px}
+.ph span{font-size:14.5px;color:var(--muted)}
+.stack{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.st{border:1px solid var(--line2);border-radius:14px;padding:13px 14px;font-size:14px;color:#dfe2e6;background:rgba(255,255,255,.02)}
+.st b{display:block;font-size:15px;color:#fff;margin-bottom:2px}
+.st.core{grid-column:span 2;border-color:rgba(255,91,31,.5);background:linear-gradient(100deg,rgba(255,91,31,.14),rgba(255,91,31,.03))}
+.st.core b{font-family:'Archivo';font-stretch:115%;font-size:20px}
+.cta{border-radius:24px;background:var(--grad);color:#170800;padding:24px 28px;display:flex;justify-content:space-between;align-items:center}
+.cta b{font-family:'Archivo';font-stretch:118%;font-weight:850;font-size:26px;display:block;line-height:1.1}
+.cta span{font-size:15px;font-weight:500;opacity:.85}
+.cta .arr{width:54px;height:54px;border-radius:16px;background:#170800;color:#FF9A3C;display:grid;place-items:center;font-size:26px;flex:none}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <symbol id="spark" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1.5c.7 5.6 4.9 9.8 10.5 10.5-5.6.7-9.8 4.9-10.5 10.5C11.3 16.9 7.1 12.7 1.5 12 7.1 11.3 11.3 7.1 12 1.5Z"/></symbol>
+  <symbol id="logo" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="#fff" stroke-width="5"/><path d="M20 4a16 16 0 0 1 15.2 11" fill="none" stroke="#FF5B1F" stroke-width="5" stroke-linecap="round"/><circle cx="20" cy="20" r="5.5" fill="#FF5B1F"/></symbol>
+</defs></svg>
+
+<!-- ================= BOARD 1 ================= -->
+<section class="board b1" id="b1">
+  <div class="glow" style="width:1100px;height:1100px;right:-200px;top:-260px;background:radial-gradient(circle,rgba(255,91,31,.30),transparent 62%)"></div>
+  <div class="glow" style="width:700px;height:700px;left:-260px;bottom:-320px;background:radial-gradient(circle,rgba(143,176,255,.10),transparent 65%)"></div>
+  <div class="top">
+    <div class="logo"><svg width="44" height="44"><use href="#logo"/></svg><div><b>ALL TIRE SUPPLY</b><i>EST. 1960 · HOUSTON</i></div></div>
+    <div class="meta"><span class="chip">WEBSITE REDESIGN CONCEPT</span><span class="chip hot"><svg class="spark"><use href="#spark"/></svg>AI BY CLAUDE FABLE 5.2</span></div>
+  </div>
+  <div class="left">
+    <span class="eyebrow">From catalog to copilot</span>
+    <h1 class="disp">The AI supply<br>desk <span class="grad">for<br>tire pros.</span></h1>
+    <p class="lead">A premium storefront where every shop gets an expert that <b>builds the bay, restocks the supplies and quotes the fleet</b>, 24/7 and priced to their account.</p>
+    <div class="feats">
+      <div class="feat"><div class="n">01</div><b>Shop Copilot</b><span>Plain-language buying & expert answers</span></div>
+      <div class="feat"><div class="n">02</div><b>AI Bay Builder</b><span>Full-shop packages with live financing</span></div>
+      <div class="feat"><div class="n">03</div><b>AutoStock + Snap</b><span>Predictive reorders & photo-to-SKU</span></div>
+      <div class="feat"><div class="n">04</div><b>60-second quotes</b><span>Fleet, government & multi-location</span></div>
+    </div>
+  </div>
+  <div class="laptop">
+    <div class="lap-screen"><span class="lap-cam"></span><img src="../screens/01_desktop_hero.png" alt=""></div>
+    <div class="lap-base"></div>
+  </div>
+  <div class="phone" style="left:790px;top:398px"><div class="scr"><span class="isl"></span><div class="sb"><span>9:41</span><span class="ic"><i></i><i></i><i></i><b></b></span></div><img src="crops/phone_copilot.png" alt=""></div></div>
+  <div class="callout" style="left:1140px;top:940px"><span class="d">AI</span>Answers, carts & quotes in one conversation</div>
+  <div class="callout" style="right:84px;top:132px"><span class="d" style="background:#3DDC97">✓</span>Responsive: desktop, tablet, phone</div>
+  <div class="foot"><span>Concept by your web & AI partner · Illustrative prices & data</span><span class="pg">01 / 03</span></div>
+</section>
+
+<!-- ================= BOARD 2 ================= -->
+<section class="board b2" id="b2">
+  <div class="glow" style="width:900px;height:900px;left:30%;top:-480px;background:radial-gradient(circle,rgba(255,91,31,.22),transparent 62%)"></div>
+  <div class="top">
+    <div class="logo"><svg width="44" height="44"><use href="#logo"/></svg><div><b>ALL TIRE SUPPLY</b><i>EST. 1960 · HOUSTON</i></div></div>
+    <div class="meta"><span class="chip hot"><svg class="spark"><use href="#spark"/></svg>AI BY CLAUDE FABLE 5.2</span></div>
+  </div>
+  <div class="head">
+    <div><span class="eyebrow">What's inside</span><h2 class="disp">Five AI engines <span class="grad">that sell.</span></h2></div>
+    <p>Each feature maps to a revenue lever: bigger baskets, repeat orders, faster B2B closes and zero missed after-hours buyers.</p>
+  </div>
+  <div class="grid2">
+    <div class="cd tall"><div class="hd"><div><div class="n">01 · SHOP COPILOT</div><b>An expert at the counter, always on</b><span>Builds carts, compares machines, troubleshoots, priced to the account.</span></div><span class="lever">↑ CONVERSION</span></div><div class="im"><img src="crops/chat.png" alt=""></div></div>
+    <div class="cd"><div class="hd"><div><div class="n">02 · BAY BUILDER</div><b>Plan & price a whole shop</b></div><span class="lever">↑ ORDER VALUE</span></div><div class="im"><img src="crops/bay.png" alt=""></div></div>
+    <div class="cd"><div class="hd"><div><div class="n">03 · FLEET QUOTES</div><b>RFQ to signed quote in 60s</b></div><span class="lever">↑ B2B WIN RATE</span></div><div class="im"><img src="crops/quote.png" alt="" style="top:-10px"></div></div>
+    <div class="cd"><div class="hd"><div><div class="n">04 · AUTOSTOCK</div><b>Predictive consumable reorders</b></div><span class="lever">↑ REPEAT REVENUE</span></div><div class="im"><img src="crops/autostock.png" alt="" style="top:-196px"></div></div>
+    <div class="cd"><div class="hd"><div><div class="n">05 · SNAP & REORDER</div><b>Photo → exact SKU → reorder</b></div><span class="lever">↑ REORDER SPEED</span></div><div class="im"><img src="crops/snap.png" alt="" style="top:-30px"></div></div>
+  </div>
+  <div class="foot"><span>Screens from the working prototype · Illustrative prices & data</span><span class="pg">02 / 03</span></div>
+</section>
+
+<!-- ================= BOARD 3 ================= -->
+<section class="board b3" id="b3">
+  <div class="glow" style="width:900px;height:900px;right:-300px;bottom:-400px;background:radial-gradient(circle,rgba(255,91,31,.22),transparent 62%)"></div>
+  <div class="top">
+    <div class="logo"><svg width="44" height="44"><use href="#logo"/></svg><div><b>ALL TIRE SUPPLY</b><i>EST. 1960 · HOUSTON</i></div></div>
+    <div class="meta"><span class="chip">THE BUSINESS CASE</span></div>
+  </div>
+  <div class="l">
+    <span class="eyebrow">Why it sells</span>
+    <h2 class="disp">Built to move <span class="grad">revenue.</span></h2>
+    <table class="lv">
+      <tr><th>Revenue lever</th><th>AI feature</th><th>How it moves the number</th><th style="text-align:right">Pilot target</th></tr>
+      <tr><td>Order value</td><td><span class="f">✦ Bay Builder</span></td><td>Sells complete packages and adds what's missing, with financing on high-ticket equipment</td><td class="t">+15–25%<small>avg. order value</small></td></tr>
+      <tr><td>Conversion</td><td><span class="f">✦ Copilot</span></td><td>Answers fit and spec questions instantly, so buyers don't leave to call or compare</td><td class="t">+20%<small>site conversion</small></td></tr>
+      <tr><td>Repeat revenue</td><td><span class="f">✦ AutoStock</span></td><td>Turns patches, plugs, weights and valves into a predictable subscription</td><td class="t">30%<small>of consumable buyers</small></td></tr>
+      <tr><td>B2B closes</td><td><span class="f">✦ Fleet Quotes</span></td><td>Quotes go out in minutes instead of days, with Net-30, PO and tax-exempt handled</td><td class="t">Days → min<small>quote turnaround</small></td></tr>
+      <tr><td>Coverage</td><td><span class="f">✦ 24/7 Copilot</span></td><td>Nights and weekends are covered, with a human specialist one tap away</td><td class="t">24/7<small>expert coverage</small></td></tr>
+    </table>
+    <div class="note">Targets to validate in a 90-day pilot against the current baseline. Not guarantees.</div>
+    <div class="dlv"><h4>What you get</h4><div class="pills"><span>Redesigned storefront</span><span>Shop Copilot</span><span>AI Bay Builder</span><span>AutoStock</span><span>Snap & Reorder</span><span>60s Fleet Quotes</span><span>Mobile-first UX</span><span>Sales analytics</span></div></div>
+  </div>
+  <div class="r">
+    <div class="box">
+      <h4>90-day rollout</h4>
+      <div class="ph"><div class="w">DAYS 1–30</div><div><b>New storefront + Shop Copilot</b><span>Redesign, catalog enrichment, Copilot on every product page</span></div></div>
+      <div class="ph"><div class="w">DAYS 31–60</div><div><b>AutoStock + Snap & Reorder</b><span>Consumables subscription, photo-to-SKU on mobile</span></div></div>
+      <div class="ph"><div class="w">DAYS 61–90</div><div><b>Bay Builder + Fleet Quotes</b><span>Packages with financing, RFQ upload, Net-30 checkout</span></div></div>
+    </div>
+    <div class="box">
+      <h4>Under the hood</h4>
+      <div class="stack">
+        <div class="st core"><b>Claude Fable 5.2</b>Reasoning + vision model, via the Anthropic API</div>
+        <div class="st"><b>Catalog & stock</b>Specs, compatibility, lead times</div>
+        <div class="st"><b>Account pricing</b>Tiers, Net-30, tax-exempt</div>
+        <div class="st"><b>Cart, quote, PDF</b>Actions the AI can take</div>
+        <div class="st"><b>Human handoff</b>Specialists see the full chat</div>
+      </div>
+    </div>
+    <div class="cta"><div><b>Next step: live demo + pilot scope</b><span>Start with Repair Supplies + Copilot, then expand</span></div><div class="arr">→</div></div>
+  </div>
+  <div class="foot"><span>All Tire Supply · AI website concept</span><span class="pg">03 / 03</span></div>
+</section>
+</body>
+</html>

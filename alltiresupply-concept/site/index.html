@@ -1,0 +1,1260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>All Tire Supply — AI Concept</title>
+<meta name="description" content="Concept redesign: All Tire Supply with Shop Copilot, an AI supply desk for tire professionals.">
+<style>
+@font-face{font-family:'Archivo';src:url(fonts/archivo.woff2) format('woff2');font-weight:100 900;font-stretch:62% 125%;font-display:block}
+@font-face{font-family:'Inter';src:url(fonts/inter.woff2) format('woff2');font-weight:100 900;font-display:block}
+@font-face{font-family:'JB';src:url(fonts/mono.woff2) format('woff2');font-weight:100 800;font-display:block}
+
+:root{
+  --bg:#0A0B0D; --bg2:#0F1114; --surface:#14171C; --surface2:#1A1E24; --surface3:#22262D;
+  --line:rgba(255,255,255,.07); --line2:rgba(255,255,255,.13);
+  --text:#F3F4F6; --muted:#A3A9B2; --dim:#6B717B;
+  --accent:#FF5B1F; --accent2:#FF9A3C; --steel:#8FB0FF; --ok:#3DDC97; --warn:#FFC24B;
+  --paper:#F2F0EB; --paper2:#E8E5DE; --ink:#0E0F11; --inkmuted:#5C5F66;
+  --r:22px;
+  --grad: linear-gradient(100deg,#FF5B1F 0%,#FF7A2E 45%,#FFB347 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{display:block}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1320px;margin:0 auto;padding:0 32px}
+.display{font-family:'Archivo',sans-serif;font-stretch:125%;font-weight:800;letter-spacing:-.025em;line-height:.94}
+.mono{font-family:'JB',monospace}
+.eyebrow{font-family:'JB',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent2);display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:22px;height:1px;background:currentColor;opacity:.7}
+.gradtext{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 22px;border-radius:14px;font-weight:600;font-size:15px;transition:transform .2s, box-shadow .2s, background .2s;white-space:nowrap}
+.btn-primary{background:var(--grad);color:#170800;box-shadow:0 10px 30px -10px rgba(255,91,31,.7), inset 0 1px 0 rgba(255,255,255,.35)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 16px 40px -12px rgba(255,91,31,.9), inset 0 1px 0 rgba(255,255,255,.35)}
+.btn-ghost{border:1px solid var(--line2);background:rgba(255,255,255,.03)}
+.btn-ghost:hover{background:rgba(255,255,255,.07)}
+.spark{width:16px;height:16px;flex:none}
+.sec{padding:128px 0;position:relative}
+.sec-head{max-width:760px;margin-bottom:56px}
+.sec-head h2{font-size:clamp(40px,4.6vw,68px);margin:18px 0 18px}
+.sec-head p{color:var(--muted);font-size:19px;max-width:620px}
+.sec-head.split{display:flex;justify-content:space-between;align-items:flex-end;max-width:none;gap:24px}
+
+/* ---------- utility + header ---------- */
+.util{background:#000;color:#8b9099;font-size:12.5px;border-bottom:1px solid var(--line)}
+.util .wrap{display:flex;justify-content:space-between;align-items:center;height:36px}
+.util span b{color:#e6e7ea;font-weight:600}
+.util .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ok);margin-right:8px;box-shadow:0 0 0 3px rgba(61,220,151,.18)}
+.util-l{display:flex;gap:26px}
+header.top{position:sticky;top:0;z-index:50;background:rgba(10,11,13,.78);backdrop-filter:saturate(160%) blur(16px);-webkit-backdrop-filter:saturate(160%) blur(16px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;gap:36px;height:74px}
+.logo{display:flex;align-items:center;gap:12px;white-space:nowrap;flex:none}
+.logo-word{display:flex;flex-direction:column;line-height:1}
+.logo-word b{font-family:'Archivo';font-stretch:125%;font-weight:850;font-size:17px;letter-spacing:.02em}
+.logo-word i{font-style:normal;font-family:'JB';font-size:9.5px;letter-spacing:.2em;color:var(--dim);margin-top:5px}
+nav.main{display:flex;gap:24px;font-size:14px;color:#c9ccd2;white-space:nowrap}
+nav.main a{position:relative;padding:6px 0}
+nav.main a:hover{color:#fff}
+nav.main a.ai{color:#fff;display:flex;align-items:center;gap:6px}
+nav.main a.ai .spark{width:13px;height:13px}
+.hdr-r{margin-left:auto;display:flex;align-items:center;gap:12px}
+.search{display:flex;align-items:center;gap:10px;height:42px;width:250px;white-space:nowrap;overflow:hidden;padding:0 12px 0 14px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--dim);font-size:13.5px}
+.search kbd{margin-left:auto;font-family:'JB';font-size:11px;border:1px solid var(--line2);border-radius:6px;padding:2px 6px;color:var(--muted)}
+.icon-btn{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;border:1px solid var(--line);background:rgba(255,255,255,.03);position:relative}
+.icon-btn .badge{position:absolute;top:-5px;right:-5px;min-width:18px;height:18px;border-radius:9px;background:var(--accent);color:#170800;font-size:11px;font-weight:700;display:grid;place-items:center;padding:0 5px}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;padding:64px 0 0}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(ellipse 70% 60% at 65% 40%,#000 20%,transparent 75%);mask-image:radial-gradient(ellipse 70% 60% at 65% 40%,#000 20%,transparent 75%);pointer-events:none}
+.glow{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none}
+.glow.g1{width:720px;height:720px;right:-120px;top:-80px;background:radial-gradient(circle,rgba(255,91,31,.34),transparent 65%)}
+.glow.g2{width:520px;height:520px;left:-200px;bottom:-200px;background:radial-gradient(circle,rgba(143,176,255,.12),transparent 65%)}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.02fr .98fr;gap:40px;align-items:center;min-height:700px}
+.pill-new{display:inline-flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.04);font-size:13px;color:#d9dbe0}
+.pill-new b{background:var(--grad);color:#170800;font-size:11px;font-weight:800;letter-spacing:.06em;padding:4px 9px;border-radius:999px}
+.hero h1{font-size:clamp(56px,6.6vw,104px);margin:26px 0 26px}
+.hero h1 .l3{display:inline-flex;align-items:center;gap:18px}
+.hero h1 .l3 svg{width:.62em;height:.62em}
+.hero .sub{font-size:19.5px;color:var(--muted);max-width:560px;line-height:1.55}
+.hero .sub b{color:#e9eaee;font-weight:600}
+
+.cmd-wrap{position:relative;margin-top:36px;max-width:620px;border-radius:20px;padding:1.5px;background:linear-gradient(120deg,rgba(255,91,31,.9),rgba(255,179,71,.5) 30%,rgba(255,255,255,.08) 55%,rgba(255,91,31,.6));box-shadow:0 30px 80px -30px rgba(255,91,31,.55)}
+.cmd{display:flex;align-items:center;gap:12px;background:#121418;border-radius:19px;padding:9px 9px 9px 18px}
+.cmd .spark{width:20px;height:20px}
+.cmd input{flex:1;background:none;border:0;outline:none;font-size:17px;color:#fff;min-width:0}
+.cmd input::placeholder{color:#7d838d}
+.cmd .mic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:var(--muted);border:1px solid var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;max-width:640px}
+.chip{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 13px;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.03);font-size:13px;color:#d2d5da;transition:all .2s}
+.chip:hover{border-color:rgba(255,91,31,.6);color:#fff;background:rgba(255,91,31,.08)}
+.chip svg{width:14px;height:14px;color:var(--accent2)}
+.hero-trust{display:flex;gap:22px;margin-top:30px;color:var(--dim);font-size:13px;flex-wrap:wrap}
+.hero-trust span{display:flex;align-items:center;gap:7px}
+.hero-trust svg{width:15px;height:15px;color:var(--ok)}
+
+.stage{position:relative;aspect-ratio:1/1;width:100%;max-width:640px;justify-self:end}
+.stage svg.tire{width:100%;height:100%;overflow:visible}
+.spin-slow{animation:spin 60s linear infinite;transform-origin:center;transform-box:fill-box}
+.spin-rev{animation:spin 40s linear infinite reverse;transform-origin:center;transform-box:fill-box}
+.sweep{animation:spin 6s linear infinite;transform-origin:0 0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fcard{position:absolute;background:rgba(18,20,25,.74);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);border:1px solid var(--line2);border-radius:16px;padding:14px 16px;box-shadow:0 24px 60px -20px rgba(0,0,0,.8);font-size:13px;animation:float 7s ease-in-out infinite}
+.fcard .k{font-family:'JB';font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:7px}
+.fcard .v{font-weight:600;color:#fff;margin-top:6px;font-size:14px;line-height:1.35}
+.fcard .s{color:var(--muted);margin-top:3px;font-size:12.5px}
+.fcard .bar{height:6px;border-radius:3px;background:rgba(255,255,255,.08);margin-top:10px;overflow:hidden}
+.fcard .bar i{display:block;height:100%;border-radius:3px;background:var(--grad)}
+.fc1{left:-64px;top:31%;width:236px}
+.fc2{right:-18px;top:44%;width:232px;animation-delay:-2.5s}
+.fc3{left:6%;bottom:2%;width:260px;animation-delay:-4.5s}
+.live{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px rgba(61,220,151,.2)}
+.tag-ai{display:inline-flex;align-items:center;gap:5px;font-family:'JB';font-size:10.5px;letter-spacing:.1em;color:#170800;background:var(--grad);border-radius:6px;padding:2px 7px;font-weight:700}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+.stats{position:relative;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:40px}
+.stat{padding:30px 0 34px;border-right:1px solid var(--line);padding-left:28px}
+.stat:first-child{padding-left:0}
+.stat:last-child{border-right:0}
+.stat b{display:block;font-family:'Archivo';font-stretch:125%;font-weight:800;font-size:40px;letter-spacing:-.02em;line-height:1}
+.stat span{display:block;color:var(--muted);font-size:14px;margin-top:10px}
+
+/* ---------- brands ---------- */
+.brands{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2)}
+.brands .wrap{display:flex;align-items:center;gap:56px;height:112px}
+.brands .lbl{font-family:'JB';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);max-width:150px;line-height:1.5;flex:none}
+.brandrow{display:flex;align-items:center;justify-content:space-between;flex:1;color:#7c828c}
+.bw{font-family:'Archivo';font-weight:800;font-size:26px;letter-spacing:.04em;transition:color .2s}
+.bw:hover{color:#fff}
+.bw.b1{font-stretch:125%;font-weight:900;letter-spacing:.1em}
+.bw.b2{font-style:italic;font-stretch:110%;font-weight:800}
+.bw.b3{font-stretch:75%;font-weight:900;font-size:30px;letter-spacing:.06em}
+.bw.b4{font-family:'Inter';font-weight:800;font-size:22px;letter-spacing:-.01em}
+.bw.b4 em{font-style:normal;color:#b5532b}
+.bw.b5{font-stretch:100%;font-weight:700;letter-spacing:.18em;font-size:22px}
+
+/* ---------- copilot ---------- */
+.copilot{background:radial-gradient(900px 500px at 85% 20%,rgba(255,91,31,.10),transparent 60%),var(--bg)}
+.cp-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:72px;align-items:start}
+.cp-feats{display:grid;gap:4px;margin-top:8px}
+.cp-feat{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 0;border-top:1px solid var(--line)}
+.cp-feat .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:rgba(255,91,31,.1);color:var(--accent2);border:1px solid rgba(255,91,31,.25)}
+.cp-feat .ic svg{width:20px;height:20px}
+.cp-feat h4{font-size:16.5px;font-weight:650;margin-bottom:4px}
+.cp-feat p{color:var(--muted);font-size:14.5px}
+.chatwin{position:relative;border-radius:26px;background:#0E1013;border:1px solid var(--line2);box-shadow:0 50px 120px -40px rgba(0,0,0,.9),0 0 0 1px rgba(255,91,31,.06),0 40px 100px -50px rgba(255,91,31,.4);overflow:hidden}
+.chat-h{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.025),transparent)}
+.av{width:36px;height:36px;border-radius:11px;background:var(--grad);display:grid;place-items:center;color:#170800;flex:none;box-shadow:0 6px 20px -6px rgba(255,91,31,.8)}
+.av svg{width:18px;height:18px}
+.chat-h .t b{display:block;font-size:15px}
+.chat-h .t span{font-size:12px;color:var(--dim);font-family:'JB';letter-spacing:.02em}
+.chat-h .st{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+.chat-b{height:790px;overflow-y:auto;padding:24px 22px 18px;display:flex;flex-direction:column;gap:18px;scroll-behavior:smooth}
+.chat-b::-webkit-scrollbar{width:8px}.chat-b::-webkit-scrollbar-thumb{background:#262a31;border-radius:4px}
+.msg{display:flex;gap:12px;max-width:100%;animation:rise .4s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.msg.user{justify-content:flex-end}
+.msg.user .bub{background:#23272E;border:1px solid var(--line2);border-radius:18px 18px 4px 18px;padding:12px 16px;max-width:78%;font-size:14.5px;color:#eef0f3}
+.msg.ai .av{width:30px;height:30px;border-radius:9px}
+.msg.ai .av svg{width:15px;height:15px}
+.msg.ai .body{flex:1;min-width:0;font-size:14.5px;color:#dfe2e6}
+.think{display:grid;gap:5px;margin-bottom:12px}
+.think div{font-family:'JB';font-size:11.5px;color:var(--dim);display:flex;align-items:center;gap:8px;animation:rise .3s ease both}
+.think div svg{width:13px;height:13px;color:var(--ok);flex:none}
+.think div.run svg{color:var(--accent2);animation:spin 1s linear infinite}
+.txt{line-height:1.6}
+.txt b{color:#fff}
+.caret::after{content:"";display:inline-block;width:7px;height:15px;background:var(--accent2);margin-left:2px;vertical-align:-2px;animation:blink .8s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.rich{margin-top:14px;animation:rise .5s ease both}
+.pkg{border:1px solid var(--line2);border-radius:18px;background:linear-gradient(180deg,#15181d,#111317);overflow:hidden}
+.pkg-h{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line)}
+.pkg-h b{font-size:14.5px}
+.pkg-h small{display:block;color:var(--dim);font-size:12px;margin-top:2px}
+.row{display:grid;grid-template-columns:42px 1fr auto auto;gap:12px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);font-size:13.5px}
+.row .th{width:42px;height:42px;border-radius:10px;background:#1d2127;display:grid;place-items:center;color:#cfd3d9}
+.row .th svg{width:34px;height:26px}
+.row .nm b{display:block;font-weight:600;color:#eef0f2;font-size:13.5px}
+.row .nm span{color:var(--dim);font-size:12px}
+.row .q{font-family:'JB';font-size:12px;color:var(--muted)}
+.row .p{font-family:'JB';font-size:13px;color:#fff;min-width:78px;text-align:right}
+.pkg-f{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;padding:16px;background:rgba(255,91,31,.05)}
+.pkg-f .tot small{display:block;font-size:11.5px;color:var(--dim);font-family:'JB';letter-spacing:.1em;text-transform:uppercase}
+.pkg-f .tot b{font-family:'Archivo';font-stretch:115%;font-size:30px;font-weight:800;letter-spacing:-.01em}
+.pkg-f .tot span{display:block;color:var(--muted);font-size:13px}
+.pkg-f .tot span em{font-style:normal;color:var(--accent2);font-weight:600}
+.kpis{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.kp{font-size:12px;border:1px solid var(--line2);border-radius:999px;padding:5px 10px;color:#d6d9de;background:rgba(0,0,0,.25)}
+.kp.g{border-color:rgba(61,220,151,.35);color:var(--ok)}
+.acts{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.acts .btn{height:38px;padding:0 14px;border-radius:11px;font-size:13px}
+.chat-f{padding:14px 16px 16px;border-top:1px solid var(--line);background:#0c0e11}
+.chat-f .chips{margin:0 0 12px;gap:6px}
+.chat-f .chip{height:30px;font-size:12.5px}
+.chat-in{display:flex;gap:10px;align-items:center;background:#15181c;border:1px solid var(--line2);border-radius:14px;padding:6px 6px 6px 14px}
+.chat-in input{flex:1;background:none;border:0;outline:none;font-size:14.5px;min-width:0}
+.chat-in .send{width:38px;height:38px;border-radius:10px;background:var(--grad);display:grid;place-items:center;color:#170800}
+.chat-in .send svg{width:16px;height:16px}
+.fine{font-size:11.5px;color:var(--dim);margin-top:10px;font-family:'JB'}
+
+/* compare table in chat */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cmp .c{border:1px solid var(--line2);border-radius:14px;padding:14px;background:#14171b}
+.cmp .c.win{border-color:rgba(255,91,31,.55);background:linear-gradient(180deg,rgba(255,91,31,.09),#14171b 60%)}
+.cmp .c b{display:block;font-size:14px;margin:6px 0 8px}
+.cmp .c ul{list-style:none;display:grid;gap:5px;font-size:12.5px;color:var(--muted)}
+.cmp .c li{display:flex;justify-content:space-between;gap:8px}
+.cmp .c li em{font-style:normal;color:#eef0f2;font-family:'JB';font-size:12px}
+.cmp .c .pr{font-family:'JB';color:#fff;margin-top:10px;font-size:14px}
+.steps{counter-reset:s;display:grid;gap:8px}
+.steps div{display:grid;grid-template-columns:26px 1fr;gap:10px;font-size:13.5px;color:#d9dce1}
+.steps div::before{counter-increment:s;content:counter(s);width:24px;height:24px;border-radius:7px;background:#20242a;border:1px solid var(--line2);display:grid;place-items:center;font-family:'JB';font-size:11.5px;color:var(--accent2)}
+
+/* ---------- departments (paper) ---------- */
+.paper{background:var(--paper);color:var(--ink)}
+.paper .eyebrow{color:#c2410c}
+.paper .sec-head p{color:var(--inkmuted)}
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:236px;gap:16px}
+.tile{position:relative;border-radius:var(--r);background:#fff;border:1px solid rgba(14,15,17,.07);padding:24px;overflow:hidden;transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column;color:var(--ink)}
+.tile:hover{transform:translateY(-3px);box-shadow:0 24px 50px -24px rgba(14,15,17,.35)}
+.tile h3{font-family:'Archivo';font-stretch:118%;font-weight:800;font-size:21px;letter-spacing:-.01em}
+.tile p{color:var(--inkmuted);font-size:13.5px;margin-top:4px;max-width:200px}
+.tile .go{margin-top:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600}
+.tile .go svg{width:14px;height:14px}
+.tile .ill{position:absolute;right:16px;bottom:14px;width:54%;height:auto;color:#1a1c20}
+.tile.big .tg{position:absolute;top:24px;right:24px;margin:0}
+.tile.big{grid-column:span 2;grid-row:span 2;background:linear-gradient(160deg,#fff 0%,#f6f3ee 100%)}
+.tile.big h3{font-size:34px}
+.tile.big p{font-size:15.5px;max-width:300px}
+.tile.big .ill{width:74%;right:28px;bottom:30px}
+.tile .tg{align-self:flex-start;margin-top:10px;font-family:'JB';font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;border-radius:6px;background:var(--paper);color:#7a3410}
+.tile.dark{background:#111317;color:#fff}
+.tile.dark p{color:#9aa0a9}
+.tile.dark .gotext{color:var(--accent2)}
+.tile .big-n{font-family:'Archivo';font-stretch:125%;font-weight:800;font-size:44px;letter-spacing:-.02em;line-height:1;margin-top:auto}
+
+/* ---------- bay builder ---------- */
+.bb{background:linear-gradient(180deg,var(--bg) 0%,#0c0d10 100%)}
+.bb-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:28px;align-items:stretch}
+.panel{border-radius:24px;background:var(--surface);border:1px solid var(--line);padding:26px}
+.panel h4{font-family:'JB';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin:0 0 12px}
+.ctl{margin-bottom:26px}
+.seg{display:flex;background:#0f1114;border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px}
+.seg button{flex:1;height:38px;border-radius:9px;font-size:14px;color:var(--muted);font-weight:600;transition:all .2s}
+.seg button.on{background:var(--surface3);color:#fff;box-shadow:inset 0 0 0 1px var(--line2)}
+.seg.acc button.on{background:var(--grad);color:#170800;box-shadow:none}
+.mchips{display:flex;flex-wrap:wrap;gap:8px}
+.mchip{height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line2);font-size:13px;color:var(--muted);display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.mchip i{width:14px;height:14px;border-radius:4px;border:1.5px solid #555b64;display:grid;place-items:center}
+.mchip.on{color:#fff;border-color:rgba(255,91,31,.6);background:rgba(255,91,31,.08)}
+.mchip.on i{background:var(--accent);border-color:var(--accent)}
+.mchip.on i::after{content:"";width:6px;height:3px;border-left:1.6px solid #170800;border-bottom:1.6px solid #170800;transform:rotate(-45deg) translate(1px,-1px)}
+.range{display:flex;align-items:center;gap:14px}
+.range input{flex:1;accent-color:var(--accent)}
+.range output{font-family:'JB';font-size:15px;color:#fff;min-width:84px;text-align:right}
+.aibox{display:flex;gap:12px;padding:14px;border-radius:14px;background:rgba(255,91,31,.06);border:1px solid rgba(255,91,31,.2);font-size:13.5px;color:#e3e5e9}
+.aibox .av{width:28px;height:28px;border-radius:8px}
+.aibox .av svg{width:14px;height:14px}
+.viz{border-radius:24px;background:var(--surface);border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column}
+.viz-top{position:relative;padding:22px 24px 10px;background:radial-gradient(600px 240px at 50% 0%,rgba(255,91,31,.08),transparent),repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 24px),repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,transparent 1px 24px)}
+.viz-top .lab{display:flex;justify-content:space-between;font-family:'JB';font-size:11px;color:var(--dim);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+#floor{width:100%;height:270px}
+.viz-list{padding:6px 0;border-top:1px solid var(--line);flex:1}
+.viz-list .row{padding:9px 24px}
+.viz-f{display:grid;grid-template-columns:1.2fr 1fr 1fr;border-top:1px solid var(--line)}
+.viz-f > div{padding:20px 24px;border-right:1px solid var(--line)}
+.viz-f > div:last-child{border-right:0}
+.viz-f small{display:block;font-family:'JB';font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.viz-f b{display:block;font-family:'Archivo';font-stretch:115%;font-weight:800;font-size:30px;margin-top:6px;letter-spacing:-.01em}
+.viz-f span{font-size:12.5px;color:var(--muted)}
+.fitnote{font-size:12px;font-family:'JB';padding:3px 8px;border-radius:6px}
+.fitnote.ok{color:var(--ok);background:rgba(61,220,151,.1)}
+.fitnote.opt{color:var(--warn);background:rgba(255,194,75,.1)}
+
+/* ---------- autostock ---------- */
+.as{background:var(--bg2);border-top:1px solid var(--line)}
+.as-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.card{border-radius:26px;background:var(--surface);border:1px solid var(--line);overflow:hidden;position:relative}
+.card-pad{padding:32px}
+.card h3{font-family:'Archivo';font-stretch:118%;font-weight:800;font-size:30px;letter-spacing:-.015em;line-height:1.05;margin:14px 0 10px}
+.card p.lead{color:var(--muted);font-size:15.5px;max-width:420px}
+.snap{display:grid;grid-template-columns:1fr 250px;gap:8px;align-items:end}
+.phone{width:250px;height:470px;border-radius:40px;background:#050505;border:1px solid #2b2f36;padding:10px;box-shadow:0 30px 70px -20px rgba(0,0,0,.9),inset 0 0 0 2px #15171b;margin:0 22px -60px 0;position:relative}
+.screen{position:relative;width:100%;height:100%;border-radius:31px;overflow:hidden;background:radial-gradient(120% 80% at 30% 20%,#3a3026 0%,#1d1915 45%,#0d0c0b 100%)}
+.notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:86px;height:24px;border-radius:14px;background:#000;z-index:3}
+.scanbox{position:absolute;left:34px;right:34px;top:96px;height:170px}
+.scanbox .cn{position:absolute;width:26px;height:26px;border:3px solid var(--accent)}
+.cn.a{left:0;top:0;border-right:0;border-bottom:0;border-radius:8px 0 0 0}
+.cn.b{right:0;top:0;border-left:0;border-bottom:0;border-radius:0 8px 0 0}
+.cn.c{left:0;bottom:0;border-right:0;border-top:0;border-radius:0 0 0 8px}
+.cn.d{right:0;bottom:0;border-left:0;border-top:0;border-radius:0 0 8px 0}
+.scanline{position:absolute;left:6px;right:6px;height:2px;background:linear-gradient(90deg,transparent,var(--accent2),transparent);box-shadow:0 0 18px var(--accent);animation:scan 2.6s ease-in-out infinite}
+@keyframes scan{0%,100%{top:10%}50%{top:88%}}
+.idpill{position:absolute;top:52px;left:50%;transform:translateX(-50%);white-space:nowrap;background:rgba(0,0,0,.65);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);border-radius:999px;padding:6px 12px;font-size:11px;display:flex;gap:6px;align-items:center}
+.sheet{position:absolute;left:8px;right:8px;bottom:8px;background:rgba(18,20,24,.92);backdrop-filter:blur(12px);border:1px solid var(--line2);border-radius:24px;padding:14px}
+.sheet .nm{font-size:12.5px;font-weight:600}
+.sheet .mt{font-size:11px;color:var(--dim);margin-top:2px}
+.sheet .btn{width:100%;height:38px;justify-content:center;margin-top:10px;font-size:12.5px;border-radius:12px}
+.stock{margin-top:22px;border-top:1px solid var(--line)}
+.srow{display:grid;grid-template-columns:1.4fr 1fr auto;gap:16px;align-items:center;padding:14px 32px;border-bottom:1px solid var(--line);font-size:14px}
+.srow .nm b{display:block;font-weight:600;font-size:14px}
+.srow .nm span{font-size:12px;color:var(--dim);font-family:'JB'}
+.meter{height:8px;border-radius:4px;background:rgba(255,255,255,.07);overflow:hidden}
+.meter i{display:block;height:100%;border-radius:4px}
+.meter + small{display:block;font-size:11.5px;color:var(--muted);margin-top:6px;font-family:'JB'}
+.stp{font-size:12px;padding:5px 10px;border-radius:999px;white-space:nowrap;font-weight:600}
+.stp.a{background:rgba(255,91,31,.14);color:#ffb185}
+.stp.b{background:rgba(255,194,75,.12);color:var(--warn)}
+.stp.c{background:rgba(61,220,151,.1);color:var(--ok)}
+.as-foot{display:flex;justify-content:space-between;align-items:center;padding:18px 32px;font-size:13px;color:var(--muted)}
+
+/* ---------- fleet ---------- */
+.fleet-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.badges{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:30px}
+.bdg{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;background:#fff;border:1px solid rgba(14,15,17,.07);font-size:14px;font-weight:600}
+.bdg svg{width:20px;height:20px;color:#c2410c;flex:none}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}
+.flow div{font-size:12.5px;color:var(--inkmuted);border-top:2px solid var(--ink);padding-top:10px}
+.flow div b{display:block;font-family:'JB';font-size:11px;color:#c2410c;letter-spacing:.1em}
+.quote{position:relative;background:#fff;border-radius:22px;box-shadow:0 50px 100px -40px rgba(14,15,17,.45),0 0 0 1px rgba(14,15,17,.06);padding:34px 34px 28px;transform:rotate(1.2deg)}
+.quote .qh{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid var(--ink);padding-bottom:16px}
+.quote .qh b{font-family:'Archivo';font-stretch:125%;font-weight:850;font-size:24px;letter-spacing:.01em}
+.quote .qh span{font-family:'JB';font-size:11.5px;color:var(--inkmuted);display:block;margin-top:4px}
+.quote .meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding:16px 0;font-size:12px;color:var(--inkmuted);border-bottom:1px solid #e8e6e1}
+.quote .meta b{display:block;color:var(--ink);font-size:13px;margin-top:2px}
+.qt{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
+.qt th{font-family:'JB';font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--inkmuted);text-align:left;padding:10px 0;font-weight:500}
+.qt td{padding:10px 0;border-top:1px solid #efede9}
+.qt td:last-child,.qt th:last-child{text-align:right;font-family:'JB'}
+.qtot{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:14px;border-top:2px solid var(--ink)}
+.qtot b{font-family:'Archivo';font-stretch:115%;font-weight:800;font-size:28px}
+.stamp{position:absolute;right:-22px;bottom:-30px;background:var(--ink);color:#fff;border-radius:16px;padding:12px 16px;display:flex;align-items:center;gap:10px;font-size:13px;box-shadow:0 20px 40px -14px rgba(0,0,0,.5);transform:rotate(-3deg)}
+.stamp .av{width:30px;height:30px;border-radius:9px}
+.stamp .av svg{width:15px;height:15px}
+.stamp small{display:block;color:#9aa0a9;font-size:11px;font-family:'JB'}
+.upl{position:absolute;left:-14px;top:-30px;background:#fff;border-radius:14px;padding:10px 14px;display:flex;align-items:center;gap:10px;font-size:12.5px;box-shadow:0 20px 40px -14px rgba(14,15,17,.35),0 0 0 1px rgba(14,15,17,.06);transform:rotate(-2deg)}
+.upl .x{width:30px;height:30px;border-radius:8px;background:#e7f6ee;color:#0b7a45;display:grid;place-items:center;font-family:'JB';font-size:10px;font-weight:700}
+
+/* ---------- products ---------- */
+.prods{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.prod{border-radius:22px;background:var(--surface);border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,border-color .25s}
+.prod:hover{transform:translateY(-4px);border-color:var(--line2)}
+.prod .im{position:relative;height:230px;background:radial-gradient(70% 70% at 50% 40%,#262a31 0%,#16191d 70%);display:grid;place-items:center;color:#d7dbe1}
+.prod .im > svg{width:72%;height:auto}
+.prod .im .tag-ai{position:absolute;top:14px;left:14px}
+.prod .im .fav{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:rgba(0,0,0,.35);border:1px solid var(--line)}
+.prod .bd{padding:18px 18px 20px;display:flex;flex-direction:column;gap:6px;flex:1}
+.prod .br{font-family:'JB';font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.prod h4{font-size:15.5px;font-weight:650;line-height:1.35}
+.prod .why{font-size:12.5px;color:var(--accent2);display:flex;gap:6px;align-items:flex-start}
+.prod .why svg{width:13px;height:13px;margin-top:3px;flex:none}
+.prod .pr{display:flex;align-items:flex-end;justify-content:space-between;margin-top:auto;padding-top:12px}
+.prod .pr b{font-family:'Archivo';font-stretch:112%;font-weight:800;font-size:24px}
+.prod .pr span{display:block;font-size:12px;color:var(--muted)}
+.add{width:42px;height:42px;border-radius:12px;background:var(--grad);display:grid;place-items:center;color:#170800}
+.add svg{width:18px;height:18px}
+.fbt{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding:12px 18px;display:flex;justify-content:space-between}
+.fbt b{color:#fff;font-weight:600}
+
+/* ---------- heritage ---------- */
+.her{background:var(--accent);color:#170800;overflow:hidden;position:relative}
+.her::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(0,0,0,.05) 0 2px,transparent 2px 18px);pointer-events:none}
+.her .wrap{position:relative;z-index:1;display:grid;grid-template-columns:auto 1fr;gap:64px;align-items:center;padding-top:72px;padding-bottom:72px}
+.her .yr{font-family:'Archivo';font-stretch:125%;font-weight:900;font-size:200px;line-height:.8;letter-spacing:-.04em}
+.tl{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:2px solid #170800}
+.tl div{padding:18px 22px 0 0}
+.tl b{display:block;font-family:'JB';font-size:12px;letter-spacing:.14em}
+.tl h5{font-family:'Archivo';font-stretch:115%;font-weight:800;font-size:22px;margin:8px 0 6px}
+.tl p{font-size:14.5px;opacity:.8}
+
+/* ---------- CTA + footer ---------- */
+.cta{text-align:center;background:radial-gradient(800px 400px at 50% 100%,rgba(255,91,31,.22),transparent 70%),var(--bg)}
+.cta h2{font-size:clamp(52px,7vw,112px)}
+.cta p{color:var(--muted);font-size:19px;margin:22px auto 0;max-width:560px}
+.cta .cmd-wrap{margin:38px auto 0}
+.cta .row2{display:flex;justify-content:center;gap:12px;margin-top:22px}
+footer{border-top:1px solid var(--line);background:#07080a;padding:64px 0 34px;color:var(--muted);font-size:14px}
+.fgrid{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:32px}
+.fgrid h6{font-family:'JB';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#fff;margin-bottom:16px;font-weight:500}
+.fgrid ul{list-style:none;display:grid;gap:10px}
+.fbot{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:48px;padding-top:24px;font-size:12.5px;color:var(--dim)}
+.concept{font-family:'JB';color:var(--accent2)}
+
+/* launcher */
+.launch{position:fixed;right:26px;bottom:26px;z-index:60;display:flex;align-items:center;gap:10px;height:54px;padding:0 20px 0 8px;border-radius:999px;background:#15181c;border:1px solid var(--line2);box-shadow:0 20px 50px -14px rgba(0,0,0,.8),0 0 0 6px rgba(255,91,31,.08);font-weight:600;font-size:14.5px}
+.launch .av{width:40px;height:40px;border-radius:50%}
+.launch .ping{position:absolute;left:38px;top:8px;width:10px;height:10px;border-radius:50%;background:var(--ok);border:2px solid #15181c}
+
+/* responsive */
+.hero-grid > *,.cp-grid > *,.bb-grid > *,.as-grid > *,.fleet-grid > *{min-width:0}
+@media (max-width:1100px){
+  nav.main,.search{display:none}
+  .hero-grid,.cp-grid,.bb-grid,.as-grid,.fleet-grid{grid-template-columns:1fr}
+  .stage{justify-self:center}
+  .bento{grid-template-columns:repeat(2,1fr)}
+  .prods{grid-template-columns:repeat(2,1fr)}
+  .her .wrap{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  .util-l span:not(:first-child),.util .r{display:none}
+  header.top .wrap{height:62px;gap:12px}
+  .logo-word b{font-size:14px}
+  .hdr-r .icon-btn.acct{display:none}
+  .hero{padding-top:30px}
+  .hero-grid{min-height:0;gap:8px}
+  .hero h1{font-size:54px;margin:20px 0 18px}
+  .hero .sub{font-size:16.5px}
+  .cmd input{font-size:14px}
+  .cmd .mic{display:none}
+  .cmd .btn{padding:0 14px;height:44px}
+  .cmd .btn .lbl{display:none}
+  .stage{max-width:380px;margin-top:10px}
+  .fc1{left:-6px;top:4%;width:190px}
+  .fc2{right:-6px;width:180px}
+  .fc3{display:none}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat{padding:20px 0 20px 16px;border-bottom:1px solid var(--line)}
+  .stat:nth-child(odd){padding-left:0}
+  .stat:nth-child(2){border-right:0}
+  .stat b{font-size:30px}
+  .brands .wrap{flex-direction:column;height:auto;padding:26px 16px;gap:18px;align-items:flex-start}
+  .brandrow{flex-wrap:wrap;gap:16px 26px;justify-content:flex-start}
+  .bw{font-size:19px}
+  .sec{padding:84px 0}
+  .bento{grid-template-columns:1fr;grid-auto-rows:200px}
+  .sec-head.split{flex-direction:column;align-items:flex-start}
+  .tile.big{grid-column:auto;grid-row:span 2}
+  .prods{grid-template-columns:1fr}
+  .chat-b{height:560px}
+  .row{grid-template-columns:38px 1fr auto}
+  .row .q{display:none}
+  .snap{grid-template-columns:1fr}
+  .phone{margin:10px auto -60px}
+  .srow{padding:14px 18px;grid-template-columns:1fr auto}
+  .srow > div:nth-child(2){grid-column:1/-1;grid-row:2}
+  .viz-f{grid-template-columns:1fr}
+  .viz-f > div{border-right:0;border-bottom:1px solid var(--line)}
+  .badges,.flow{grid-template-columns:1fr 1fr}
+  .her .yr{font-size:120px}
+  .tl{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .launch{right:16px;bottom:16px;height:50px}
+  .launch .lt{display:none}
+  .launch{padding:0 5px}
+  .launch .ping{left:34px}
+  .stamp{right:-6px}
+  .upl{left:-6px}
+  .quote{padding:24px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- ======= SVG SYMBOLS ======= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="spark" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1.5c.7 5.6 4.9 9.8 10.5 10.5-5.6.7-9.8 4.9-10.5 10.5C11.3 16.9 7.1 12.7 1.5 12 7.1 11.3 11.3 7.1 12 1.5Z"/></symbol>
+    <symbol id="arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.5l5 5 10-11"/></symbol>
+    <symbol id="loader" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" d="M12 3a9 9 0 1 0 9 9"/></symbol>
+    <symbol id="plus" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></g></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.5l2.2 11h10.6l2-8H7"/><circle cx="9.5" cy="19.5" r="1.4"/><circle cx="17" cy="19.5" r="1.4"/></g></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8.5" r="4"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/></g></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></g></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></g></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M13 2 4 14h7l-1 8 9-12h-7z"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></g></symbol>
+    <symbol id="i-wrench" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M14.5 6.5a4 4 0 0 0 5 5L21 13l-8 8-4-4 8-8zM3 21l6-6"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/></g></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></g></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M2 6h12v10H2zM14 9h4l3 3v4h-7z"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></g></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></g></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></g></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></symbol>
+    <symbol id="i-gauge" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17l4-5"/></g></symbol>
+
+    <!-- product / category illustrations -->
+    <symbol id="ill-lift" viewBox="0 0 220 160">
+      <g fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+        <rect x="20" y="16" width="18" height="128" rx="2"/><rect x="182" y="16" width="18" height="128" rx="2"/>
+        <path d="M10 144h38M172 144h38"/><path d="M29 16V7h162v9"/>
+        <path d="M38 88h30M152 88h30"/>
+        <path d="M54 82V70q2-5 10-7l20-14q4-3 10-3h34q6 0 10 4l16 13q12 1 15 6v13z"/>
+        <path d="M92 50l-3 13h22V50M118 50v13h22"/>
+      </g>
+      <circle cx="78" cy="86" r="11" fill="currentColor"/><circle cx="148" cy="86" r="11" fill="currentColor"/>
+      <circle cx="78" cy="86" r="4" fill="#FF5B1F"/><circle cx="148" cy="86" r="4" fill="#FF5B1F"/>
+      <rect x="22" y="80" width="14" height="18" rx="2" fill="#FF5B1F"/><rect x="184" y="80" width="14" height="18" rx="2" fill="#FF5B1F"/>
+    </symbol>
+    <symbol id="ill-changer" viewBox="0 0 220 160">
+      <g fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M44 150V98h108v52z"/><path d="M44 112h108"/>
+        <ellipse cx="98" cy="94" rx="60" ry="12"/>
+        <ellipse cx="98" cy="66" rx="48" ry="11"/><ellipse cx="98" cy="66" rx="26" ry="6"/>
+        <path d="M50 66v14a48 11 0 0 0 96 0V66"/>
+        <path d="M178 150V22h-46v14M132 36v22"/><path d="M124 58h16l-4 8h-8z"/>
+        <path d="M64 150v6M86 150v6M108 150v6"/>
+      </g>
+      <ellipse cx="98" cy="66" rx="14" ry="3.2" fill="#FF5B1F"/>
+      <rect x="170" y="60" width="16" height="40" rx="3" fill="#FF5B1F"/>
+    </symbol>
+    <symbol id="ill-balancer" viewBox="0 0 220 160">
+      <g fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M84 150V82h100v68z"/><path d="M76 150h116"/>
+        <rect x="104" y="26" width="64" height="36" rx="5"/><path d="M136 62v20"/>
+        <path d="M84 104H64"/>
+        <circle cx="40" cy="104" r="30"/><circle cx="40" cy="104" r="17"/>
+        <path d="M6 82a36 36 0 0 1 68 0"/>
+      </g>
+      <rect x="110" y="32" width="52" height="24" rx="3" fill="#FF5B1F" opacity=".9"/>
+      <circle cx="40" cy="104" r="5" fill="#FF5B1F"/>
+      <path d="M116 44h10M132 40v8M144 44h12" stroke="#170800" stroke-width="2.4" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="ill-repair" viewBox="0 0 220 160">
+      <g fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M30 70l70-22 70 22-70 22z"/><path d="M30 70v52l70 24V92M170 70v52l-70 24"/>
+        <path d="M150 12h50M175 12v46l-6 8"/>
+        <path d="M40 132c8-10 16 10 24 0s16 10 24 0"/>
+      </g>
+      <ellipse cx="78" cy="68" rx="16" ry="6" fill="#FF5B1F"/><ellipse cx="112" cy="62" rx="12" ry="4.5" fill="currentColor"/><ellipse cx="124" cy="76" rx="14" ry="5" fill="#FF5B1F" opacity=".75"/>
+    </symbol>
+    <symbol id="ill-weights" viewBox="0 0 220 160">
+      <g fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+        <rect x="20" y="96" width="180" height="26" rx="5"/><path d="M50 96v26M80 96v26M110 96v26M140 96v26M170 96v26"/>
+        <path d="M34 34h44v18q-22 12-44 0z"/><path d="M40 34V24h32"/>
+        <path d="M104 34h44v18q-22 12-44 0z"/><path d="M110 34V24h32"/>
+      </g>
+      <path d="M104 34h44v18q-22 12-44 0z" fill="#FF5B1F"/>
+      <rect x="20" y="96" width="30" height="26" rx="5" fill="#FF5B1F"/>
+    </symbol>
+    <symbol id="ill-air" viewBox="0 0 220 160">
+      <g fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+        <rect x="18" y="86" width="170" height="48" rx="24"/>
+        <rect x="40" y="52" width="56" height="34" rx="6"/><rect x="106" y="58" width="36" height="28" rx="4"/>
+        <circle cx="170" cy="60" r="20"/><path d="M170 40v40M150 60h40"/>
+        <path d="M36 134v12M170 134v12"/><circle cx="36" cy="150" r="6"/>
+      </g>
+      <circle cx="132" cy="110" r="11" fill="#FF5B1F"/><path d="M132 110l5-6" stroke="#170800" stroke-width="2.4" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="ill-tpms" viewBox="0 0 220 160">
+      <g fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M44 146h28l-5-26H49z"/><path d="M53 120V52h10v68"/>
+        <rect x="104" y="84" width="84" height="46" rx="12"/><path d="M118 84V60h10v24"/>
+        <path d="M150 52a20 20 0 0 1 20 20M150 36a36 36 0 0 1 36 36"/>
+      </g>
+      <rect x="50" y="36" width="16" height="16" rx="3" fill="#FF5B1F"/>
+      <circle cx="146" cy="107" r="7" fill="#FF5B1F"/>
+    </symbol>
+    <symbol id="ill-tools" viewBox="0 0 220 160">
+      <g fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M40 46h84q14 0 14 14v8q0 10-10 10H98l-7 52H64l5-52H42q-10 0-10-10v-12q0-10 8-10z"/>
+        <path d="M138 56h24v12h-24"/><rect x="58" y="130" width="42" height="16" rx="3"/>
+      </g>
+      <rect x="162" y="52" width="20" height="20" rx="3" fill="#FF5B1F"/>
+      <path d="M72 92h14" stroke="#FF5B1F" stroke-width="5" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ======= UTILITY BAR ======= -->
+<div class="util">
+  <div class="wrap">
+    <div class="util-l">
+      <span><span class="dot"></span><b>Houston, TX</b> · Serving tire pros since 1960</span>
+      <span>Net-30 terms for approved accounts</span>
+      <span>Tax-exempt & PO checkout</span>
+    </div>
+    <div class="r"><span>Talk to a specialist <b>(713) 956-6665</b></span></div>
+  </div>
+</div>
+
+<!-- ======= HEADER ======= -->
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#">
+      <svg width="38" height="38" viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="16" fill="none" stroke="#fff" stroke-width="5"/>
+        <path d="M20 4a16 16 0 0 1 15.2 11" fill="none" stroke="#FF5B1F" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="20" cy="20" r="5.5" fill="#FF5B1F"/>
+      </svg>
+      <span class="logo-word"><b>ALL TIRE SUPPLY</b><i>EST. 1960 · HOUSTON</i></span>
+    </a>
+    <nav class="main">
+      <a href="#depts">Lifts</a><a href="#depts">Tire Changers</a><a href="#depts">Balancers</a><a href="#depts">Repair Supplies</a><a href="#fleet">Fleet & Gov</a>
+      <a class="ai" href="#copilot"><svg class="spark" style="color:var(--accent)"><use href="#spark"/></svg>Shop Copilot</a>
+    </nav>
+    <div class="hdr-r">
+      <div class="search"><svg width="16" height="16"><use href="#i-search"/></svg>Search SKUs, brands…<kbd>⌘K</kbd></div>
+      <a class="icon-btn acct" href="#"><svg width="19" height="19"><use href="#i-user"/></svg></a>
+      <a class="icon-btn" href="#"><svg width="19" height="19"><use href="#i-cart"/></svg><span class="badge">3</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- ======= HERO ======= -->
+<section class="hero">
+  <div class="glow g1"></div><div class="glow g2"></div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="pill-new"><b>NEW</b>Shop Copilot — AI built for tire pros</span>
+        <h1 class="display">Equip it.<br>Stock it.<br><span class="l3 gradtext">Ask it.<svg style="color:#FF7A2E"><use href="#spark"/></svg></span></h1>
+        <p class="sub">Lifts, changers, balancers and every patch, plug and weight your bays burn through — now with <b>Shop Copilot</b>, an AI that builds your shop, restocks your supplies and quotes your fleet in seconds.</p>
+        <div class="cmd-wrap">
+          <form class="cmd" id="heroCmd">
+            <svg class="spark" style="color:var(--accent2)"><use href="#spark"/></svg>
+            <input id="heroInput" placeholder="Build a 3-bay SUV shop under $30k" aria-label="Ask Shop Copilot">
+            <button type="button" class="mic" aria-label="Voice"><svg width="18" height="18"><use href="#i-mic"/></svg></button>
+            <button class="btn btn-primary" type="submit"><span class="lbl">Ask Copilot</span><svg width="17" height="17"><use href="#arrow"/></svg></button>
+          </form>
+        </div>
+        <div class="chips">
+          <button class="chip" data-ask="Restock my usual repair supplies"><svg><use href="#i-box"/></svg>Restock my usual supplies</button>
+          <button class="chip" data-ask="Which tire changer handles 26-inch run-flats?"><svg><use href="#i-wrench"/></svg>Changer for 26″ run-flats?</button>
+          <button class="chip" data-ask="Quote 12 balancers for our 4 fleet locations, Net-30"><svg><use href="#i-file"/></svg>Quote for 4 fleet locations</button>
+          <button class="chip" data-ask="My balancer shows error E-07"><svg><use href="#i-bolt"/></svg>Balancer error E-07</button>
+        </div>
+        <div class="hero-trust">
+          <span><svg><use href="#check"/></svg>Authorized distributor</span>
+          <span><svg><use href="#check"/></svg>Ships nationwide</span>
+          <span><svg><use href="#check"/></svg>Real experts behind the AI</span>
+        </div>
+      </div>
+
+      <div class="stage">
+        <svg class="tire" id="tire" viewBox="-330 -330 660 660" aria-label="Tire and wheel illustration"></svg>
+        <div class="fcard fc1">
+          <div class="k"><span class="tag-ai">AI MATCH</span> 98% fit</div>
+          <div class="v">Rim-clamp changer for your 22″ low-profile mix</div>
+          <div class="s">Matched to last 90 days of jobs</div>
+        </div>
+        <div class="fcard fc2">
+          <div class="k"><span class="live"></span> AutoStock</div>
+          <div class="v">Radial patches: 6 days left</div>
+          <div class="bar"><i style="width:22%"></i></div>
+          <div class="s">Reorder queued · arrives Thu</div>
+        </div>
+        <div class="fcard fc3">
+          <div class="k"><svg width="13" height="13" style="color:var(--ok)"><use href="#check"/></svg> Fleet quote Q-4821</div>
+          <div class="v">12 balancers · 4 sites · Net-30</div>
+          <div class="s">Drafted by Copilot in 52 seconds</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>1960</b><span>Supplying tire shops from Houston</span></div>
+      <div class="stat"><b>4.8★</b><span>Google customer rating</span></div>
+      <div class="stat"><b>24/7</b><span>AI expert on every product page</span></div>
+      <div class="stat"><b>60s</b><span>Fleet & government quotes</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= BRANDS ======= -->
+<section class="brands">
+  <div class="wrap">
+    <div class="lbl">Authorized distributor of</div>
+    <div class="brandrow">
+      <span class="bw b1">COATS</span>
+      <span class="bw b2">ROTARY</span>
+      <span class="bw b3">CHAMPION</span>
+      <span class="bw b4">REMA <em>TIP TOP</em></span>
+      <span class="bw b5">MOV-IT</span>
+    </div>
+  </div>
+</section>
+
+<!-- ======= COPILOT ======= -->
+<section class="sec copilot" id="copilot">
+  <div class="wrap cp-grid">
+    <div>
+      <div class="sec-head" style="margin-bottom:28px">
+        <span class="eyebrow">Shop Copilot · Claude Fable 5.2</span>
+        <h2 class="display">An expert at the counter. <span class="gradtext">Always on.</span></h2>
+        <p>Describe your shop in plain words. Copilot knows the whole catalog, your account pricing and 60+ years of tire-shop know-how, and it acts on them: it builds carts, drafts quotes and schedules reorders.</p>
+      </div>
+      <div class="cp-feats">
+        <div class="cp-feat"><div class="ic"><svg><use href="#i-wrench"/></svg></div><div><h4>Understands your shop</h4><p>Bays, vehicle mix, wheel sizes, volume. It recommends what fits, not what's on promo.</p></div></div>
+        <div class="cp-feat"><div class="ic"><svg><use href="#i-search"/></svg></div><div><h4>Knows every SKU</h4><p>Specs, compatibility, stock and lead times across Coats, Rotary, Champion, Rema Tip Top and more.</p></div></div>
+        <div class="cp-feat"><div class="ic"><svg><use href="#i-card"/></svg></div><div><h4>Prices to your account</h4><p>Tier pricing, Net-30, tax-exempt status and financing are applied automatically.</p></div></div>
+        <div class="cp-feat"><div class="ic"><svg><use href="#i-bolt"/></svg></div><div><h4>Takes action</h4><p>One tap to cart, a PDF quote or an AutoStock schedule. A human specialist steps in anytime.</p></div></div>
+      </div>
+    </div>
+
+    <div class="chatwin">
+      <div class="chat-h">
+        <div class="av"><svg><use href="#spark"/></svg></div>
+        <div class="t"><b>Shop Copilot</b><span>Powered by Claude Fable 5.2</span></div>
+        <div class="st"><span class="live"></span>Signed in · Pro account</div>
+      </div>
+      <div class="chat-b" id="chatBody">
+        <div class="msg user"><div class="bub">We're opening a 3-bay shop in Katy. Mostly SUVs and light trucks, some 22″ wheels. Budget around $30k.</div></div>
+        <div class="msg ai">
+          <div class="av"><svg><use href="#spark"/></svg></div>
+          <div class="body">
+            <div class="think">
+              <div><svg><use href="#check"/></svg>Sized 3 bays for SUV / light-truck duty cycle</div>
+              <div><svg><use href="#check"/></svg>Filtered changers for 22″ low-profile & run-flat</div>
+              <div><svg><use href="#check"/></svg>Applied Pro pricing · checked Houston stock</div>
+            </div>
+            <div class="txt">Here's a package that covers all three bays and stays under budget. I picked a <b>rim-clamp changer with an assist arm</b>, because your 22″ low-profile work will scratch rims on a center-post machine.</div>
+            <div class="rich">
+              <div class="pkg">
+                <div class="pkg-h"><div><b>3-Bay SUV & Light-Truck Package</b><small>Built for 22″ · Ready to ship from Houston</small></div><span class="tag-ai"><svg width="10" height="10"><use href="#spark"/></svg>AI-BUILT</span></div>
+                <div class="row"><div class="th"><svg><use href="#ill-lift"/></svg></div><div class="nm"><b>Rotary® 2-post lift, 10,000 lb</b><span>Asymmetric · 3-stage arms</span></div><div class="q">×3</div><div class="p">$17,970</div></div>
+                <div class="row"><div class="th"><svg><use href="#ill-changer"/></svg></div><div class="nm"><b>Coats® rim-clamp changer + assist</b><span>Up to 24″ wheels · run-flat ready</span></div><div class="q">×1</div><div class="p">$6,450</div></div>
+                <div class="row"><div class="th"><svg><use href="#ill-balancer"/></svg></div><div class="nm"><b>Coats® digital wheel balancer</b><span>Auto data arm · hidden-weight mode</span></div><div class="q">×1</div><div class="p">$3,280</div></div>
+                <div class="row"><div class="th"><svg><use href="#ill-repair"/></svg></div><div class="nm"><b>Rema Tip Top® opening kit</b><span>Patches, plugs, valves, weights</span></div><div class="q">×1</div><div class="p">$940</div></div>
+                <div class="pkg-f">
+                  <div class="tot"><small>Package total</small><b>$28,640</b><span>or <em>$607/mo</em> for 60 months*</span></div>
+                  <div class="kpis"><span class="kp g">$1,360 under budget</span><span class="kp">Est. payback ≈ 8 mo*</span></div>
+                </div>
+              </div>
+              <div class="acts">
+                <button class="btn btn-primary"><svg width="15" height="15"><use href="#i-cart"/></svg>Add all to cart</button>
+                <button class="btn btn-ghost"><svg width="15" height="15"><use href="#i-file"/></svg>Formal quote (PDF)</button>
+                <button class="btn btn-ghost">Talk to a specialist</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chat-f">
+        <div class="chips">
+          <button class="chip" data-ask="Restock my usual repair supplies"><svg><use href="#i-box"/></svg>Restock my usual</button>
+          <button class="chip" data-ask="Which tire changer handles 26-inch run-flats?"><svg><use href="#i-wrench"/></svg>26″ run-flats?</button>
+          <button class="chip" data-ask="Quote 12 balancers for our 4 fleet locations, Net-30"><svg><use href="#i-file"/></svg>Fleet quote</button>
+          <button class="chip" data-ask="My balancer shows error E-07"><svg><use href="#i-bolt"/></svg>Error E-07</button>
+        </div>
+        <form class="chat-in" id="chatForm">
+          <input id="chatInput" placeholder="Ask about any product, order or repair…" aria-label="Message Shop Copilot">
+          <button type="button" class="icon-btn" style="width:38px;height:38px;border-radius:10px" aria-label="Snap a photo"><svg width="17" height="17"><use href="#i-camera"/></svg></button>
+          <button class="send" aria-label="Send"><svg><use href="#arrow"/></svg></button>
+        </form>
+        <div class="fine">*Illustrative pricing & financing for concept purposes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= DEPARTMENTS ======= -->
+<section class="sec paper" id="depts">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Shop by department</span>
+      <h2 class="display">Everything a tire bay runs on.</h2>
+      <p>From the lift to the last valve core. Every product page has an AI fit-check: tell it your vehicles and wheels, and it says yes, no, or "get this instead."</p>
+    </div>
+    <div class="bento">
+      <a class="tile big" href="#"><span class="tg">Most financed</span><h3>Vehicle Lifts</h3><p>2-post, 4-post, scissor and alignment lifts from Rotary and more. Bay-planned by AI.</p><span class="go">Shop lifts <svg><use href="#arrow"/></svg></span><svg class="ill" viewBox="0 0 220 160"><use href="#ill-lift"/></svg></a>
+      <a class="tile" href="#"><h3>Tire Changers</h3><p>Center-post to rim-clamp & heavy-duty</p><span class="go">Shop <svg><use href="#arrow"/></svg></span><svg class="ill" viewBox="0 0 220 160"><use href="#ill-changer"/></svg></a>
+      <a class="tile" href="#"><h3>Wheel Balancers</h3><p>Digital, laser & road-force</p><span class="go">Shop <svg><use href="#arrow"/></svg></span><svg class="ill" viewBox="0 0 220 160"><use href="#ill-balancer"/></svg></a>
+      <a class="tile" href="#"><h3>Repair Supplies</h3><p>Patches, plugs, cements & tools</p><span class="tg">✦ AutoStock</span><span class="go">Shop <svg><use href="#arrow"/></svg></span><svg class="ill" viewBox="0 0 220 160"><use href="#ill-repair"/></svg></a>
+      <a class="tile" href="#"><h3>Wheel Weights</h3><p>Clip-on, adhesive, steel & zinc</p><span class="tg">✦ AutoStock</span><span class="go">Shop <svg><use href="#arrow"/></svg></span><svg class="ill" viewBox="0 0 220 160"><use href="#ill-weights"/></svg></a>
+      <a class="tile" href="#"><h3>Air & Compressors</h3><p>Piston, rotary screw, air lines</p><span class="go">Shop <svg><use href="#arrow"/></svg></span><svg class="ill" viewBox="0 0 220 160"><use href="#ill-air"/></svg></a>
+      <a class="tile" href="#"><h3>TPMS & Valves</h3><p>Sensors, stems, cores & tools</p><span class="go">Shop <svg><use href="#arrow"/></svg></span><svg class="ill" viewBox="0 0 220 160"><use href="#ill-tpms"/></svg></a>
+      <a class="tile" href="#"><h3>Air Tools</h3><p>Impacts, sockets, torque</p><span class="go">Shop <svg><use href="#arrow"/></svg></span><svg class="ill" viewBox="0 0 220 160"><use href="#ill-tools"/></svg></a>
+      <a class="tile dark" href="#bay"><span class="tag-ai" style="align-self:flex-start"><svg width="10" height="10"><use href="#spark"/></svg>BAY BUILDER</span><p style="margin-top:14px;color:#cfd3d9;font-size:15px;max-width:none">Not sure what you need? Let AI plan the whole shop.</p><span class="big-n gradtext">Start →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ======= BAY BUILDER ======= -->
+<section class="sec bb" id="bay">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">AI Bay Builder</span>
+      <h2 class="display">Plan the shop. <span class="gradtext">Price it live.</span></h2>
+      <p>Pick bays, vehicles and wheel sizes. Copilot lays out the floor, selects the equipment, fits it to your budget and shows the monthly payment. Every change updates in real time.</p>
+    </div>
+    <div class="bb-grid">
+      <div class="panel">
+        <div class="ctl"><h4>Service bays</h4><div class="seg acc" id="baySeg"></div></div>
+        <div class="ctl"><h4>Vehicles you service</h4>
+          <div class="mchips" id="mixChips">
+            <button class="mchip on" data-k="pass"><i></i>Passenger</button>
+            <button class="mchip on" data-k="suv"><i></i>SUV & light truck</button>
+            <button class="mchip" data-k="hd"><i></i>Heavy-duty / commercial</button>
+            <button class="mchip" data-k="perf"><i></i>Performance / low-profile</button>
+          </div>
+        </div>
+        <div class="ctl"><h4>Largest wheel</h4><div class="seg" id="wheelSeg"><button data-v="20">20″</button><button data-v="22" class="on">22″</button><button data-v="24.5">24.5″</button><button data-v="26">26″+</button></div></div>
+        <div class="ctl"><h4>Budget</h4><div class="range"><input type="range" id="budget" min="10000" max="120000" step="1000" value="40000"><output id="budgetOut">$40,000</output></div></div>
+        <div class="aibox"><div class="av"><svg><use href="#spark"/></svg></div><div id="aiNote">Copilot picked a rim-clamp changer because of your 22″ low-profile mix.</div></div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:22px"><button class="btn btn-primary" style="flex:1;justify-content:center"><svg width="16" height="16"><use href="#i-cart"/></svg>Add package to cart</button><button class="btn btn-ghost"><svg width="16" height="16"><use href="#i-file"/></svg>Quote PDF</button></div>
+        <div class="fine" style="margin-top:14px">Includes freight estimate & install scheduling at checkout.</div>
+      </div>
+      <div class="viz">
+        <div class="viz-top">
+          <div class="lab"><span>Floor plan · auto-generated</span><span id="fitNote" class="fitnote ok">Fits budget</span></div>
+          <svg id="floor" viewBox="0 0 760 270" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+        <div class="viz-list" id="bbList"></div>
+        <div class="viz-f">
+          <div><small>Package total</small><b id="bbTotal">$0</b><span id="bbSave"></span></div>
+          <div><small>Financing</small><b id="bbMonthly">$0</b><span>/mo · 60 months*</span></div>
+          <div><small>Est. payback</small><b id="bbPayback">0 mo</b><span>at ~$1.2k net/bay/mo*</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= AUTOSTOCK + SNAP ======= -->
+<section class="sec as">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Repeat revenue on autopilot</span>
+      <h2 class="display">Never run out of patches again.</h2>
+      <p>Consumables are what keep a shop open. Copilot learns how fast each bay uses them and restocks before you run short. Need something fast? Snap a photo and reorder.</p>
+    </div>
+    <div class="as-grid">
+      <div class="card">
+        <div class="card-pad snap">
+          <div style="align-self:start">
+            <span class="tag-ai"><svg width="10" height="10"><use href="#spark"/></svg>SNAP & REORDER</span>
+            <h3>Point. Identify. Reordered.</h3>
+            <p class="lead">Photograph an empty box, a worn part or a label. Vision AI matches it to the exact SKU and your last order. Reorder in one tap from the bay floor.</p>
+            <div style="display:flex;gap:18px;margin-top:26px">
+              <div><b class="display" style="font-size:34px">3 sec</b><div style="color:var(--muted);font-size:13px;margin-top:6px">photo to SKU</div></div>
+              <div><b class="display" style="font-size:34px">1 tap</b><div style="color:var(--muted);font-size:13px;margin-top:6px">to reorder</div></div>
+            </div>
+          </div>
+          <div class="phone">
+            <div class="screen">
+              <div class="notch"></div>
+              <div class="idpill"><span class="live"></span>Identified · 98% match</div>
+              <svg viewBox="0 0 180 170" style="position:absolute;left:34px;right:34px;top:96px;width:calc(100% - 68px);height:170px">
+                <defs><linearGradient id="bx" x1="0" x2="1"><stop offset="0" stop-color="#e9e3d6"/><stop offset="1" stop-color="#c9c0ae"/></linearGradient><linearGradient id="bx2" x1="0" x2="1"><stop offset="0" stop-color="#b9ae99"/><stop offset="1" stop-color="#9c917c"/></linearGradient></defs>
+                <path d="M30 60 90 38l60 22-60 22z" fill="#f4efe4"/>
+                <path d="M30 60v64l60 26V82z" fill="url(#bx)"/>
+                <path d="M150 60v64l-60 26V82z" fill="url(#bx2)"/>
+                <path d="M36 74l48 21v18l-48-21z" fill="#FF5B1F"/>
+                <path d="M40 96l40 17M40 104l30 13" stroke="#5a4f3e" stroke-width="2.4" stroke-linecap="round"/>
+                <circle cx="120" cy="104" r="12" fill="none" stroke="#6b604d" stroke-width="2.4"/>
+                <path d="M114 104h12" stroke="#6b604d" stroke-width="2.4"/>
+              </svg>
+              <div class="scanbox"><span class="cn a"></span><span class="cn b"></span><span class="cn c"></span><span class="cn d"></span><span class="scanline"></span></div>
+              <div class="sheet">
+                <div style="display:flex;gap:10px;align-items:center">
+                  <div style="width:40px;height:40px;border-radius:10px;background:#22262c;display:grid;place-items:center;color:#d7dbe1"><svg width="32" height="24"><use href="#ill-repair"/></svg></div>
+                  <div><div class="nm">Radial repair patch assortment</div><div class="mt">Rema Tip Top® · Last ordered Oct 12</div></div>
+                </div>
+                <button class="btn btn-primary">Reorder 2 boxes · Pro price</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-pad" style="padding-bottom:0">
+          <span class="tag-ai"><svg width="10" height="10"><use href="#spark"/></svg>AUTOSTOCK</span>
+          <h3>Your supply room, forecasted.</h3>
+          <p class="lead">Burn rates per bay, seasonality and lead times. Copilot orders at the right moment and you approve with one tap, or let it run.</p>
+        </div>
+        <div class="stock">
+          <div class="srow"><div class="nm"><b>Radial repair patches</b><span>RP-ASSORT · 2.1 boxes/wk</span></div><div><div class="meter"><i style="width:18%;background:var(--accent)"></i></div><small>6 days left</small></div><span class="stp a">Auto-ordered · Thu</span></div>
+          <div class="srow"><div class="nm"><b>Tire plugs / strings</b><span>PLG-BLK-50 · 1.4 packs/wk</span></div><div><div class="meter"><i style="width:36%;background:var(--warn)"></i></div><small>11 days left</small></div><span class="stp b">Approve order</span></div>
+          <div class="srow"><div class="nm"><b>Snap-in valve stems TR413</b><span>VS-413 · 180 / wk</span></div><div><div class="meter"><i style="width:72%;background:var(--ok)"></i></div><small>24 days left</small></div><span class="stp c">Healthy</span></div>
+          <div class="srow"><div class="nm"><b>Adhesive wheel weights</b><span>AWW-025 · 9 rolls/mo</span></div><div><div class="meter"><i style="width:58%;background:var(--ok)"></i></div><small>19 days left</small></div><span class="stp c">Healthy</span></div>
+          <div class="srow"><div class="nm"><b>Tire mounting lube</b><span>LUBE-1G · 3 gal/mo</span></div><div><div class="meter"><i style="width:28%;background:var(--warn)"></i></div><small>8 days left</small></div><span class="stp b">Approve order</span></div>
+        </div>
+        <div class="as-foot"><span>Learned from 14 months of order history</span><span style="color:var(--accent2);font-weight:600">AutoStock members save on every reorder →</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= FLEET & GOV ======= -->
+<section class="sec paper" id="fleet">
+  <div class="wrap fleet-grid">
+    <div>
+      <span class="eyebrow">Fleet · Government · Multi-location</span>
+      <h2 class="display" style="font-size:clamp(40px,4.2vw,62px);margin:18px 0">Quotes in 60 seconds.<br><span style="color:#c2410c">Not 2 days.</span></h2>
+      <p style="color:var(--inkmuted);font-size:19px;max-width:560px">Upload an RFQ or a spreadsheet, or just type what you need. Copilot drafts a compliant quote at your contract pricing, splits shipments across locations and sends a PDF for sign-off.</p>
+      <div class="flow">
+        <div><b>01</b>Upload RFQ or describe it</div>
+        <div><b>02</b>AI drafts line items & pricing</div>
+        <div><b>03</b>Approve, PO or P-card</div>
+        <div><b>04</b>Ships to every location</div>
+      </div>
+      <div class="badges">
+        <div class="bdg"><svg><use href="#i-card"/></svg>Net-30 terms</div>
+        <div class="bdg"><svg><use href="#i-shield"/></svg>Tax-exempt checkout</div>
+        <div class="bdg"><svg><use href="#i-file"/></svg>PO & P-card accepted</div>
+        <div class="bdg"><svg><use href="#i-pin"/></svg>Multi-location ship-to</div>
+        <div class="bdg"><svg><use href="#i-box"/></svg>W-9 & COI on demand</div>
+        <div class="bdg"><svg><use href="#i-user"/></svg>Dedicated account rep</div>
+      </div>
+    </div>
+    <div style="position:relative;padding:20px 30px">
+      <div class="quote">
+        <div class="stamp"><div class="av"><svg><use href="#spark"/></svg></div><div>Drafted by Copilot<small>52 seconds · ready to sign</small></div></div>
+        <div class="qh"><div><b>QUOTE</b><span>Q-26-4821 · Valid 30 days</span></div><div style="text-align:right"><b style="font-size:15px">ALL TIRE SUPPLY</b><span>Houston, Texas</span></div></div>
+        <div class="meta"><div>Prepared for<b>Metro Fleet Services</b></div><div>Terms<b>Net-30 · Tax-exempt</b></div><div>Ship-to<b>4 locations</b></div></div>
+        <table class="qt">
+          <tr><th>Item</th><th>Qty</th><th>Amount</th></tr>
+          <tr><td>Coats® digital wheel balancer</td><td>12</td><td>$37,440</td></tr>
+          <tr><td>Weight starter kits (clip-on + adhesive)</td><td>12</td><td>$2,280</td></tr>
+          <tr><td>On-site install & calibration</td><td>4 sites</td><td>$3,200</td></tr>
+          <tr><td>Freight · split shipment</td><td>4</td><td>$1,180</td></tr>
+        </table>
+        <div class="qtot"><span style="font-size:13px;color:var(--inkmuted)">Contract pricing applied<br><span class="mono" style="font-size:11px">Sample customer · illustrative</span></span><b>$44,100</b></div>
+      </div>
+      <div class="upl"><div class="x">XLS</div><div><b>RFQ_balancers.xlsx</b><div style="color:var(--inkmuted);font-size:11.5px">Parsed · 4 sites · 12 units</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= PRODUCTS ======= -->
+<section class="sec" style="background:var(--bg)">
+  <div class="wrap">
+    <div class="sec-head split">
+      <div style="max-width:700px"><span class="eyebrow">Picked by Copilot</span><h2 class="display">Recommended for your shop.</h2><p>Personalized from what you service, what you've bought and what similar shops add next.</p></div>
+      <a class="btn btn-ghost" href="#">View all equipment <svg width="16" height="16"><use href="#arrow"/></svg></a>
+    </div>
+    <div class="prods">
+      <div class="prod"><div class="im"><span class="tag-ai"><svg width="10" height="10"><use href="#spark"/></svg>98% FIT</span><span class="fav"><svg width="16" height="16"><use href="#i-heart"/></svg></span><svg viewBox="0 0 220 160"><use href="#ill-changer"/></svg></div><div class="bd"><span class="br">Coats</span><h4>Rim-clamp tire changer with assist arm</h4><span class="why"><svg><use href="#spark"/></svg>Handles your 22″ low-profile jobs</span><div class="pr"><div><b>$6,450</b><span>or $137/mo*</span></div><button class="add" aria-label="Add"><svg><use href="#plus"/></svg></button></div></div><div class="fbt">Often added: <b>bead pressing tool</b></div></div>
+      <div class="prod"><div class="im"><span class="tag-ai"><svg width="10" height="10"><use href="#spark"/></svg>BAY PICK</span><span class="fav"><svg width="16" height="16"><use href="#i-heart"/></svg></span><svg viewBox="0 0 220 160"><use href="#ill-lift"/></svg></div><div class="bd"><span class="br">Rotary</span><h4>2-post asymmetric lift, 10,000 lb</h4><span class="why"><svg><use href="#spark"/></svg>Fits your 12 ft ceiling height</span><div class="pr"><div><b>$5,990</b><span>or $127/mo*</span></div><button class="add" aria-label="Add"><svg><use href="#plus"/></svg></button></div></div><div class="fbt">Often added: <b>truck adapters</b></div></div>
+      <div class="prod"><div class="im"><span class="tag-ai"><svg width="10" height="10"><use href="#spark"/></svg>UPGRADE</span><span class="fav"><svg width="16" height="16"><use href="#i-heart"/></svg></span><svg viewBox="0 0 220 160"><use href="#ill-air"/></svg></div><div class="bd"><span class="br">Champion</span><h4>7.5 HP two-stage air compressor, 80 gal</h4><span class="why"><svg><use href="#spark"/></svg>Runs 3 impacts at once without drop</span><div class="pr"><div><b>$3,480</b><span>or $74/mo*</span></div><button class="add" aria-label="Add"><svg><use href="#plus"/></svg></button></div></div><div class="fbt">Often added: <b>air line kit</b></div></div>
+      <div class="prod"><div class="im"><span class="tag-ai"><svg width="10" height="10"><use href="#spark"/></svg>AUTOSTOCK</span><span class="fav"><svg width="16" height="16"><use href="#i-heart"/></svg></span><svg viewBox="0 0 220 160"><use href="#ill-repair"/></svg></div><div class="bd"><span class="br">Rema Tip Top</span><h4>Radial repair patch assortment, shop box</h4><span class="why"><svg><use href="#spark"/></svg>You reorder every ~3 weeks</span><div class="pr"><div><b>$164</b><span>Subscribe & save</span></div><button class="add" aria-label="Add"><svg><use href="#plus"/></svg></button></div></div><div class="fbt">Often added: <b>vulcanizing cement</b></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= HERITAGE ======= -->
+<section class="her">
+  <div class="wrap">
+    <div class="yr">1960</div>
+    <div>
+      <div class="tl">
+        <div><b>1960</b><h5>Rema of Texas</h5><p>Supplying Houston tire shops with repair products and equipment.</p></div>
+        <div><b>ONLINE</b><h5>All Tire Supply</h5><p>Dealerships, chains, fleets and municipalities across the U.S.</p></div>
+        <div><b>NOW</b><h5>AI supply desk</h5><p>Same experts, now available 24/7 through Shop Copilot.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= CTA ======= -->
+<section class="sec cta">
+  <div class="wrap">
+    <span class="eyebrow">Open a Pro account in minutes</span>
+    <h2 class="display" style="margin-top:20px">Your shop,<br><span class="gradtext">on autopilot.</span></h2>
+    <p>Ask Copilot anything. Get Net-30 terms, AutoStock and account pricing from day one.</p>
+    <div class="cmd-wrap">
+      <form class="cmd" id="ctaCmd">
+        <svg class="spark" style="color:var(--accent2)"><use href="#spark"/></svg>
+        <input id="ctaInput" placeholder="What does a new 2-bay shop need?" aria-label="Ask Shop Copilot">
+        <button class="btn btn-primary" type="submit"><span class="lbl">Ask Copilot</span><svg width="17" height="17"><use href="#arrow"/></svg></button>
+      </form>
+    </div>
+    <div class="row2"><a class="btn btn-ghost" href="#">Open a Pro account</a><a class="btn btn-ghost" href="#">Call (713) 956-6665</a></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <a class="logo" href="#"><svg width="34" height="34" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="#fff" stroke-width="5"/><path d="M20 4a16 16 0 0 1 15.2 11" fill="none" stroke="#FF5B1F" stroke-width="5" stroke-linecap="round"/><circle cx="20" cy="20" r="5.5" fill="#FF5B1F"/></svg><span class="logo-word"><b>ALL TIRE SUPPLY</b><i>EST. 1960 · HOUSTON</i></span></a>
+        <p style="margin-top:18px;max-width:300px">Tire-shop equipment and supplies for independents, dealerships, chains, fleets and government.</p>
+      </div>
+      <div><h6>Shop</h6><ul><li>Lifts</li><li>Tire changers</li><li>Balancers</li><li>Repair supplies</li><li>Wheel weights</li></ul></div>
+      <div><h6>AI tools</h6><ul><li>Shop Copilot</li><li>Bay Builder</li><li>AutoStock</li><li>Snap & Reorder</li></ul></div>
+      <div><h6>Pro accounts</h6><ul><li>Net-30 terms</li><li>Fleet & government</li><li>Financing</li><li>Tax-exempt</li></ul></div>
+      <div><h6>Support</h6><ul><li>(713) 956-6665</li><li>Order tracking</li><li>Returns</li><li>Equipment install</li></ul></div>
+    </div>
+    <div class="fbot"><span>© 2026 All Tire Supply Co. · Houston, Texas</span><span class="concept">Concept design · prices, customers & metrics are illustrative</span></div>
+  </div>
+</footer>
+
+<a class="launch" href="#copilot" id="launch"><span class="av"><svg width="18" height="18"><use href="#spark"/></svg></span><span class="ping"></span><span class="lt">Ask Copilot</span></a>
+
+<script>
+/* ---------- helpers ---------- */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const usd = n => '$' + Math.round(n).toLocaleString('en-US');
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const SV = (id, w, h) => `<svg viewBox="0 0 220 160" style="width:${w||34}px;height:${h||26}px"><use href="#${id}"/></svg>`;
+const NS = 'http://www.w3.org/2000/svg';
+
+/* ---------- hero tire ---------- */
+(function buildTire(){
+  const s = $('#tire');
+  const pt = (r, a) => [r*Math.cos((a-90)*Math.PI/180), r*Math.sin((a-90)*Math.PI/180)];
+  let h = `<defs>
+    <radialGradient id="tg" cx="0" cy="0" r="290" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2a2d33"/><stop offset=".72" stop-color="#15171b"/><stop offset=".9" stop-color="#0b0c0e"/><stop offset="1" stop-color="#050506"/></radialGradient>
+    <radialGradient id="sw" cx="-60" cy="-80" r="300" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2b2e34"/><stop offset=".6" stop-color="#16181c"/><stop offset="1" stop-color="#0e0f12"/></radialGradient>
+    <linearGradient id="rim" x1="-180" y1="-180" x2="180" y2="180" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f4f6f8"/><stop offset=".35" stop-color="#b7bdc6"/><stop offset=".6" stop-color="#6c727b"/><stop offset=".8" stop-color="#c9ced5"/><stop offset="1" stop-color="#4a4f57"/></linearGradient>
+    <linearGradient id="rim2" x1="180" y1="-180" x2="-180" y2="180" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#dfe3e8"/><stop offset=".5" stop-color="#7d838c"/><stop offset="1" stop-color="#2e3238"/></linearGradient>
+    <radialGradient id="disc" cx="0" cy="0" r="160" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3a3e45"/><stop offset=".7" stop-color="#25282d"/><stop offset="1" stop-color="#111316"/></radialGradient>
+    <linearGradient id="cal" x1="0" y1="-160" x2="0" y2="-60" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF9A3C"/><stop offset="1" stop-color="#E2440D"/></linearGradient>
+    <linearGradient id="swp" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FF5B1F" stop-opacity="0"/><stop offset="1" stop-color="#FF5B1F" stop-opacity=".45"/></linearGradient>
+    <path id="txtp" d="M0,-214 a214,214 0 1,1 -0.1,0"/>
+    <filter id="sh" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>`;
+  // AI rings (behind)
+  h += `<g class="spin-slow"><circle r="318" fill="none" stroke="rgba(255,91,31,.35)" stroke-width="1.2" stroke-dasharray="2 9"/></g>`;
+  h += `<g class="spin-rev"><circle r="302" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="1" stroke-dasharray="60 14 6 14"/></g>`;
+  h += `<ellipse cx="0" cy="300" rx="230" ry="26" fill="#000" opacity=".7" filter="url(#sh)"/>`;
+  // tire body
+  h += `<circle r="288" fill="url(#tg)"/>`;
+  // tread blocks
+  const N = 60;
+  for (let i=0;i<N;i++){
+    const a = i*360/N;
+    h += `<g transform="rotate(${a})"><path d="M-11,-289 L11,-289 L13,-262 L-9,-258 Z" fill="#1c1e23" stroke="rgba(255,255,255,.06)" stroke-width="1"/></g>`;
+    h += `<g transform="rotate(${a+3})"><rect x="-4" y="-256" width="8" height="10" rx="2" fill="#18191d"/></g>`;
+  }
+  h += `<circle r="252" fill="url(#sw)"/>`;
+  h += `<circle r="250" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="2"/>`;
+  // sidewall text (embossed)
+  const t = 'ALL TIRE SUPPLY  •  HOUSTON TX  •  EST 1960  •  SHOP COPILOT  •  ';
+  h += `<text font-family="Archivo" font-stretch="125%" font-weight="800" font-size="21" letter-spacing="5" fill="rgba(255,255,255,.07)" transform="translate(0,-1)"><textPath href="#txtp">${t}</textPath></text>`;
+  h += `<text font-family="Archivo" font-stretch="125%" font-weight="800" font-size="21" letter-spacing="5" fill="#2b2e34"><textPath href="#txtp">${t}</textPath></text>`;
+  // rim lip
+  h += `<circle r="186" fill="url(#rim)"/>`;
+  h += `<circle r="176" fill="#0d0f12"/>`;
+  // brake disc
+  h += `<circle r="150" fill="url(#disc)"/>`;
+  for (let i=0;i<36;i++){ const [x,y] = pt(128 - (i%2)*12, i*10); h += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.2" fill="#0d0f12"/>`; }
+  h += `<circle r="96" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="2"/>`;
+  // caliper
+  h += `<path d="M -70,-148 A 162 162 0 0 1 70,-148 L 58,-112 A 126 126 0 0 0 -58,-112 Z" fill="url(#cal)" transform="rotate(38)"/>`;
+  h += `<text font-family="Archivo" font-stretch="125%" font-weight="900" font-size="15" letter-spacing="2" fill="#2a0e02" transform="rotate(38) translate(0,-126)" text-anchor="middle">ATS</text>`;
+  // spokes (5 twin spokes)
+  for (let i=0;i<5;i++){
+    for (const off of [-9, 9]){
+      const a = i*72 + off;
+      const p1 = pt(52, a-6), p2 = pt(174, a-2.6), p3 = pt(174, a+2.6), p4 = pt(52, a+6);
+      h += `<path d="M${p1} L${p2} A174 174 0 0 1 ${p3} L${p4} Z" fill="url(#rim)" stroke="rgba(0,0,0,.35)" stroke-width="1"/>`;
+      const q1 = pt(60, a-1.2), q2 = pt(170, a-.6);
+      h += `<path d="M${q1} L${q2}" stroke="rgba(255,255,255,.55)" stroke-width="1.2"/>`;
+    }
+  }
+  h += `<circle r="176" fill="none" stroke="url(#rim2)" stroke-width="6"/>`;
+  // hub
+  h += `<circle r="58" fill="url(#rim2)"/><circle r="52" fill="url(#rim)"/>`;
+  for (let i=0;i<5;i++){ const [x,y] = pt(36, i*72+36); h += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7" fill="#2a2e34"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4" fill="#a5abb4"/>`; }
+  h += `<circle r="20" fill="#121418"/><circle r="20" fill="none" stroke="#FF5B1F" stroke-width="3"/>`;
+  h += `<path transform="scale(.9) translate(-12,-12)" d="M12 1.5c.7 5.6 4.9 9.8 10.5 10.5-5.6.7-9.8 4.9-10.5 10.5C11.3 16.9 7.1 12.7 1.5 12 7.1 11.3 11.3 7.1 12 1.5Z" fill="#FF7A2E"/>`;
+  // AI scan overlay
+  h += `<g class="sweep"><path d="M0 0 L300 0 A300 300 0 0 0 259.8 -150 Z" fill="url(#swp)" opacity=".55"/></g>`;
+  // measurement callouts
+  const callouts = [[-36, 288, 'TREAD 9/32″'], [118, 186, 'RIM 22×9.5'], [212, 252, 'DOT 2626']];
+  for (const [a, r, label] of callouts){
+    const [x,y] = pt(r, a), [x2,y2] = pt(r+40, a);
+    const right = x2 > 0;
+    h += `<circle cx="${x}" cy="${y}" r="5" fill="#FF5B1F"/><circle cx="${x}" cy="${y}" r="11" fill="none" stroke="#FF5B1F" stroke-opacity=".5"/>`;
+    h += `<path d="M${x} ${y} L${x2} ${y2} h${right?36:-36}" stroke="rgba(255,255,255,.4)" fill="none"/>`;
+    h += `<text x="${x2 + (right?42:-42)}" y="${y2+4}" font-family="JB" font-size="12.5" fill="#e5e7ea" text-anchor="${right?'start':'end'}" letter-spacing="1">${label}</text>`;
+  }
+  s.innerHTML = h;
+})();
+
+/* ---------- hero placeholder cycle ---------- */
+(function(){
+  const prompts = ['Build a 3-bay SUV shop under $30k','Which balancer fits 26″ truck wheels?','Restock patches, plugs & TR413 stems','Quote 40 lifts for a county fleet','Why does my changer leave bead marks?'];
+  let i = 0; const inp = $('#heroInput');
+  setInterval(()=>{ if (document.activeElement !== inp && !inp.value){ i=(i+1)%prompts.length; inp.placeholder = prompts[i]; } }, 3200);
+})();
+
+/* ---------- copilot engine (scripted demo; production = Claude Fable 5.2 + catalog tools) ---------- */
+const S = {
+  bays: { steps:['Sized bays for your vehicle mix','Filtered equipment for wheel size & ceiling height','Applied Pro pricing · checked Houston stock'],
+    text:'Here\'s a starting package. I sized one 2-post lift per bay and shared the changer and balancer between bays, which is the usual ratio for SUV-heavy shops under ~40 cars a day.',
+    rich:()=>`<div class="pkg"><div class="pkg-h"><div><b>2-Bay Starter Package</b><small>Passenger & SUV · up to 22″</small></div><span class="tag-ai">AI-BUILT</span></div>
+      ${row('ill-lift','Rotary® 2-post lift, 10,000 lb','Asymmetric arms','×2','$11,980')}
+      ${row('ill-changer','Coats® rim-clamp changer','Up to 24″','×1','$6,450')}
+      ${row('ill-balancer','Coats® digital balancer','Auto data arm','×1','$3,280')}
+      ${row('ill-air','Champion® 5 HP compressor','60 gal · two-stage','×1','$2,190')}
+      <div class="pkg-f"><div class="tot"><small>Package total</small><b>$23,900</b><span>or <em>$507/mo</em> for 60 months*</span></div><div class="kpis"><span class="kp">Est. payback ≈ 10 mo*</span></div></div></div>
+      <div class="acts"><button class="btn btn-primary">Add all to cart</button><button class="btn btn-ghost">Open in Bay Builder</button></div>`},
+  restock: { steps:['Pulled your last 6 orders','Forecast burn rate for the next 30 days','Checked AutoStock savings on each item'],
+    text:'Based on your last six orders, here\'s your usual restock. <b>Patches and lube run out first</b>, in about a week, so I\'d ship today. Turn on AutoStock and I\'ll handle this automatically from now on.',
+    rich:()=>`<div class="pkg"><div class="pkg-h"><div><b>Your usual restock</b><small>Ships today from Houston · arrives Thu</small></div><span class="tag-ai">FORECAST</span></div>
+      ${row('ill-repair','Radial repair patch assortment','6 days left','×2','$328')}
+      ${row('ill-repair','Tire plugs / strings, 50-pk','11 days left','×4','$96')}
+      ${row('ill-tpms','Snap-in valve stems TR413, 100-pk','24 days left','×2','$58')}
+      ${row('ill-weights','Adhesive wheel weights, roll','19 days left','×6','$210')}
+      <div class="pkg-f"><div class="tot"><small>Restock total</small><b>$692</b><span>AutoStock price: <em>$637</em></span></div><div class="kpis"><span class="kp g">Save $55 with AutoStock</span></div></div></div>
+      <div class="acts"><button class="btn btn-primary">Reorder now</button><button class="btn btn-ghost">Turn on AutoStock</button></div>`},
+  compat: { steps:['Checked 26″ capacity & run-flat certification','Compared bead-breaker force and clamp range','Matched to your bay height & air supply'],
+    text:'For 26″ run-flats you need a rim-clamp machine with a <b>helper arm and a strong bead breaker</b>. Center-post changers will struggle and can damage the TPMS sensor. Two good options:',
+    rich:()=>`<div class="cmp">
+      <div class="c win"><span class="tag-ai">BEST FIT</span><b>Coats® rim-clamp + dual assist</b><ul><li>Max wheel <em>30″</em></li><li>Run-flat ready <em>Yes</em></li><li>Bead breaker <em>2,500 lb</em></li><li>TPMS-safe mode <em>Yes</em></li></ul><div class="pr">$9,850 · $209/mo*</div></div>
+      <div class="c"><span class="kp">Budget pick</span><b>Coats® rim-clamp + single assist</b><ul><li>Max wheel <em>26″</em></li><li>Run-flat ready <em>Yes</em></li><li>Bead breaker <em>2,000 lb</em></li><li>TPMS-safe mode <em>Manual</em></li></ul><div class="pr">$6,450 · $137/mo*</div></div></div>
+      <div class="acts"><button class="btn btn-primary">Add best fit to cart</button><button class="btn btn-ghost">Compare full specs</button></div>`},
+  fleet: { steps:['Detected 4 ship-to locations on your account','Applied contract pricing · Net-30 · tax-exempt','Split freight by location'],
+    text:'Done. Here\'s a quote for <b>12 balancers across your 4 locations</b>, with install and calibration at each site. It\'s ready to send for approval.',
+    rich:()=>`<div class="pkg"><div class="pkg-h"><div><b>Quote Q-26-4822</b><small>Net-30 · Tax-exempt · Valid 30 days</small></div><span class="tag-ai">READY</span></div>
+      ${row('ill-balancer','Coats® digital wheel balancer','3 per location','×12','$37,440')}
+      ${row('ill-weights','Weight starter kits','Clip-on + adhesive','×12','$2,280')}
+      ${row('ill-tools','Install & calibration','On-site','×4','$3,200')}
+      <div class="pkg-f"><div class="tot"><small>Quote total</small><b>$42,920</b><span>+ freight $1,180 · split by site</span></div><div class="kpis"><span class="kp g">Drafted in 48s</span></div></div></div>
+      <div class="acts"><button class="btn btn-primary">Send for approval</button><button class="btn btn-ghost">Download PDF</button><button class="btn btn-ghost">Edit lines</button></div>`},
+  error: { steps:['Looked up error code for your balancer model','Checked your purchase & warranty status','Found the likely part in stock'],
+    text:'<b>E-07 usually means the wheel is spinning outside its calibration window</b>, most often from a loose shaft adapter or a dirty sensor. Try these steps first:',
+    rich:()=>`<div class="steps"><div>Remove the wheel and clean the shaft threads and cone face.</div><div>Re-run a zero calibration with the calibration weight (Menu → Cal → 0).</div><div>If E-07 returns, the encoder is likely failing. Your unit is still <b>under warranty</b>.</div></div>
+      <div class="pkg" style="margin-top:12px">${row('ill-balancer','Replacement encoder board','Fits your model · in stock','×1','$0 · warranty')}</div>
+      <div class="acts"><button class="btn btn-primary">Start warranty claim</button><button class="btn btn-ghost">Book a technician</button></div>`},
+  general: { steps:['Searched catalog & knowledge base','Checked your account context'],
+    text:'I can help with that. I can <b>build an equipment package</b>, <b>restock your consumables</b>, <b>check compatibility</b>, <b>draft a fleet quote</b> or <b>troubleshoot a machine</b>. Tell me a bit more about your shop and I\'ll take it from there.',
+    rich:()=>`<div class="acts"><button class="btn btn-ghost" data-ask="Build a 2-bay starter shop">Build a package</button><button class="btn btn-ghost" data-ask="Restock my usual repair supplies">Restock</button><button class="btn btn-ghost" data-ask="Talk to a specialist">Talk to a human</button></div>`}
+};
+function row(ill, name, sub, q, p){ return `<div class="row"><div class="th">${SV(ill)}</div><div class="nm"><b>${name}</b><span>${sub}</span></div><div class="q">${q}</div><div class="p">${p}</div></div>`; }
+function route(t){
+  t = t.toLowerCase();
+  if (/error|e-?\d|troubleshoot|broken|bead mark|not working/.test(t)) return S.error;
+  if (/quote|fleet|location|net-?30|county|city|government/.test(t)) return S.fleet;
+  if (/run-?flat|26|which (tire )?changer|compatib|handle|fit/.test(t)) return S.compat;
+  if (/restock|reorder|patch|plug|usual|stems|consumable/.test(t)) return S.restock;
+  if (/bay|shop|setup|set up|build|equip|open/.test(t)) return S.bays;
+  return S.general;
+}
+let busy = false;
+async function ask(text){
+  if (!text || busy) return; busy = true;
+  const body = $('#chatBody');
+  const u = document.createElement('div'); u.className = 'msg user'; u.innerHTML = `<div class="bub"></div>`; u.firstChild.textContent = text; body.appendChild(u);
+  body.scrollTop = body.scrollHeight;
+  const sc = route(text);
+  const m = document.createElement('div'); m.className = 'msg ai';
+  m.innerHTML = `<div class="av"><svg><use href="#spark"/></svg></div><div class="body"><div class="think"></div><div class="txt"></div></div>`;
+  body.appendChild(m);
+  const th = $('.think', m), tx = $('.txt', m), bd = $('.body', m);
+  await sleep(350);
+  for (const st of sc.steps){
+    const d = document.createElement('div'); d.className = 'run'; d.innerHTML = `<svg><use href="#loader"/></svg>${st}`; th.appendChild(d);
+    body.scrollTop = body.scrollHeight;
+    await sleep(520);
+    d.className = ''; d.innerHTML = `<svg><use href="#check"/></svg>${st}`;
+  }
+  // stream text (html-aware)
+  tx.classList.add('caret');
+  const full = sc.text; let out = '';
+  for (let i=0;i<full.length;){
+    if (full[i] === '<'){ const j = full.indexOf('>', i); out += full.slice(i, j+1); i = j+1; continue; }
+    out += full.slice(i, i+3); i += 3;
+    tx.innerHTML = out; body.scrollTop = body.scrollHeight;
+    await sleep(14);
+  }
+  tx.innerHTML = full; tx.classList.remove('caret');
+  const r = document.createElement('div'); r.className = 'rich'; r.innerHTML = sc.rich(); bd.appendChild(r);
+  body.scrollTop = body.scrollHeight;
+  busy = false;
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-ask]'); if (!b) return;
+  e.preventDefault();
+  const inHero = b.closest('.hero');
+  if (inHero){ $('#copilot').scrollIntoView({behavior:'smooth'}); setTimeout(()=>ask(b.dataset.ask), 650); }
+  else ask(b.dataset.ask);
+});
+$('#chatForm').addEventListener('submit', e => { e.preventDefault(); const v = $('#chatInput').value.trim(); $('#chatInput').value=''; ask(v); });
+for (const [f, i] of [['#heroCmd','#heroInput'],['#ctaCmd','#ctaInput']]){
+  $(f).addEventListener('submit', e => { e.preventDefault(); const inp = $(i); const v = inp.value.trim() || inp.placeholder; inp.value=''; $('#copilot').scrollIntoView({behavior:'smooth'}); setTimeout(()=>ask(v), 650); });
+}
+
+/* ---------- bay builder ---------- */
+const BB = { bays:3, mix:new Set(['pass','suv']), wheel:22, budget:40000 };
+const seg = $('#baySeg');
+for (let n=1;n<=6;n++){ const b = document.createElement('button'); b.textContent = n; b.dataset.v = n; if (n===3) b.className='on'; seg.appendChild(b); }
+seg.addEventListener('click', e => { const b = e.target.closest('button'); if(!b) return; $$('button', seg).forEach(x=>x.classList.remove('on')); b.classList.add('on'); BB.bays = +b.dataset.v; calc(); });
+$('#wheelSeg').addEventListener('click', e => { const b = e.target.closest('button'); if(!b) return; $$('#wheelSeg button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); BB.wheel = +b.dataset.v; calc(); });
+$('#mixChips').addEventListener('click', e => { const b = e.target.closest('.mchip'); if(!b) return; b.classList.toggle('on'); const k=b.dataset.k; BB.mix.has(k)?BB.mix.delete(k):BB.mix.add(k); if(!BB.mix.size){BB.mix.add('pass'); $('[data-k=pass]').classList.add('on');} calc(); });
+$('#budget').addEventListener('input', e => { BB.budget = +e.target.value; $('#budgetOut').textContent = usd(BB.budget); calc(); });
+
+function pmt(P){ const r = .099/12, n = 60; return P*r/(1-Math.pow(1+r,-n)); }
+function calc(){
+  const {bays, mix, wheel, budget} = BB;
+  const hd = mix.has('hd') || wheel >= 24.5, perf = mix.has('perf') || wheel >= 22;
+  const pairs = Math.ceil(bays/3);
+  const build = (tier) => {
+    const it = [];
+    if (hd) it.push(['ill-lift', 'Rotary® 2-post lift, 12,000 lb', 'Heavy-duty · truck adapters', bays, tier ? 7450 : 8990]);
+    else it.push(['ill-lift', tier ? 'Value 2-post lift, 9,000 lb' : 'Rotary® 2-post lift, 10,000 lb', tier ? 'Symmetric arms' : 'Asymmetric · 3-stage arms', bays, tier ? 4290 : 5990]);
+    if (hd) it.push(['ill-changer','Coats® heavy-duty truck changer','Up to 26″ · 24.5″ commercial', pairs, 11900]);
+    else if (perf) it.push(['ill-changer','Coats® rim-clamp changer + assist','Up to 24″ · run-flat ready', pairs, 6450]);
+    else it.push(['ill-changer','Coats® center-post changer','Up to 20″', pairs, 3990]);
+    if (perf || hd) it.push(['ill-balancer', tier ? 'Coats® digital balancer' : 'Coats® balancer with laser & auto arm', tier ? 'Auto data arm' : 'Hidden-weight · laser locate', pairs, tier ? 3280 : 6280]);
+    else it.push(['ill-balancer','Coats® digital balancer','Auto data arm', pairs, 3280]);
+    const comp = bays <= 2 ? ['Champion® 5 HP compressor','60 gal · two-stage',2190] : bays <= 4 ? ['Champion® 7.5 HP compressor','80 gal · two-stage',3480] : ['Champion® 10 HP rotary screw','120 gal · continuous duty',8900];
+    it.push(['ill-air', comp[0], comp[1], 1, comp[2]]);
+    it.push(['ill-repair','Rema Tip Top® opening kit','Patches, plugs, valves, weights', 1, 400 + bays*180]);
+    return it;
+  };
+  let items = build(0), tier = 0;
+  let total = items.reduce((s,i)=>s+i[3]*i[4],0);
+  if (total > budget){ const alt = build(1); const t2 = alt.reduce((s,i)=>s+i[3]*i[4],0); if (t2 < total){ items = alt; total = t2; tier = 1; } }
+  const fits = total <= budget;
+  $('#bbList').innerHTML = items.map(i => row(i[0], i[1], i[2], '×'+i[3], usd(i[3]*i[4]))).join('');
+  $('#bbTotal').textContent = usd(total);
+  $('#bbMonthly').textContent = usd(pmt(total));
+  $('#bbPayback').textContent = Math.max(3, Math.round(total/(bays*1200))) + ' mo';
+  const fn = $('#fitNote');
+  if (fits && !tier){ fn.className='fitnote ok'; fn.textContent='Fits budget'; $('#bbSave').textContent = usd(budget-total)+' under budget'; }
+  else if (fits){ fn.className='fitnote opt'; fn.textContent='Optimized to fit'; $('#bbSave').textContent = usd(budget-total)+' under budget'; }
+  else { fn.className='fitnote opt'; fn.textContent='Over by '+usd(total-budget); $('#bbSave').textContent = 'Financing keeps it at '+usd(pmt(total))+'/mo'; }
+  const notes = [];
+  if (hd) notes.push('a heavy-duty changer and 12,000 lb lifts for commercial wheels');
+  else if (perf) notes.push('a rim-clamp changer for your low-profile and 22″ work');
+  else notes.push('a center-post changer, which is all a ≤20″ passenger mix needs');
+  if (tier) notes.push('and swapped in value-tier models to stay near budget');
+  notes.push(`One tire station (changer + balancer) serves up to 3 bays.`);
+  $('#aiNote').innerHTML = `Copilot picked <b>${notes[0]}</b>${tier?' '+notes[1]:''}. ${notes[notes.length-1]}`;
+  drawFloor(bays, pairs, hd);
+}
+function drawFloor(bays, pairs, hd){
+  const svg = $('#floor');
+  const gap = 12, eqW = 170, W = 760, H = 270;
+  const bw = Math.min(96, (W - 40 - eqW - 26 - (bays-1)*gap)/bays);
+  const total = bays*bw + (bays-1)*gap + 26 + eqW;
+  const x0 = (W - total)/2, y0 = 26, bh = 210;
+  let h = '';
+  h += `<rect x="${x0-14}" y="${y0-14}" width="${total+28}" height="${bh+28}" rx="14" fill="rgba(255,255,255,.015)" stroke="rgba(255,255,255,.12)" stroke-dasharray="4 6"/>`;
+  for (let i=0;i<bays;i++){
+    const x = x0 + i*(bw+gap);
+    h += `<rect x="${x}" y="${y0}" width="${bw}" height="${bh}" rx="8" fill="rgba(255,255,255,.025)" stroke="rgba(255,255,255,.14)"/>`;
+    h += `<text x="${x+bw/2}" y="${y0+bh+-10}" text-anchor="middle" font-family="JB" font-size="10" fill="#7b818b" letter-spacing="1.5">BAY ${i+1}</text>`;
+    // lift posts
+    h += `<rect x="${x+6}" y="${y0+82}" width="12" height="18" rx="2" fill="#FF5B1F"/><rect x="${x+bw-18}" y="${y0+82}" width="12" height="18" rx="2" fill="#FF5B1F"/>`;
+    // car top-down
+    const cx = x+bw/2, cw = Math.min(hd ? 58 : 52, bw-34), ch = hd ? 150 : 138, cy = y0+22;
+    h += `<rect x="${cx-cw/2}" y="${cy}" width="${cw}" height="${ch}" rx="16" fill="#2a2e35" stroke="rgba(255,255,255,.18)"/>`;
+    h += `<rect x="${cx-cw/2+7}" y="${cy+30}" width="${cw-14}" height="24" rx="6" fill="#151820"/>`;
+    h += `<rect x="${cx-cw/2+7}" y="${cy+ch-44}" width="${cw-14}" height="18" rx="5" fill="#151820"/>`;
+    h += `<rect x="${cx-cw/2+9}" y="${cy+58}" width="${cw-18}" height="${ch-106}" rx="4" fill="#323741"/>`;
+    for (const [dx,dy] of [[-1,24],[1,24],[-1,ch-30],[1,ch-30]]) h += `<rect x="${cx+dx*(cw/2)-(dx<0?5:-1)}" y="${cy+dy}" width="4" height="16" rx="1.5" fill="#0b0c0e"/>`;
+  }
+  // equipment zone
+  const ex = x0 + bays*(bw+gap) - gap + 26;
+  h += `<rect x="${ex}" y="${y0}" width="${eqW}" height="${bh}" rx="8" fill="rgba(255,91,31,.04)" stroke="rgba(255,91,31,.35)"/>`;
+  h += `<text x="${ex+12}" y="${y0+20}" font-family="JB" font-size="10" fill="#FF9A3C" letter-spacing="1.5">TIRE STATION</text>`;
+  const per = Math.min(pairs, 3);
+  for (let i=0;i<per;i++){
+    const yy = y0 + 36 + i*(per>2?44:58);
+    h += `<circle cx="${ex+34}" cy="${yy+16}" r="15" fill="#20242a" stroke="#FF5B1F" stroke-width="2"/><circle cx="${ex+34}" cy="${yy+16}" r="6" fill="#FF5B1F"/>`;
+    h += `<rect x="${ex+64}" y="${yy+2}" width="28" height="28" rx="5" fill="#20242a" stroke="rgba(255,255,255,.35)"/><circle cx="${ex+78}" cy="${yy+16}" r="7" fill="none" stroke="#cfd3d9" stroke-width="1.6"/>`;
+    h += `<text x="${ex+102}" y="${yy+13}" font-family="JB" font-size="9.5" fill="#cfd3d9">CHANGER</text><text x="${ex+102}" y="${yy+26}" font-family="JB" font-size="9.5" fill="#7b818b">+ BALANCER</text>`;
+  }
+  if (pairs > 3) h += `<text x="${ex+12}" y="${y0+176}" font-family="JB" font-size="9.5" fill="#7b818b">+${pairs-3} more stations</text>`;
+  h += `<rect x="${ex+12}" y="${y0+bh-34}" width="${eqW-24}" height="22" rx="11" fill="#20242a" stroke="rgba(255,255,255,.25)"/>`;
+  h += `<text x="${ex+eqW/2}" y="${y0+bh-19}" text-anchor="middle" font-family="JB" font-size="9.5" fill="#cfd3d9" letter-spacing="1">AIR COMPRESSOR</text>`;
+  // dimension line
+  h += `<path d="M${x0} ${H-6} H${x0+total}" stroke="rgba(255,255,255,.25)"/><path d="M${x0} ${H-11} v10 M${x0+total} ${H-11} v10" stroke="rgba(255,255,255,.25)"/>`;
+  svg.innerHTML = h;
+}
+calc();
+</script>
+</body>
+</html>
