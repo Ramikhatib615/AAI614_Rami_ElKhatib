@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>All Tire Supply — Full Deck Pages</title>
+<style>
+@font-face{font-family:'Archivo';src:url(../site/fonts/archivo.woff2) format('woff2');font-weight:100 900;font-stretch:62% 125%;font-display:block}
+@font-face{font-family:'Inter';src:url(../site/fonts/inter.woff2) format('woff2');font-weight:100 900;font-display:block}
+@font-face{font-family:'JB';src:url(../site/fonts/mono.woff2) format('woff2');font-weight:100 800;font-display:block}
+:root{--bg:#08090B;--text:#F3F4F6;--muted:#A3A9B2;--dim:#6B717B;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);--accent:#FF5B1F;--accent2:#FF9A3C;--ok:#3DDC97;--grad:linear-gradient(100deg,#FF5B1F 0%,#FF7A2E 45%,#FFB347 100%)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;font-family:'Inter',sans-serif;color:var(--text);-webkit-font-smoothing:antialiased}
+.board{position:relative;width:1920px;height:1080px;overflow:hidden;background:var(--bg);margin:0 auto 40px}
+.board::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:80px 80px;-webkit-mask-image:radial-gradient(ellipse 80% 70% at 70% 45%,#000 10%,transparent 75%);pointer-events:none}
+.glow{position:absolute;border-radius:50%;filter:blur(110px);pointer-events:none}
+.disp{font-family:'Archivo';font-stretch:125%;font-weight:800;letter-spacing:-.025em;line-height:.98}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{font-family:'JB';font-size:15px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent2);display:inline-flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:28px;height:1px;background:currentColor}
+.top{position:absolute;left:80px;right:80px;top:56px;display:flex;justify-content:space-between;align-items:center;z-index:5}
+.logo{display:flex;align-items:center;gap:14px}
+.logo b{font-family:'Archivo';font-stretch:125%;font-weight:850;font-size:21px;letter-spacing:.02em;display:block;line-height:1}
+.logo i{font-style:normal;font-family:'JB';font-size:11px;letter-spacing:.2em;color:var(--dim);display:block;margin-top:6px}
+.chip{font-family:'JB';font-size:13px;letter-spacing:.08em;color:#d6d9de;border:1px solid var(--line2);border-radius:999px;padding:9px 16px;background:rgba(255,255,255,.03);display:inline-flex;align-items:center;gap:8px}
+.foot{position:absolute;left:80px;right:80px;bottom:44px;display:flex;justify-content:space-between;align-items:center;font-family:'JB';font-size:12.5px;color:var(--dim);letter-spacing:.06em;z-index:5}
+.pg{color:var(--accent2)}
+.lever{display:inline-block;font-family:'JB';font-size:13px;letter-spacing:.08em;color:var(--ok);border:1px solid rgba(61,220,151,.35);background:rgba(61,220,151,.07);border-radius:999px;padding:8px 14px;white-space:nowrap}
+
+/* browser window */
+.win{display:inline-flex;flex-direction:column;border-radius:16px;overflow:hidden;border:1px solid var(--line2);box-shadow:0 50px 120px -40px rgba(0,0,0,.95),0 0 110px -40px rgba(255,91,31,.45);background:#0b0c0e}
+.win .bar{height:38px;flex:none;display:flex;align-items:center;gap:7px;padding:0 14px;background:#15171b;border-bottom:1px solid var(--line)}
+.win .bar i{width:11px;height:11px;border-radius:50%;background:#32363d}
+.win .bar span{margin-left:14px;font-family:'JB';font-size:12px;color:var(--dim);background:#0d0f12;border:1px solid var(--line);border-radius:8px;padding:4px 14px}
+.win img{display:block;width:auto;height:auto}
+
+/* side layout */
+.side .txt{position:absolute;left:80px;top:196px;width:540px;z-index:3}
+.side h2{font-size:56px;margin:20px 0 22px}
+.side .txt p{font-size:20px;color:var(--muted);line-height:1.5}
+.bul{list-style:none;margin:30px 0 34px}
+.bul li{display:grid;grid-template-columns:22px 1fr;gap:14px;padding:16px 0;border-top:1px solid var(--line);font-size:18.5px;color:#e3e5e9;line-height:1.4}
+.bul li:last-child{border-bottom:1px solid var(--line)}
+.bul li svg{width:17px;height:17px;color:var(--accent2);margin-top:5px}
+.side .shot{position:absolute;left:690px;right:80px;top:140px;bottom:96px;display:flex;align-items:center;justify-content:center;z-index:2}
+.side .win img{max-width:1150px;max-height:806px}
+
+/* stacked layout */
+.stack .hd{position:absolute;left:80px;right:80px;top:132px;display:flex;justify-content:space-between;align-items:flex-end;gap:40px;z-index:3}
+.stack h2{font-size:56px;margin-top:16px}
+.stack .hd .r{text-align:right;max-width:600px}
+.stack .hd .r p{font-size:19px;color:var(--muted);line-height:1.5;margin-bottom:14px}
+.stack .shot{position:absolute;left:80px;right:80px;top:310px;bottom:96px;display:flex;align-items:center;justify-content:center;z-index:2}
+.stack .win img{max-width:1760px;max-height:636px}
+
+/* phones */
+.phones{position:absolute;left:80px;right:80px;top:300px;bottom:92px;display:flex;align-items:flex-start;justify-content:center;gap:70px;z-index:2}
+.pw{text-align:center}
+.ph{width:290px;height:610px;border-radius:50px;background:#050505;padding:11px;border:2px solid #30343b;box-shadow:0 50px 120px -30px rgba(0,0,0,.95),0 0 90px -40px rgba(255,91,31,.45),inset 0 0 0 2px #15171b}
+.ph .scr{position:relative;width:100%;height:100%;border-radius:39px;overflow:hidden;background:#0a0b0d}
+.ph .scr img{width:100%;display:block}
+.ph .isl{position:absolute;top:10px;left:50%;width:84px;height:24px;margin-left:-42px;border-radius:14px;background:#000;z-index:2}
+.sb{height:44px;display:flex;justify-content:space-between;align-items:center;padding:4px 24px 0 28px;font-weight:600;font-size:13.5px;background:#0a0b0d}
+.sb .ic{display:flex;gap:3px;align-items:flex-end}
+.sb .ic i{width:3px;background:#fff;border-radius:1px}
+.sb .ic i:nth-child(1){height:5px}.sb .ic i:nth-child(2){height:8px}.sb .ic i:nth-child(3){height:11px}
+.sb .ic b{width:22px;height:11px;border:1.5px solid #fff;border-radius:4px;margin-left:5px;position:relative}
+.sb .ic b::after{content:'';position:absolute;inset:1.5px 5px 1.5px 1.5px;background:#fff;border-radius:1.5px}
+.pw .cap{margin-top:16px;font-size:16.5px;font-weight:600}
+.pw .cap small{display:block;font-family:'JB';font-size:12px;color:var(--dim);font-weight:400;margin-top:3px;letter-spacing:.04em}
+
+/* full page */
+.cols{position:absolute;left:80px;right:80px;top:310px;bottom:96px;display:flex;align-items:center;justify-content:center;gap:22px;z-index:2}
+.cols figure{position:relative}
+.cols img{display:block;width:392px;height:660px;border-radius:14px;border:1px solid var(--line2);box-shadow:0 40px 100px -40px rgba(0,0,0,.95)}
+.cols figcaption{position:absolute;left:12px;top:12px;font-family:'JB';font-size:11.5px;letter-spacing:.1em;color:#170800;background:var(--grad);border-radius:7px;padding:3px 8px;font-weight:700}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <symbol id="spark" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1.5c.7 5.6 4.9 9.8 10.5 10.5-5.6.7-9.8 4.9-10.5 10.5C11.3 16.9 7.1 12.7 1.5 12 7.1 11.3 11.3 7.1 12 1.5Z"/></symbol>
+  <symbol id="logo" viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="#fff" stroke-width="5"/><path d="M20 4a16 16 0 0 1 15.2 11" fill="none" stroke="#FF5B1F" stroke-width="5" stroke-linecap="round"/><circle cx="20" cy="20" r="5.5" fill="#FF5B1F"/></symbol>
+</defs></svg>
+
+<!-- 03 HOMEPAGE -->
+<section class="board side" data-n="03">
+  <div class="glow" style="width:1000px;height:1000px;right:-200px;top:-300px;background:radial-gradient(circle,rgba(255,91,31,.26),transparent 62%)"></div>
+  <div class="top"><div class="logo"><svg width="44" height="44"><use href="#logo"/></svg><div><b>ALL TIRE SUPPLY</b><i>EST. 1960 · HOUSTON</i></div></div><span class="chip">THE WEBSITE · DESKTOP</span></div>
+  <div class="txt">
+    <span class="eyebrow">01 · Homepage</span>
+    <h2 class="disp">A first screen <span class="grad">that sells.</span></h2>
+    <p>The AI prompt sits where the search bar used to be. Buyers say what they need and get an answer.</p>
+    <ul class="bul">
+      <li><svg><use href="#spark"/></svg>Ask box front and centre, with one-tap example questions</li>
+      <li><svg><use href="#spark"/></svg>Live proof cards: fit match, stock forecast, fleet quote</li>
+      <li><svg><use href="#spark"/></svg>Trust up top: since 1960, Google rating, authorized distributor</li>
+    </ul>
+    <span class="lever">↑ FIRST IMPRESSION</span>
+  </div>
+  <div class="shot"><div class="win"><div class="bar"><i></i><i></i><i></i><span>alltiresupply.com</span></div><img src="../screens/01_desktop_hero.png" alt=""></div></div>
+  <div class="foot"><span>All Tire Supply · AI website concept · Illustrative prices & data</span><span class="pg"></span></div>
+</section>
+
+<!-- 04 COPILOT -->
+<section class="board side" data-n="04">
+  <div class="glow" style="width:900px;height:900px;right:-100px;bottom:-400px;background:radial-gradient(circle,rgba(255,91,31,.24),transparent 62%)"></div>
+  <div class="top"><div class="logo"><svg width="44" height="44"><use href="#logo"/></svg><div><b>ALL TIRE SUPPLY</b><i>EST. 1960 · HOUSTON</i></div></div><span class="chip">THE WEBSITE · AI FEATURE</span></div>
+  <div class="txt">
+    <span class="eyebrow">02 · Shop Copilot</span>
+    <h2 class="disp">An expert at the counter. <span class="grad">Always on.</span></h2>
+    <p>Powered by Claude Fable 5.2. The shop owner describes the job and Copilot does the selling.</p>
+    <ul class="bul">
+      <li><svg><use href="#spark"/></svg>Understands bays, vehicles, wheel sizes and budget</li>
+      <li><svg><use href="#spark"/></svg>Answers with a priced package, financing and stock</li>
+      <li><svg><use href="#spark"/></svg>One tap to cart, a PDF quote or a human specialist</li>
+    </ul>
+    <span class="lever">↑ CONVERSION</span>
+  </div>
+  <div class="shot"><div class="win"><div class="bar"><i></i><i></i><i></i><span>alltiresupply.com/copilot</span></div><img src="../screens/02_shop_copilot.png" alt=""></div></div>
+  <div class="foot"><span>All Tire Supply · AI website concept · Illustrative prices & data</span><span class="pg"></span></div>
+</section>
+
+<!-- 05 DEPARTMENTS -->
+<section class="board side" data-n="05">
+  <div class="glow" style="width:900px;height:900px;left:-300px;bottom:-400px;background:radial-gradient(circle,rgba(255,91,31,.18),transparent 62%)"></div>
+  <div class="top"><div class="logo"><svg width="44" height="44"><use href="#logo"/></svg><div><b>ALL TIRE SUPPLY</b><i>EST. 1960 · HOUSTON</i></div></div><span class="chip">THE WEBSITE · CATALOG</span></div>
+  <div class="txt">
+    <span class="eyebrow">03 · Departments</span>
+    <h2 class="disp">Everything a tire bay <span class="grad">runs on.</span></h2>
+    <p>The catalog becomes one clear grid, with the AI tools placed where buyers make decisions.</p>
+    <ul class="bul">
+      <li><svg><use href="#spark"/></svg>Eight departments, from lifts to valve cores</li>
+      <li><svg><use href="#spark"/></svg>One illustration style across every category</li>
+      <li><svg><use href="#spark"/></svg>AutoStock and Bay Builder entry points built in</li>
+    </ul>
+    <span class="lever">↑ PRODUCT DISCOVERY</span>
+  </div>
+  <div class="shot"><div class="win"><div class="bar"><i></i><i></i><i></i><span>alltiresupply.com/shop</span></div><img src="../screens/03_departments.png" alt=""></div></div>
+  <div class="foot"><span>All Tire Supply · AI website concept · Illustrative prices & data</span><span class="pg"></span></div>
+</section>
+
+<!-- 06 BAY BUILDER -->
+<section class="board side" data-n="06">
+  <div class="glow" style="width:1000px;height:1000px;right:-250px;top:-350px;background:radial-gradient(circle,rgba(255,91,31,.24),transparent 62%)"></div>
+  <div class="top"><div class="logo"><svg width="44" height="44"><use href="#logo"/></svg><div><b>ALL TIRE SUPPLY</b><i>EST. 1960 · HOUSTON</i></div></div><span class="chip">THE WEBSITE · AI FEATURE</span></div>
+  <div class="txt">
+    <span class="eyebrow">04 · AI Bay Builder</span>
+    <h2 class="disp">Plan the shop. <span class="grad">Price it live.</span></h2>
+    <p>A configurator that sells the whole shop in one order instead of one machine at a time.</p>
+    <ul class="bul">
+      <li><svg><use href="#spark"/></svg>Pick bays, vehicles, wheel size and budget</li>
+      <li><svg><use href="#spark"/></svg>Floor plan and equipment list update instantly</li>
+      <li><svg><use href="#spark"/></svg>Total, monthly payment and payback in one view</li>
+    </ul>
+    <span class="lever">↑ ORDER VALUE</span>
+  </div>
+  <div class="shot"><div class="win"><div class="bar"><i></i><i></i><i></i><span>alltiresupply.com/bay-builder</span></div><img src="../screens/04_bay_builder.png" alt=""></div></div>
+  <div class="foot"><span>All Tire Supply · AI website concept · Illustrative prices & data</span><span class="pg"></span></div>
+</section>
+
+<!-- 07 AUTOSTOCK -->
+<section class="board side" data-n="07">
+  <div class="glow" style="width:900px;height:900px;right:-100px;bottom:-420px;background:radial-gradient(circle,rgba(255,91,31,.22),transparent 62%)"></div>
+  <div class="top"><div class="logo"><svg width="44" height="44"><use href="#logo"/></svg><div><b>ALL TIRE SUPPLY</b><i>EST. 1960 · HOUSTON</i></div></div><span class="chip">THE WEBSITE · AI FEATURE</span></div>
+  <div class="txt">
+    <span class="eyebrow">05 · AutoStock + Snap</span>
+    <h2 class="disp">Never run out of <span class="grad">patches again.</span></h2>
+    <p>Consumables are bought every few weeks. This turns them into predictable monthly revenue.</p>
+    <ul class="bul">
+      <li><svg><use href="#spark"/></svg>Forecasts usage per product and reorders on time</li>
+      <li><svg><use href="#spark"/></svg>Photo of a box or label finds the exact SKU</li>
+      <li><svg><use href="#spark"/></svg>Approve with one tap, or let it run automatically</li>
+    </ul>
+    <span class="lever">↑ REPEAT REVENUE</span>
+  </div>
+  <div class="shot"><div class="win"><div class="bar"><i></i><i></i><i></i><span>alltiresupply.com/autostock</span></div><img src="../screens/05_autostock_snap.png" alt=""></div></div>
+  <div class="foot"><span>All Tire Supply · AI website concept · Illustrative prices & data</span><span class="pg"></span></div>
+</section>
+
+<!-- 08 FLEET -->
+<section class="board stack" data-n="08">
+  <div class="glow" style="width:900px;height:900px;left:35%;top:-520px;background:radial-gradient(circle,rgba(255,91,31,.22),transparent 62%)"></div>
+  <div class="top"><div class="logo"><svg width="44" height="44"><use href="#logo"/></svg><div><b>ALL TIRE SUPPLY</b><i>EST. 1960 · HOUSTON</i></div></div><span class="chip">THE WEBSITE · AI FEATURE</span></div>
+  <div class="hd">
+    <div><span class="eyebrow">06 · Fleet & Government</span><h2 class="disp">Quotes in 60 seconds.<br><span class="grad">Not 2 days.</span></h2></div>
+    <div class="r"><p>Upload an RFQ or type the request. Copilot drafts the quote at contract pricing, with Net-30, PO and tax-exempt handled.</p><span class="lever">↑ B2B WIN RATE</span></div>
+  </div>
+  <div class="shot"><div class="win"><div class="bar"><i></i><i></i><i></i><span>alltiresupply.com/fleet</span></div><img src="../screens/06_fleet_quotes.png" alt=""></div></div>
+  <div class="foot"><span>All Tire Supply · AI website concept · Illustrative prices & data</span><span class="pg"></span></div>
+</section>
+
+<!-- 09 RECOMMENDED -->
+<section class="board stack" data-n="09">
+  <div class="glow" style="width:900px;height:900px;right:-200px;bottom:-480px;background:radial-gradient(circle,rgba(255,91,31,.22),transparent 62%)"></div>
+  <div class="top"><div class="logo"><svg width="44" height="44"><use href="#logo"/></svg><div><b>ALL TIRE SUPPLY</b><i>EST. 1960 · HOUSTON</i></div></div><span class="chip">THE WEBSITE · AI FEATURE</span></div>
+  <div class="hd">
+    <div><span class="eyebrow">07 · Personalized products</span><h2 class="disp">Recommended<br><span class="grad">for each shop.</span></h2></div>
+    <div class="r"><p>Every card says why the product fits this shop, shows the monthly payment and suggests what is usually added next.</p><span class="lever">↑ CROSS-SELL</span></div>
+  </div>
+  <div class="shot"><div class="win"><div class="bar"><i></i><i></i><i></i><span>alltiresupply.com</span></div><img src="../screens/07_recommended.png" alt="" style="padding:26px;background:#0A0B0D"></div></div>
+  <div class="foot"><span>All Tire Supply · AI website concept · Illustrative prices & data</span><span class="pg"></span></div>
+</section>
+
+<!-- 10 MOBILE -->
+<section class="board stack" data-n="10">
+  <div class="glow" style="width:1100px;height:1100px;left:22%;bottom:-700px;background:radial-gradient(circle,rgba(255,91,31,.26),transparent 62%)"></div>
+  <div class="top"><div class="logo"><svg width="44" height="44"><use href="#logo"/></svg><div><b>ALL TIRE SUPPLY</b><i>EST. 1960 · HOUSTON</i></div></div><span class="chip">THE WEBSITE · MOBILE</span></div>
+  <div class="hd">
+    <div><span class="eyebrow">08 · Mobile</span><h2 class="disp">Built for <span class="grad">the bay floor.</span></h2></div>
+    <div class="r"><p>Shop staff order from a phone between jobs. Every AI feature works one-handed.</p><span class="lever">↑ MOBILE ORDERS</span></div>
+  </div>
+  <div class="phones">
+    <div class="pw"><div class="ph"><div class="scr"><span class="isl"></span><div class="sb"><span>9:41</span><span class="ic"><i></i><i></i><i></i><b></b></span></div><img src="crops/phone_hero.png" alt=""></div></div><div class="cap">Homepage<small>ASK BOX FIRST</small></div></div>
+    <div class="pw"><div class="ph"><div class="scr"><span class="isl"></span><div class="sb"><span>9:41</span><span class="ic"><i></i><i></i><i></i><b></b></span></div><img src="crops/phone_copilot.png" alt=""></div></div><div class="cap">Shop Copilot<small>CHAT TO CART</small></div></div>
+    <div class="pw"><div class="ph"><div class="scr"><span class="isl"></span><div class="sb"><span>9:41</span><span class="ic"><i></i><i></i><i></i><b></b></span></div><img src="crops/phone_snap.png" alt=""></div></div><div class="cap">Snap & Reorder<small>PHOTO TO SKU</small></div></div>
+    <div class="pw"><div class="ph"><div class="scr"><span class="isl"></span><div class="sb"><span>9:41</span><span class="ic"><i></i><i></i><i></i><b></b></span></div><img src="crops/phone_bay.png" alt=""></div></div><div class="cap">Bay Builder<small>PLAN & PRICE</small></div></div>
+  </div>
+  <div class="foot"><span>All Tire Supply · AI website concept · Illustrative prices & data</span><span class="pg"></span></div>
+</section>
+
+<!-- 11 FULL PAGE -->
+<section class="board stack" data-n="11">
+  <div class="glow" style="width:900px;height:900px;left:-300px;top:-400px;background:radial-gradient(circle,rgba(255,91,31,.2),transparent 62%)"></div>
+  <div class="top"><div class="logo"><svg width="44" height="44"><use href="#logo"/></svg><div><b>ALL TIRE SUPPLY</b><i>EST. 1960 · HOUSTON</i></div></div><span class="chip">THE WEBSITE · FULL PAGE</span></div>
+  <div class="hd">
+    <div><span class="eyebrow">09 · Full homepage</span><h2 class="disp">One page,<br><span class="grad">start to finish.</span></h2></div>
+    <div class="r"><p>The complete scroll, top to bottom: hero, Copilot, departments, Bay Builder, AutoStock, fleet quotes, products, heritage and the closing call to action.</p></div>
+  </div>
+  <div class="cols">
+    <figure><img src="crops/full_1.jpg" alt=""><figcaption>1 / 4</figcaption></figure>
+    <figure><img src="crops/full_2.jpg" alt=""><figcaption>2 / 4</figcaption></figure>
+    <figure><img src="crops/full_3.jpg" alt=""><figcaption>3 / 4</figcaption></figure>
+    <figure><img src="crops/full_4.jpg" alt=""><figcaption>4 / 4</figcaption></figure>
+  </div>
+  <div class="foot"><span>All Tire Supply · AI website concept · Illustrative prices & data</span><span class="pg"></span></div>
+</section>
+
+<script>
+document.querySelectorAll('.board').forEach(b => { b.querySelector('.pg').textContent = b.dataset.n + ' / 12'; });
+</script>
+</body>
+</html>
