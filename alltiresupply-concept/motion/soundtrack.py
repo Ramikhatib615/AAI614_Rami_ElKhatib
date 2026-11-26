@@ -18,6 +18,8 @@ dry = np.zeros((2, N))
 rev = np.zeros((2, N))      # reverb send
 arpb = np.zeros((2, N))     # arp bus (gets ping-pong delay)
 music_sc = np.zeros((2, N))  # pad + bass bus (gets sidechain)
+drums = np.zeros((2, N))    # drum bus (ducked under the exhaust)
+exb = np.zeros((2, N))      # exhaust bus
 
 
 def place(bus, sig, t, pan=0.0, gain=1.0):
@@ -85,7 +87,7 @@ def kick(t0, g=1.0):
     ph = 2 * np.pi * np.cumsum(f) / SR
     s = np.sin(ph) * np.exp(-t * 6.5)
     click = rng.standard_normal(len(t)) * np.exp(-t * 900) * 0.4
-    place(dry, np.tanh(1.6 * (s + click)) * 0.9, t0, 0, g)
+    place(drums, np.tanh(1.6 * (s + click)) * 0.9, t0, 0, g)
 
 
 def snare(t0, g=1.0, pan=0.0):
@@ -93,7 +95,7 @@ def snare(t0, g=1.0, pan=0.0):
     n = bp(rng.standard_normal(len(t)), 900, 7000) * np.exp(-t * 18)
     tone = np.sin(2 * np.pi * 190 * t) * np.exp(-t * 30)
     s = n * 0.8 + tone * 0.5
-    place(dry, s, t0, pan, g * 0.55)
+    place(drums, s, t0, pan, g * 0.55)
     place(rev, s, t0, pan, g * 0.25)
 
 
@@ -105,14 +107,14 @@ def clap(t0, g=1.0):
         i = int(off * SR)
         e[i:] += np.exp(-(t[: len(t) - i]) * (90 if k < 2 else 16))
     s = n * e
-    place(dry, s, t0, 0.08, g * 0.45)
+    place(drums, s, t0, 0.08, g * 0.45)
     place(rev, s, t0, -0.1, g * 0.35)
 
 
 def hat(t0, g=1.0, open_=False, pan=0.25):
     t = tt(0.4 if open_ else 0.08)
     n = hp(rng.standard_normal(len(t)), 7500, 4) * np.exp(-t * (11 if open_ else 70))
-    place(dry, n, t0, pan, g * (0.16 if open_ else 0.12))
+    place(drums, n, t0, pan, g * (0.16 if open_ else 0.12))
 
 
 def bass(t0, m, dur, g=1.0, cut=700):
@@ -283,6 +285,58 @@ def rumble(t0, dur, g=1.0):
     place(dry, (n * 1.6 + wob * 0.5) * e * 0.35, t0, 0.2, g)
 
 
+def exhaust(t0, pts, pops_win, pan_pts, g=1.0):
+    """Performance V8 exhaust. pts: [(abs_time, rpm, throttle)], pops on lift-off."""
+    t_end = pts[-1][0]
+    n = int((t_end - t0) * SR)
+    ta = t0 + np.arange(n) / SR
+    rpm = np.interp(ta, [p[0] for p in pts], [p[1] for p in pts])
+    thr = np.interp(ta, [p[0] for p in pts], [p[2] for p in pts])
+    f = rpm / 60.0 * 4.0                      # V8: 4 firings per crank revolution
+    ph = np.cumsum(f / SR)
+    idx = np.nonzero(np.diff(np.floor(ph)) > 0)[0] + 1
+    pattern = np.array([1.0, .62, .9, .55, .97, .7, .6, .86])   # cross-plane burble
+    amps = pattern[np.arange(len(idx)) % 8] * (0.45 + 0.55 * thr[idx]) * (1 + 0.1 * rng.standard_normal(len(idx)))
+    jit = (rng.standard_normal(len(idx)) * 0.0006 * SR * (rpm[idx] < 2600)).astype(int)
+    train = np.zeros(n)
+    np.add.at(train, np.clip(idx + jit, 0, n - 1), amps)
+    ht = np.arange(int(0.035 * SR)) / SR
+    h = (np.exp(-ht * 210) * np.sin(2 * np.pi * 92 * ht)
+         + 0.45 * np.exp(-ht * 110) * np.sin(2 * np.pi * 46 * ht)
+         + 0.3 * np.exp(-ht * 900) * rng.standard_normal(len(ht)))
+    x = fftconvolve(train, h)[:n]
+    x = x / (np.max(np.abs(x)) + 1e-9)
+    res = bp(x, 60, 190) * 1.5 + bp(x, 240, 560) * 0.7 + lp(x, 2500) * 0.5
+    roar = bp(rng.standard_normal(n), 180, 2600) * (0.15 + 0.85 * thr) * (0.5 + 0.5 * np.sin(2 * np.pi * ph)) ** 2 * 0.35
+    y = res + roar
+    bright = lp(y, 4800, 2)
+    dark = lp(y, 900, 2)
+    y = dark * (1 - thr) + bright * thr
+    drive = 1.6 + 3.0 * thr
+    y = np.tanh(y / (np.max(np.abs(y)) + 1e-9) * drive * 1.6)
+    # exhaust crackles & pops on lift-off
+    pa, pb = pops_win
+    tm = pa
+    while tm < pb:
+        k = int((tm - t0) * SR)
+        big = rng.random() < 0.18
+        seg = np.arange(int(0.09 * SR)) / SR
+        crack = bp(rng.standard_normal(len(seg)), 700, 6000) * np.exp(-seg * (380 if big else 700))
+        boom = np.sin(2 * np.pi * 68 * seg) * np.exp(-seg * 35)
+        pop_ = (crack * (1.6 if big else 0.9) + boom * (0.9 if big else 0.3)) * (1 - 0.6 * (tm - pa) / (pb - pa))
+        y[k:k + len(seg)] += pop_[: max(0, n - k)]
+        tm += rng.uniform(0.025, 0.11) * (1.8 if big else 1.0)
+    env = np.minimum(1, (ta - t0) / 0.08) * np.minimum(1, (t_end - ta) / 0.6)
+    amp = (0.42 + 0.58 * thr) * env
+    y = np.tanh(y * amp * 1.3)
+    pans = np.interp(ta, [p[0] for p in pan_pts], [p[1] for p in pan_pts])
+    a = (pans + 1) * np.pi / 4
+    i = int(t0 * SR)
+    hz = int(0.0006 * SR)  # small Haas offset for width
+    exb[0, i:i + n] += y * np.cos(a) * g
+    exb[1, i + hz:i + hz + n] += y * np.sin(a) * g
+
+
 def sparkle(t0, t1, dens=10, g=1.0, lo=84, hi=101):
     scale = [0, 2, 3, 7, 9]  # A minor pentatonic-ish (A C D E G via offsets on A)
     pool = [m for m in range(lo, hi) if (m - 57) % 12 in (0, 3, 5, 7, 10)]
@@ -436,7 +490,11 @@ impact(5.35, g=0.9); clink(5.35, g=0.6, base=1800)
 impact(5.85, g=0.8); clink(5.85, g=0.6, base=2000)
 impact(6.35, g=1.0, size=1.3); clink(6.35, g=0.7, base=2300)
 sparkle(6.7, 7.5, dens=14, g=0.8, lo=88, hi=105)
-rumble(5.3, 1.9, g=1.0)
+rumble(5.3, 1.9, g=0.8)
+exhaust(5.02, [(5.02, 950, .35), (5.30, 1000, .2), (5.34, 1300, 1.0), (5.86, 6600, 1.0), (5.96, 6200, 0.0),
+               (6.26, 3500, 0.0), (6.30, 3600, 1.0), (6.96, 7400, 1.0), (7.04, 6800, 0.0), (7.75, 1250, 0.0),
+               (8.10, 950, 0.18), (8.75, 900, 0.1)],
+        pops_win=(7.06, 7.95), pan_pts=[(5.0, 0.85), (7.0, 0.18), (9.0, 0.1)], g=1.25)
 kick(7.0, 0.5)
 whoosh(7.25, 1.0, g=0.35, up=True, pan_from=0.8, pan_to=-0.8)
 for k, tm in enumerate([7.4, 7.7, 8.0]):
@@ -587,6 +645,8 @@ for k in kt:
     sc[i:i + len(seg)] = np.minimum(sc[i:i + len(seg)], duck[: N - i])
 music = hp(music_sc * sc, 45) * 0.62
 
+exb = np.tanh(exb * 2.0) * 0.9   # dense, loud exhaust bus
+rev += exb * 0.10
 # reverb: synthetic stereo hall IR
 irn = int(2.6 * SR)
 it = np.arange(irn) / SR
@@ -595,7 +655,13 @@ ir[:, : int(0.012 * SR)] = 0
 ir /= np.sqrt(np.sum(ir ** 2, axis=1, keepdims=True))
 wet = np.stack([fftconvolve(rev[0], ir[0])[:N], fftconvolve(rev[1], ir[1])[:N]])
 
-mix = dry + music + arp_mix * 0.9 + wet * 0.5
+# duck music + drums under the exhaust so it hits hard
+exm = np.abs(exb).max(0)
+win = int(0.03 * SR)
+exe = np.convolve(exm, np.ones(win) / win, mode='same')
+exe = np.clip(exe / (exe.max() + 1e-9), 0, 1)
+duck = 1 - 0.78 * exe
+mix = (dry + (drums + music + arp_mix * 0.9) * duck + wet * 0.5) * 0.74 + exb
 mix = hp(mix, 28)
 # gentle glue + soft limit
 mix = np.tanh(mix * 0.8) / np.tanh(0.8)
@@ -605,8 +671,9 @@ fade = int(1.4 * SR)
 mix[:, end - fade:end] *= np.linspace(1, 0, fade) ** 1.5
 mix[:, end:] = 0
 mix = mix[:, :end]
-mix /= np.max(np.abs(mix)) + 1e-9
-mix *= 0.89
+ref = np.percentile(np.abs(mix[:, :end]), 99.95)
+mix = mix / ref * 0.82
+mix = np.clip(np.tanh(mix * 1.25) / np.tanh(1.25) * 0.93, -0.97, 0.97)
 
 out = sys.argv[1] if len(sys.argv) > 1 else 'soundtrack.wav'
 pcm = (mix.T * 32767).astype(np.int16)
